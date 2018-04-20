@@ -41,6 +41,24 @@ bool Tile::hasCharacter() const
     return m_character != nullptr;
 }
 
+bool Tile::canEnter() const
+{
+    if (m_tileType == Floor && m_character == nullptr) return true;
+    return false;
+}
+
+void Tile::onLeave(Tile* toTile) {
+    if (toTile->canEnter()) {
+        onEnter(m_character);
+        m_character == nullptr;
+    }    
+}
+
+void Tile::onEnter(Character* c) {
+    m_character == c;
+}
+
+
 char Tile::tileToChar() const
 {
     switch(m_tileType) {
@@ -48,6 +66,8 @@ char Tile::tileToChar() const
         case Floor  : return '.';
     }
 }
+
+
 
 /*
 Tile::TileType charToTileType(const char& c)
