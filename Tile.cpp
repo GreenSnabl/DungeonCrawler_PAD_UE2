@@ -43,19 +43,19 @@ bool Tile::hasCharacter() const
 
 bool Tile::canEnter() const
 {
-    if (m_tileType == Floor && m_character == nullptr) return true;
+    if (m_tileType == Tile::Floor && !hasCharacter()) return true;
     return false;
 }
 
 void Tile::onLeave(Tile* toTile) {
     if (toTile->canEnter()) {
-        onEnter(m_character);
-        m_character == nullptr;
+        toTile->onEnter(m_character);
+        m_character = nullptr;
     }    
 }
 
 void Tile::onEnter(Character* c) {
-    m_character == c;
+    m_character = c;
 }
 
 

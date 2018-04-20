@@ -46,8 +46,6 @@ private:
     Tile*** m_tile;
     const int m_height;
     const int m_width;
-
-    Screen* m_screen;
 };
 
 #endif /* DUNGEONMAP_H */

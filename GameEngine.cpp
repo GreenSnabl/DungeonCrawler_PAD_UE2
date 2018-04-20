@@ -16,7 +16,7 @@
 GameEngine::GameEngine(int height, int width, const std::string& data) : m_map{new DungeonMap(height, width, data)} 
 {
     m_charVec.push_back(new Character('@'));
-    m_map->place({5,5}, m_charVec[0]);
+    m_map->place({4,1}, m_charVec[0]);
 }
 
 GameEngine::GameEngine(const GameEngine& orig) {
