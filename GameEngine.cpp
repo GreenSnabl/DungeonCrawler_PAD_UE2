@@ -13,7 +13,7 @@
 
 #include "GameEngine.h"
 
-GameEngine::GameEngine() {
+GameEngine::GameEngine(int height, int width, std::vector<std::string>& data) {
 }
 
 GameEngine::GameEngine(const GameEngine& orig) {
@@ -22,3 +22,18 @@ GameEngine::GameEngine(const GameEngine& orig) {
 GameEngine::~GameEngine() {
 }
 
+bool GameEngine::turn()
+{
+}
+
+bool GameEngine::finished()
+{
+}
+
+void GameEngine::run()
+{
+    while (!finished())
+    {
+        turn();
+    }
+}

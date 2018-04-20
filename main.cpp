@@ -12,14 +12,26 @@
  */
 
 #include <cstdlib>
+#include <string>
 
-using namespace std;
+using std::string;
 
 /*
  * 
  */
 int main(int argc, char** argv) {
 
+    const string map =  "##########"
+                        "####.....#"
+                        "###......#"
+                        "##.......#"
+                        "#........#"
+                        "#........#"
+                        "#........#"
+                        "#........#"
+                        "#........#"
+                        "##########";
+    
     return 0;
 }
 

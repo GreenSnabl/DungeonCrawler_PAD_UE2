@@ -13,14 +13,24 @@
 
 #ifndef GAMEENGINE_H
 #define GAMEENGINE_H
+#include "Character.h"
+#include "DungeonMap.h"
+#include <vector>
+#include <string>
 
 class GameEngine {
 public:
-    GameEngine();
+    GameEngine(int height, int width, std::vector<std::string>& data);
     GameEngine(const GameEngine& orig);
     virtual ~GameEngine();
+    
+    bool finished();
+    bool turn();
+    void run();
+    
 private:
-
+    std::vector<Character*> m_charVec;
+    DungeonMap* map;
 };
 
 #endif /* GAMEENGINE_H */
