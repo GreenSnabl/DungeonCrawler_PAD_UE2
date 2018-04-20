@@ -134,7 +134,7 @@ void DungeonMap::print() const
     for (int i = 0; i < m_height; ++i) {
         for (int j = 0; j < m_width; ++j) {
             if (find({j,i})->hasCharacter()) {
-            m_screen->getSubScreen("map")->setChar({j,i}, find({j,i})->getCharacter()->getSign());
+            m_screen->getSubScreen("map")->setChar({j,i}, (find({j,i})->getCharacter()->getSign()));
         }
     }
     }

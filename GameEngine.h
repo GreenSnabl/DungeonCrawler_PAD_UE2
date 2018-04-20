@@ -21,17 +21,23 @@
 class GameEngine {
 public:
     GameEngine(int height, int width, const std::string& data);
-    GameEngine(const GameEngine& orig);
-    virtual ~GameEngine();
+    ~GameEngine();
     
-    bool finished();
-    bool turn();
     void run();
     
 private:
+    bool finished();
+    bool turn();
+
     std::vector<Character*> m_charVec;
-    DungeonMap* map;
+    DungeonMap* m_map;
+
+    static int rounds;
+   
+    GameEngine(const GameEngine& orig);
 };
+
+Position intToPos(int);
 
 #endif /* GAMEENGINE_H */
 

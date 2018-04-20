@@ -12,6 +12,9 @@
  */
 
 #include "Character.h"
+#include <iostream>
+
+using std::cin;
 
 Character::Character(char sign) : m_sign{sign} {
 }
@@ -25,4 +28,13 @@ Character::~Character() {
 char Character::getSign() const
 {
     return m_sign;
+}
+
+int Character::move()
+{
+    char c = '0';
+    while (c < '1' || c > '9') {
+        cin >> c;
+    }
+    return static_cast<int>(c-'0');    
 }

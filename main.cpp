@@ -11,11 +11,11 @@
  * Created on April 19, 2018, 8:32 PM
  */
 
-#include <cstdlib>
 #include <string>
+#include "GameEngine.h"
 
-#include "DungeonMap.h"
-#include "Character.h"
+//#include "DungeonMap.h"
+//#include "Character.h"
 
 using std::string;
 
@@ -40,6 +40,12 @@ int main(int argc, char** argv) {
                         "#........#"
                         "##########";
     
+    GameEngine game(10, 10, map);
+    
+    game.run();
+    
+    
+    /*
     DungeonMap dungeonMap(10, 10, map);
 
     makeMap(map);
@@ -56,6 +62,10 @@ int main(int argc, char** argv) {
     copyMap.print();
     
     delete c;
+     */
+     
+    
+    
     return 0;
 }
 

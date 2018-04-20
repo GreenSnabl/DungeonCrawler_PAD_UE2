@@ -1,10 +1,12 @@
-build/Debug/GNU-Linux/main.o: main.cpp DungeonMap.h Tile.h Character.h \
- Screen.h
+build/Debug/GNU-Linux/main.o: main.cpp GameEngine.h Character.h \
+ DungeonMap.h Tile.h Screen.h
+
+GameEngine.h:
+
+Character.h:
 
 DungeonMap.h:
 
 Tile.h:
-
-Character.h:
 
 Screen.h:
