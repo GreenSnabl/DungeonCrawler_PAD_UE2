@@ -17,6 +17,7 @@
 #include "Character.h"
 #include <string>
 #include <vector>
+#include "Screen.h"
 
 struct Position{
     int x;
@@ -26,7 +27,7 @@ struct Position{
 class DungeonMap {
 public:
     DungeonMap(int height, int width);
-    DungeonMap(int height, int width, std::vector<std::string>& data);
+    DungeonMap(int height, int width, const std::string& data);
     DungeonMap(const DungeonMap& orig);
     
     virtual ~DungeonMap();
@@ -46,6 +47,7 @@ private:
     const int m_height;
     const int m_width;
 
+    Screen* m_screen;
 };
 
 #endif /* DUNGEONMAP_H */

@@ -20,7 +20,7 @@
 
 class GameEngine {
 public:
-    GameEngine(int height, int width, std::vector<std::string>& data);
+    GameEngine(int height, int width, const std::string& data);
     GameEngine(const GameEngine& orig);
     virtual ~GameEngine();
     

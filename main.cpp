@@ -14,8 +14,16 @@
 #include <cstdlib>
 #include <string>
 
+#include "DungeonMap.h"
+#include "Character.h"
+
 using std::string;
 
+
+void makeMap(const string& str)
+{
+    DungeonMap map(10,10, str);
+}
 /*
  * 
  */
@@ -32,6 +40,22 @@ int main(int argc, char** argv) {
                         "#........#"
                         "##########";
     
+    DungeonMap dungeonMap(10, 10, map);
+
+    makeMap(map);
+    
+    DungeonMap copyMap(dungeonMap);
+    
+
+    copyMap.print();
+    
+    Character* c = new Character('@');
+    
+    copyMap.find({5,5})->setCharacter(c);
+    
+    copyMap.print();
+    
+    delete c;
     return 0;
 }
 

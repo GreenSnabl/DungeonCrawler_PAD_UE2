@@ -13,7 +13,7 @@
 
 #include "GameEngine.h"
 
-GameEngine::GameEngine(int height, int width, std::vector<std::string>& data) {
+GameEngine::GameEngine(int height, int width, const std::string& data) {
 }
 
 GameEngine::GameEngine(const GameEngine& orig) {

@@ -21,7 +21,7 @@ Tile::Tile(TileType tileType) : m_tileType {tileType}, m_character{nullptr}
 Tile::~Tile() {
 }
 
-TileType Tile::getTileType() const
+Tile::TileType Tile::getTileType() const
 {
     return m_tileType;
 }
@@ -40,4 +40,20 @@ bool Tile::hasCharacter() const
 {
     return m_character != nullptr;
 }
-    
+
+char Tile::tileToChar() const
+{
+    switch(m_tileType) {
+        case Wall   : return '#';
+        case Floor  : return '.';
+    }
+}
+
+/*
+Tile::TileType charToTileType(const char& c)
+{
+    switch (c){
+        case '#' : return Tile::Wall;
+        case '.' : return Tile::Floor;
+    }
+} */

@@ -38,6 +38,7 @@ OBJECTFILES= \
 	${OBJECTDIR}/Character.o \
 	${OBJECTDIR}/DungeonMap.o \
 	${OBJECTDIR}/GameEngine.o \
+	${OBJECTDIR}/Screen.o \
 	${OBJECTDIR}/Tile.o \
 	${OBJECTDIR}/main.o
 
@@ -80,6 +81,11 @@ ${OBJECTDIR}/GameEngine.o: GameEngine.cpp
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
 	$(COMPILE.cc) -g -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/GameEngine.o GameEngine.cpp
+
+${OBJECTDIR}/Screen.o: Screen.cpp
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} "$@.d"
+	$(COMPILE.cc) -g -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Screen.o Screen.cpp
 
 ${OBJECTDIR}/Tile.o: Tile.cpp
 	${MKDIR} -p ${OBJECTDIR}

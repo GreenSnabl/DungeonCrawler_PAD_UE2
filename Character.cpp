@@ -22,3 +22,7 @@ Character::Character(const Character& orig) {
 Character::~Character() {
 }
 
+char Character::getSign() const
+{
+    return m_sign;
+}

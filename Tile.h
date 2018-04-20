@@ -16,15 +16,18 @@
 #include "Character.h"
 
 
-enum TileType {Floor, Wall};
 
 
 class Tile {
 public:
+    enum TileType {Floor, Wall};
+
     Tile(TileType tiletype);
     ~Tile();
     TileType getTileType() const;
     Character* getCharacter() const;
+
+
     void setCharacter(Character* character);
     
     bool hasCharacter() const;
@@ -33,6 +36,8 @@ public:
     
     void onLeave(Tile* toTile);
     void onEnter(Character *c);
+    
+    char tileToChar() const;
     
 private:
     TileType m_tileType;
