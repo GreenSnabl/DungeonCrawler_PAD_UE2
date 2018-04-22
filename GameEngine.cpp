@@ -16,7 +16,7 @@
 GameEngine::GameEngine(int height, int width, const std::string& data) : m_map{new DungeonMap(height, width, data)} 
 {
     m_charVec.push_back(new Character('@'));
-    m_map->place({4,1}, m_charVec[0]);
+    m_map->place({5,5}, m_charVec[0]);
 }
 
 GameEngine::GameEngine(const GameEngine& orig) {
@@ -42,6 +42,7 @@ bool GameEngine::finished()
 
 void GameEngine::run()
 {
+    m_map->print();
     while (!finished())
     {
         turn();
@@ -60,8 +61,8 @@ Position intToPos(int dir)
         case 4 : return {-1, 0};
         case 5 : return { 0, 0};
         case 6 : return { 1, 0};
-        case 7 : return {-1, 1};
-        case 8 : return { 0, 1};
-        case 9 : return { 1, 1};
+        case 7 : return {-1, -1};
+        case 8 : return { 0, -1};
+        case 9 : return { 1, -1};
     }
 }
