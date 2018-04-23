@@ -20,12 +20,10 @@ public:
     Character(const Character& orig);
     virtual ~Character();
 
-
     char getSign() const;
     int move();
 private:
     char m_sign;
-
 };
 
 #endif /* CHARACTER_H */

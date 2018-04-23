@@ -42,6 +42,8 @@ public:
 private:
     TileType m_tileType;
     Character* m_character;
+
+    Tile(const Tile&);
 };
 
 #endif /* TILE_H */

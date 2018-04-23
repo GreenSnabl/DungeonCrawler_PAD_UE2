@@ -27,16 +27,10 @@ DungeonMap::DungeonMap(int height, int width) : m_height{height}, m_width{width}
             m_tile[i][j] = new Tile(Tile::Floor);
         }
     }
-
-
-
-
 }
 
 DungeonMap::DungeonMap(int height, int width, const std::string& data) : m_height{height}, m_width{width}
 {
-
-
     m_tile = new Tile**[m_height];
 
     for (int i = 0; i < m_height; ++i) {
@@ -114,8 +108,7 @@ Tile* DungeonMap::find(Position pos) const {
 
 void DungeonMap::print() const {
     Screen screen(m_width, m_height);
-
-
+    
     for (int i = 0; i < m_height; ++i) {
         for (int j = 0; j < m_width; ++j) {
             if (find({j, i})->hasCharacter()) {

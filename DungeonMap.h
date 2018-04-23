@@ -30,7 +30,7 @@ public:
     DungeonMap(int height, int width, const std::string& data);
     DungeonMap(const DungeonMap& orig);
 
-    virtual ~DungeonMap();
+    ~DungeonMap();
 
     void place(Position pos, Character* c);
 
