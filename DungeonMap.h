@@ -19,7 +19,7 @@
 #include <vector>
 #include "Screen.h"
 
-struct Position{
+struct Position {
     int x;
     int y;
 };
@@ -29,19 +29,19 @@ public:
     DungeonMap(int height, int width);
     DungeonMap(int height, int width, const std::string& data);
     DungeonMap(const DungeonMap& orig);
-    
+
     virtual ~DungeonMap();
-    
+
     void place(Position pos, Character* c);
-    
+
     Position find(Tile* t) const;
     Position find(Character* c) const;
-    
+
     Tile* find(Position pos) const;
-    
+
     void print() const;
-    
-    
+
+
 private:
     Tile*** m_tile;
     const int m_height;

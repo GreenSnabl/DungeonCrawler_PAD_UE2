@@ -19,7 +19,7 @@ using std::cin;
 Character::Character(char sign) : m_sign{sign} {
 }
 
-Character::Character(const Character& orig) {
+Character::Character(const Character& orig) : m_sign{orig.m_sign}{
 }
 
 Character::~Character() {

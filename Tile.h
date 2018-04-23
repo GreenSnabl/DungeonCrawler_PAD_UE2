@@ -15,12 +15,12 @@
 #define TILE_H
 #include "Character.h"
 
-
-
-
 class Tile {
 public:
-    enum TileType {Floor, Wall};
+
+    enum TileType {
+        Floor, Wall
+    };
 
     Tile(TileType tiletype);
     ~Tile();
@@ -29,16 +29,16 @@ public:
 
 
     void setCharacter(Character* character);
-    
+
     bool hasCharacter() const;
-    
+
     bool canEnter() const;
-    
+
     void onLeave(Tile* toTile);
     void onEnter(Character *c);
-    
+
     char tileToChar() const;
-    
+
 private:
     TileType m_tileType;
     Character* m_character;

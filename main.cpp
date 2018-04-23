@@ -19,11 +19,10 @@
 
 using std::string;
 
-
-void makeMap(const string& str)
-{
-    DungeonMap map(10,10, str);
+void makeMap(const string& str) {
+    DungeonMap map(10, 10, str);
 }
+
 /*
  * 
  */
@@ -39,12 +38,12 @@ int main(int argc, char** argv) {
                         "#........#"
                         "#........#"
                         "##########";
-    
+
     GameEngine game(10, 10, map);
-    
+
     game.run();
-    
-    
+
+
     /*
     DungeonMap dungeonMap(10, 10, map);
 
@@ -63,9 +62,9 @@ int main(int argc, char** argv) {
     
     delete c;
      */
-     
-    
-    
+
+
+
     return 0;
 }
 

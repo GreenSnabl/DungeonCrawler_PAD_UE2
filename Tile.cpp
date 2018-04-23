@@ -14,35 +14,30 @@
 #include "Tile.h"
 
 
-Tile::Tile(TileType tileType) : m_tileType {tileType}, m_character{nullptr}
+Tile::Tile(TileType tileType) : m_tileType{tileType}, m_character{nullptr}
 {
 }
 
 Tile::~Tile() {
 }
 
-Tile::TileType Tile::getTileType() const
-{
+Tile::TileType Tile::getTileType() const {
     return m_tileType;
 }
 
-Character* Tile::getCharacter() const
-{
+Character* Tile::getCharacter() const {
     return m_character;
 }
 
-void Tile::setCharacter(Character* character)
-{
+void Tile::setCharacter(Character* character) {
     m_character = character;
 }
 
-bool Tile::hasCharacter() const
-{
+bool Tile::hasCharacter() const {
     return m_character != nullptr;
 }
 
-bool Tile::canEnter() const
-{
+bool Tile::canEnter() const {
     if (m_tileType == Tile::Floor && !hasCharacter()) return true;
     return false;
 }
@@ -51,19 +46,17 @@ void Tile::onLeave(Tile* toTile) {
     if (toTile->canEnter()) {
         toTile->onEnter(m_character);
         m_character = nullptr;
-    }    
+    }
 }
 
 void Tile::onEnter(Character* c) {
     m_character = c;
 }
 
-
-char Tile::tileToChar() const
-{
-    switch(m_tileType) {
-        case Wall   : return '#';
-        case Floor  : return '.';
+char Tile::tileToChar() const {
+    switch (m_tileType) {
+        case Wall: return '#';
+        case Floor: return '.';
     }
 }
 

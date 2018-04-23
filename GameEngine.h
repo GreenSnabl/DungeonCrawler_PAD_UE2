@@ -22,9 +22,9 @@ class GameEngine {
 public:
     GameEngine(int height, int width, const std::string& data);
     ~GameEngine();
-    
+
     void run();
-    
+
 private:
     bool finished();
     bool turn();
@@ -33,7 +33,7 @@ private:
     DungeonMap* m_map;
 
     static int rounds;
-   
+
     GameEngine(const GameEngine& orig);
 };
 

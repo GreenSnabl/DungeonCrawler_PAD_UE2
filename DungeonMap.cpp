@@ -114,7 +114,7 @@ Tile* DungeonMap::find(Position pos) const {
 
 void DungeonMap::print() const {
     Screen screen(m_width, m_height);
-    
+
 
     for (int i = 0; i < m_height; ++i) {
         for (int j = 0; j < m_width; ++j) {
