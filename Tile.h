@@ -20,7 +20,7 @@
 
 class Tile {
 public:
-    enum TileType {Floor, Wall};
+    enum TileType {Floor, Wall, Door};
 
     Tile(TileType tiletype);
     ~Tile();
@@ -38,6 +38,8 @@ public:
     void onEnter(Character *c);
     
     char tileToChar() const;
+    
+    static TileType charToTileType(char c);
     
 private:
     TileType m_tileType;

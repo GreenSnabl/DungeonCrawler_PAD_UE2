@@ -43,7 +43,7 @@ bool Tile::hasCharacter() const
 
 bool Tile::canEnter() const
 {
-    if (m_tileType == Tile::Floor && !hasCharacter()) return true;
+    if (!hasCharacter() && (m_tileType == Tile::Floor || m_tileType == Tile::Door)) return true;
     return false;
 }
 
@@ -64,16 +64,16 @@ char Tile::tileToChar() const
     switch(m_tileType) {
         case Wall   : return '#';
         case Floor  : return '.';
+        case Door   : return 'x';
     }
 }
 
 
-
-/*
-Tile::TileType charToTileType(const char& c)
+Tile::TileType Tile::charToTileType(char c)
 {
     switch (c){
         case '#' : return Tile::Wall;
         case '.' : return Tile::Floor;
+        case 'x' : return Tile::Door;
     }
-} */
+}

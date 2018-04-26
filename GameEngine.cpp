@@ -37,7 +37,7 @@ bool GameEngine::turn()
 
 bool GameEngine::finished()
 {
-    return rounds > 10;    
+    return rounds > 10 || m_map->find(m_map->find(m_charVec[0]))->getTileType() == Tile::Door;
 }
 
 void GameEngine::run()
