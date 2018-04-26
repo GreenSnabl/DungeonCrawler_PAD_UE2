@@ -29,16 +29,16 @@ void makeMap(const string& str)
  */
 int main(int argc, char** argv) {
 
-    const string map =  "##########"
+    const string map =  "####x#####"
                         "####.....#"
-                        "###...x..#"
+                        "###......#"
                         "##.......#"
                         "#........#"
                         "#........#"
+                        "#........x"
                         "#........#"
                         "#........#"
-                        "#........#"
-                        "##########";
+                        "##x#######";
     
     GameEngine game(10, 10, map);
     
