@@ -109,11 +109,8 @@ void DungeonMap::print() const {
     
     for (int i = 0; i < m_height; ++i) {
         for (int j = 0; j < m_width; ++j) {
-            switch (find({j, i})->getTileType()) {
-                case Tile::Wall: screen.setChar({j, i}, '#'); break;
-                case Tile::Floor: screen.setChar({j, i}, '.'); break;
-                case Tile::Door: screen.setChar({j, i}, 'x'); break;
-            }
+            
+            screen.setChar({j, i}, find({j, i})->tileToChar());
             
             if (find({j, i})->hasCharacter()) {
                 screen.setChar({j, i}, find({j, i})->getCharacter()->getSign());
