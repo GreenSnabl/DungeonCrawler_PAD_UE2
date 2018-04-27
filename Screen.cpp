@@ -68,7 +68,6 @@ bool Screen::getVisibility() const
 void Screen::setString(Pos2d pos, const string& item)
 {
     for (int i = 0; i < item.size(); ++i) {
-        //m_screen[i + pos.x + m_width * pos.y] = item[i];
         setChar({pos.x + i, pos.y}, item[i]); 
     }
 }
@@ -77,7 +76,6 @@ void Screen::setInt(Pos2d pos, const int& item)
 {
     string str = std::to_string(item);
     for (int i = 0; i < str.size(); ++i) {
-        //m_screen[i + pos.x + m_width * pos.y] = str[i];
         setString(pos, str);
     }
 }
@@ -97,11 +95,7 @@ void Screen::addSubScreen(Screen* subs, Pos2d anchor, const string& name)
     screenPointer->m_anchor = anchor;
     screenPointer->m_name = name;
     m_screens.push_back(screenPointer);
-    /*
-    subs->m_anchor = anchor;
-    subs->m_name = name;
-    m_screens.push_back(subs);
-    */
+ 
 }
 
 Screen* Screen::getSubScreen(const string& name)
@@ -141,7 +135,6 @@ void Screen::draw(Screen& s)
         for (int j = 0; j < s.m_width; ++j)
         {
             setChar({j + s.m_anchor.x, i + s.m_anchor.y}, s.getChar({j,i}));
-            //m_screen[j + s.m_anchor.x + (i + s.m_anchor.y) * m_width] = s.m_screen[j + s.m_width * i];
         }
     }
     

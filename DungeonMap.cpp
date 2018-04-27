@@ -24,7 +24,7 @@ DungeonMap::DungeonMap(int height, int width) : m_height{height}, m_width{width}
 
     for (int i = 0; i < m_height; ++i) {
         for (int j = 0; j < m_width; ++j) {
-            m_tile[i][j] = new Tile(Tile::Floor);
+            m_tile[i][j] = new Floor;
         }
     }
 }
@@ -41,11 +41,14 @@ DungeonMap::DungeonMap(int height, int width, const std::string& data) : m_heigh
 
     for (int i = 0; i < m_height; ++i) {
         for (int j = 0; j < m_width; ++j) {
-            m_tile[i][j] = new Tile(Tile::charToTileType(data[i * m_width + j]));
+            switch (data[i * m_width + j]) {
+                case '.': m_tile[i][j] = new Floor; break;
+                case '#': m_tile[i][j] = new Wall; break;     
+            }
         }
     }
 }
-
+/*
 DungeonMap::DungeonMap(const DungeonMap& orig) : m_height{orig.m_height}, m_width{orig.m_width}
 {
 
@@ -61,7 +64,7 @@ DungeonMap::DungeonMap(const DungeonMap& orig) : m_height{orig.m_height}, m_widt
         }
     }
 }
-
+*/
 DungeonMap::~DungeonMap() {
     for (int i = 0; i < m_height; ++i) {
         for (int j = 0; j < m_width; ++j) {

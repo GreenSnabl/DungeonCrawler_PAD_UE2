@@ -14,16 +14,12 @@
 #include "Tile.h"
 
 
-Tile::Tile(TileType tileType) : m_tileType {tileType}, m_character{nullptr}
+Tile::Tile() : m_character{nullptr}
 {
 }
+
 
 Tile::~Tile() {
-}
-
-Tile::TileType Tile::getTileType() const
-{
-    return m_tileType;
 }
 
 Character* Tile::getCharacter() const
@@ -43,7 +39,7 @@ bool Tile::hasCharacter() const
 
 bool Tile::canEnter() const
 {
-    if (!hasCharacter() && (m_tileType == Tile::Floor || m_tileType == Tile::Door)) return true;
+    if (!hasCharacter()) return true;
     return false;
 }
 
@@ -59,21 +55,28 @@ void Tile::onEnter(Character* c) {
 }
 
 
-char Tile::tileToChar() const
-{
-    switch(m_tileType) {
-        case Wall   : return '#';
-        case Floor  : return '.';
-        case Door   : return 'x';
+Floor::Floor() {}
+Wall::Wall() {}
+
+char Floor::tileToChar() const {return '.';}
+char Wall::tileToChar() const {return '#';}
+
+
+bool Wall::canEnter() const {
+        return false;
     }
+
+
+Active::~Active() {}
+Switch::Switch() : m_wasUsed(false), m_sign('?') {}
+Switch::~Switch() {}
+
+bool Switch::use() {
+    m_sign = '!';
+    return m_wasUsed = true;
 }
 
-
-Tile::TileType Tile::charToTileType(char c)
+char Switch::tileToChar() const
 {
-    switch (c){
-        case '#' : return Tile::Wall;
-        case '.' : return Tile::Floor;
-        case 'x' : return Tile::Door;
-    }
+    return m_sign;
 }

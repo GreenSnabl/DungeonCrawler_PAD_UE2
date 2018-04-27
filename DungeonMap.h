@@ -28,7 +28,6 @@ class DungeonMap {
 public:
     DungeonMap(int height, int width);
     DungeonMap(int height, int width, const std::string& data);
-    DungeonMap(const DungeonMap& orig);
     
     virtual ~DungeonMap();
     
@@ -46,6 +45,8 @@ private:
     Tile*** m_tile;
     const int m_height;
     const int m_width;
+
+    DungeonMap(const DungeonMap& orig);
 };
 
 #endif /* DUNGEONMAP_H */

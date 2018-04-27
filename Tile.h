@@ -14,36 +14,74 @@
 #ifndef TILE_H
 #define TILE_H
 #include "Character.h"
+#include <vector>
 
 
 
 
 class Tile {
 public:
-    enum TileType {Floor, Wall, Door};
-
-    Tile(TileType tiletype);
-    ~Tile();
-    TileType getTileType() const;
+    Tile();
+//    Tile(const Tile& other);
+    virtual ~Tile() = 0;
     Character* getCharacter() const;
 
-
     void setCharacter(Character* character);
-    
     bool hasCharacter() const;
     
-    bool canEnter() const;
+    virtual bool canEnter() const;
+    virtual void onLeave(Tile* toTile);
+    virtual void onEnter(Character *c);
     
-    void onLeave(Tile* toTile);
-    void onEnter(Character *c);
+    virtual char tileToChar() const = 0;
     
-    char tileToChar() const;
-    
-    static TileType charToTileType(char c);
     
 private:
-    TileType m_tileType;
     Character* m_character;
+};
+
+class Floor : public Tile
+{
+public:
+    Floor();
+    char tileToChar() const;
+};
+
+class Wall : public Tile {
+public:
+    Wall();
+    bool canEnter() const;
+    char tileToChar() const;
+    
+};
+
+class Passive : public Tile {
+public:
+    virtual ~Passive() = 0;
+    void notify();
+};
+
+class Active : public Tile {
+public:
+    virtual ~Active() = 0;
+    void registerPassive(Passive*);
+    void unregisterPassive(Passive*);
+private:
+    std::vector<Passive*> m_passives;
+};
+
+class Switch : public Active {
+public:
+    Switch();
+    ~Switch();
+    
+    char tileToChar() const;
+    bool use();
+private:
+    
+    bool m_wasUsed;
+    char m_sign;
+    Switch(const Switch& orig);
 };
 
 #endif /* TILE_H */
