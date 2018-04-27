@@ -43,56 +43,5 @@ private:
     char m_sign;
 };
 
-class Floor : public Tile
-{
-public:
-    Floor();
-};
-
-class Wall : public Tile {
-public:
-    Wall();
-    bool canEnter() const;
-    
-};
-
-class Passive : public Tile {
-public:
-    Passive(char sign);
-    virtual ~Passive() = 0;
-    void notify();
-};
-
-class Active : public Tile {
-public:
-    Active(char sign);
-    virtual ~Active() = 0;
-    void registerPassive(Passive*);
-    void unregisterPassive(Passive*);
-private:
-    std::vector<Passive*> m_passives;
-};
-
-class Switch : public Active {
-public:
-    Switch();
-    ~Switch();
-    bool use();
-private:
-    bool m_wasUsed;
-    char m_sign;
-    Switch(const Switch& orig);
-};
-
-class Door : public Passive {
-public:
-    Door(char sign);
-    ~Door();
-    bool canEnter() const;
-private:
-    bool m_isOpen;
-};
-
-
 #endif /* TILE_H */
 

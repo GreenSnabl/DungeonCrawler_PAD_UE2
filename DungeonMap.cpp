@@ -24,7 +24,7 @@ DungeonMap::DungeonMap(int height, int width) : m_height{height}, m_width{width}
 
     for (int i = 0; i < m_height; ++i) {
         for (int j = 0; j < m_width; ++j) {
-            m_tile[i][j] = new Floor;
+            m_tile[i][j] = Tile::makeTile('.');
         }
     }
 }

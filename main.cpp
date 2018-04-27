@@ -43,28 +43,7 @@ int main(int argc, char** argv) {
     GameEngine game(10, 10, map);
     
     game.run();
-    
-    
-    /*
-    DungeonMap dungeonMap(10, 10, map);
-
-    makeMap(map);
-    
-    DungeonMap copyMap(dungeonMap);
-    
-
-    copyMap.print();
-    
-    Character* c = new Character('@');
-    
-    copyMap.find({5,5})->setCharacter(c);
-    
-    copyMap.print();
-    
-    delete c;
-     */
-     
-    
+        
     
     return 0;
 }

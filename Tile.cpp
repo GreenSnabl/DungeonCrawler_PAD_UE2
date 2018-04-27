@@ -12,6 +12,10 @@
  */
 
 #include "Tile.h"
+#include "Floor.h"
+#include "Wall.h"
+#include "Switch.h"
+#include "Door.h"
 
 
 Tile::Tile(char sign) : m_character{nullptr}, m_sign{sign}
@@ -72,37 +76,9 @@ Tile* Tile::makeTile(char c){
 }
 
 
-Floor::Floor() : Tile('.') {}
-Wall::Wall() : Tile('#') {}
-
-
-bool Wall::canEnter() const {
-        return false;
-    }
-
-Active::Active(char sign) : Tile(sign) {}
-Active::~Active() {}
-Passive::Passive(char sign) : Tile(sign) {}
-Passive::~Passive() {}
-
-Switch::Switch() : Active('?'), m_wasUsed(false), m_sign('?') {}
-Switch::~Switch() {}
-
-bool Switch::use() {
-    m_sign = '!';
-    return m_wasUsed = true;
-}
-
-
-Door::~Door() {}
-
-Door::Door(char sign) : Passive(sign), m_isOpen{sign == '/'} 
-{
-}
 
 
 
-bool Door::canEnter() const {
-    if (m_isOpen) return Tile::canEnter();
-    else return false;
-}
+
+
+
