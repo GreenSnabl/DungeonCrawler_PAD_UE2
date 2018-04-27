@@ -21,7 +21,7 @@
 
 class Tile {
 public:
-    Tile();
+    Tile(char sign);
 //    Tile(const Tile& other);
     virtual ~Tile() = 0;
     Character* getCharacter() const;
@@ -33,36 +33,39 @@ public:
     virtual void onLeave(Tile* toTile);
     virtual void onEnter(Character *c);
     
-    virtual char tileToChar() const = 0;
+    virtual char tileToChar() const;
+    
+    static Tile* makeTile(char c);
     
     
 private:
     Character* m_character;
+    char m_sign;
 };
 
 class Floor : public Tile
 {
 public:
     Floor();
-    char tileToChar() const;
 };
 
 class Wall : public Tile {
 public:
     Wall();
     bool canEnter() const;
-    char tileToChar() const;
     
 };
 
 class Passive : public Tile {
 public:
+    Passive(char sign);
     virtual ~Passive() = 0;
     void notify();
 };
 
 class Active : public Tile {
 public:
+    Active(char sign);
     virtual ~Active() = 0;
     void registerPassive(Passive*);
     void unregisterPassive(Passive*);
@@ -74,15 +77,22 @@ class Switch : public Active {
 public:
     Switch();
     ~Switch();
-    
-    char tileToChar() const;
     bool use();
 private:
-    
     bool m_wasUsed;
     char m_sign;
     Switch(const Switch& orig);
 };
+
+class Door : public Passive {
+public:
+    Door(char sign);
+    ~Door();
+    bool canEnter() const;
+private:
+    bool m_isOpen;
+};
+
 
 #endif /* TILE_H */
 

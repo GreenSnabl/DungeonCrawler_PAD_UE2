@@ -14,13 +14,16 @@
 #include "Tile.h"
 
 
-Tile::Tile() : m_character{nullptr}
+Tile::Tile(char sign) : m_character{nullptr}, m_sign{sign}
 {
 }
 
 
 Tile::~Tile() {
 }
+
+
+
 
 Character* Tile::getCharacter() const
 {
@@ -54,21 +57,35 @@ void Tile::onEnter(Character* c) {
     m_character = c;
 }
 
+char Tile::tileToChar() const {
+    return m_sign;
+}
 
-Floor::Floor() {}
-Wall::Wall() {}
 
-char Floor::tileToChar() const {return '.';}
-char Wall::tileToChar() const {return '#';}
+Tile* Tile::makeTile(char c){
+    switch(c) {
+        case '.' : return new Floor;
+        case '#' : return new Wall;
+        case 'X' : case '/' : return new Door(c);
+        case '?' : return new Switch;
+    }
+}
+
+
+Floor::Floor() : Tile('.') {}
+Wall::Wall() : Tile('#') {}
 
 
 bool Wall::canEnter() const {
         return false;
     }
 
-
+Active::Active(char sign) : Tile(sign) {}
 Active::~Active() {}
-Switch::Switch() : m_wasUsed(false), m_sign('?') {}
+Passive::Passive(char sign) : Tile(sign) {}
+Passive::~Passive() {}
+
+Switch::Switch() : Active('?'), m_wasUsed(false), m_sign('?') {}
 Switch::~Switch() {}
 
 bool Switch::use() {
@@ -76,7 +93,16 @@ bool Switch::use() {
     return m_wasUsed = true;
 }
 
-char Switch::tileToChar() const
+
+Door::~Door() {}
+
+Door::Door(char sign) : Passive(sign), m_isOpen{sign == '/'} 
 {
-    return m_sign;
+}
+
+
+
+bool Door::canEnter() const {
+    if (m_isOpen) return Tile::canEnter();
+    else return false;
 }

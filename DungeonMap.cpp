@@ -41,10 +41,8 @@ DungeonMap::DungeonMap(int height, int width, const std::string& data) : m_heigh
 
     for (int i = 0; i < m_height; ++i) {
         for (int j = 0; j < m_width; ++j) {
-            switch (data[i * m_width + j]) {
-                case '.': m_tile[i][j] = new Floor; break;
-                case '#': m_tile[i][j] = new Wall; break;     
-            }
+            m_tile[i][j] = Tile::makeTile(data[i * m_width + j]);
+
         }
     }
 }
