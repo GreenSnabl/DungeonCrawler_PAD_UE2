@@ -57,8 +57,7 @@ DungeonMap::DungeonMap(int height, int width, const std::vector<std::string>& da
 
     for (int i = 0; i < m_height; ++i) {
         for (int j = 0; j < m_width; ++j) {
-            m_tile[i][j] = Tile::makeTile(data[i].at(j));
-
+            m_tile[i][j] = Tile::makeTile(data[i][j]);
         }
     }
 

@@ -47,9 +47,8 @@ GameEngine::GameEngine(int height, int width, const std::string& data) : m_map{n
         if(!loadMap(mapFile, vecMap)) throw;
         
         m_map = new DungeonMap(vecMap.size(), vecMap[0].size(), vecMap);
-        m_charVec.push_back(new Player);
-        m_map->place({3,8}, m_charVec[0]);
         
+        loadEntities(vecMap);
         
         vector<Position> vecPos;        
         if (!loadConnectors(connectorFile, vecPos)) throw;
@@ -93,6 +92,20 @@ GameEngine::GameEngine(int height, int width, const std::string& data) : m_map{n
         return vecPos.size() % 2 == 0;
     }
 
+    void GameEngine::loadEntities(const vector<string>& vecMap)
+    {
+        Character* temp = nullptr;
+        for (int i = 0; i < vecMap.size(); ++i) {
+            for (int j = 0; j < vecMap[i].size(); ++j) {
+                if (temp = Character::makeCharacter(vecMap[i][j]))
+                {
+                    m_charVec.push_back(temp);
+                    m_map->place({j,i}, m_charVec[m_charVec.size()-1]);
+                    temp = nullptr;
+                }
+            }
+        }
+    }
 
 GameEngine::GameEngine(const GameEngine& orig) {
 }

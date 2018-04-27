@@ -23,6 +23,8 @@ public:
     
     char getSign() const;
     int move();
+
+    static Character* makeCharacter(char c);
 private:
     
     char m_sign;

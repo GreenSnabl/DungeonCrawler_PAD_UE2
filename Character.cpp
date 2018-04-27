@@ -13,6 +13,8 @@
 
 #include "Character.h"
 #include "ConsoleController.h"
+#include "Player.h"
+#include "NPC.h"
 
 
 Character::Character(char sign, Controller* controller) : m_sign{sign}, m_controller{controller} {
@@ -35,4 +37,14 @@ char Character::getSign() const
 int Character::move()
 {
     m_controller->move();
+}
+
+Character* Character::makeCharacter(char sign)
+{
+    switch (sign) {
+        case 'C'  : return new Player;
+        default   : return nullptr;
+               
+    
+    }
 }

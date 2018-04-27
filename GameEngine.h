@@ -35,6 +35,7 @@ private:
     bool loadMap(const std::string& mapFile, std::vector<std::string>& VecMap);    
     bool loadConnectors(const std::string& connectorFile, std::vector<Position>& vecPos);
     
+    void loadEntities(const std::vector<std::string>& vecMap);
     std::vector<Character*> m_charVec;
     DungeonMap* m_map;
 
