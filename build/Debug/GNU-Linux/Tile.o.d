@@ -1,9 +1,11 @@
-build/Debug/GNU-Linux/Tile.o: Tile.cpp Tile.h Character.h Floor.h Wall.h \
- Switch.h Active.h Passive.h Door.h
+build/Debug/GNU-Linux/Tile.o: Tile.cpp Tile.h Character.h Controller.h \
+ Floor.h Wall.h Switch.h Active.h Passive.h Door.h
 
 Tile.h:
 
 Character.h:
+
+Controller.h:
 
 Floor.h:
 

@@ -12,14 +12,15 @@
  */
 
 #include "Character.h"
-#include <iostream>
+#include "ConsoleController.h"
 
-using std::cin;
 
 Character::Character(char sign) : m_sign{sign} {
+    m_controller = new ConsoleController;
 }
 
 Character::Character(const Character& orig) {
+    delete m_controller;
 }
 
 Character::~Character() {
@@ -32,9 +33,5 @@ char Character::getSign() const
 
 int Character::move()
 {
-    char c = '0';
-    while (c < '1' || c > '9') {
-        cin >> c;
-    }
-    return static_cast<int>(c-'0');    
+    m_controller->move();
 }

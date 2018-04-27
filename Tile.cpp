@@ -70,8 +70,8 @@ Tile* Tile::makeTile(char c){
     switch(c) {
         case '.' : return new Floor;
         case '#' : return new Wall;
-        case 'X' : case '/' : return new Door(c);
-        case '?' : return new Switch;
+        case 'D' : return new Door;
+        case 'S' : return new Switch;
     }
 }
 

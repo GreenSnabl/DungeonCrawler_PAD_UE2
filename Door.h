@@ -18,7 +18,7 @@
 
 class Door : public Passive {
 public:
-    Door(char sign);
+    Door();
     ~Door();
     bool canEnter() const;
 private:

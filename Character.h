@@ -13,6 +13,8 @@
 
 #ifndef CHARACTER_H
 #define CHARACTER_H
+#include "Controller.h"
+
 
 class Character {
 public:
@@ -25,6 +27,7 @@ public:
     int move();
 private:
     char m_sign;
+    Controller* m_controller;
 
 };
 

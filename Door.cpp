@@ -14,7 +14,7 @@
 #include "Door.h"
 
 
-Door::Door(char sign) : Passive(sign), m_isOpen{sign == '/'} 
+Door::Door() : Passive('X'), m_isOpen{false} 
 {
 }
 

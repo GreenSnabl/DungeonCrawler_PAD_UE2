@@ -37,6 +37,8 @@ OBJECTDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}
 OBJECTFILES= \
 	${OBJECTDIR}/Active.o \
 	${OBJECTDIR}/Character.o \
+	${OBJECTDIR}/ConsoleController.o \
+	${OBJECTDIR}/Controller.o \
 	${OBJECTDIR}/Door.o \
 	${OBJECTDIR}/DungeonMap.o \
 	${OBJECTDIR}/Floor.o \
@@ -82,6 +84,16 @@ ${OBJECTDIR}/Character.o: Character.cpp
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
 	$(COMPILE.cc) -g -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Character.o Character.cpp
+
+${OBJECTDIR}/ConsoleController.o: ConsoleController.cpp
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} "$@.d"
+	$(COMPILE.cc) -g -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/ConsoleController.o ConsoleController.cpp
+
+${OBJECTDIR}/Controller.o: Controller.cpp
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} "$@.d"
+	$(COMPILE.cc) -g -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Controller.o Controller.cpp
 
 ${OBJECTDIR}/Door.o: Door.cpp
 	${MKDIR} -p ${OBJECTDIR}
