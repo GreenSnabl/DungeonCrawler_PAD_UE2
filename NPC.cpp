@@ -12,8 +12,9 @@
  */
 
 #include "NPC.h"
+#include "AiController.h"
 
-NPC::NPC(char sign) : Character(sign) {
+NPC::NPC(char sign, AiController::Behaviour behaviour) : Character(sign, new AiController(behaviour)) {
 }
 
 

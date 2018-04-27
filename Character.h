@@ -18,7 +18,7 @@
 
 class Character {
 public:
-    Character(char sign);
+    Character(char sign, Controller* controller);
     virtual ~Character() = 0;
     
     char getSign() const;

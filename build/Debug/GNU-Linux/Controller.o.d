@@ -1,6 +1,6 @@
 build/Debug/GNU-Linux/Controller.o: Controller.cpp Controller.h \
  ConsoleController.h AiController.h DungeonMap.h Tile.h Character.h \
- Screen.h
+ Screen.h GameEngine.h
 
 Controller.h:
 
@@ -15,3 +15,5 @@ Tile.h:
 Character.h:
 
 Screen.h:
+
+GameEngine.h:

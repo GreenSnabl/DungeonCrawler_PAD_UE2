@@ -15,10 +15,11 @@
 #define NPC_H
 
 #include "Character.h"
+#include "AiController.h"
 
 class NPC : public Character{
 public:
-    NPC(char sign);
+    NPC(char sign, AiController::Behaviour behaviour);
     virtual ~NPC();
 private:
     NPC(const NPC& orig);

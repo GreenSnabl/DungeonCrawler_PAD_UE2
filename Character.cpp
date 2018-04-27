@@ -15,7 +15,7 @@
 #include "ConsoleController.h"
 
 
-Character::Character(char sign) : m_sign{sign}, m_controller{Controller::makeController(m_sign)} {
+Character::Character(char sign, Controller* controller) : m_sign{sign}, m_controller{controller} {
     
 }
 

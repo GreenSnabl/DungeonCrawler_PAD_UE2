@@ -12,8 +12,10 @@
  */
 
 #include "Player.h"
+#include "ConsoleController.h"
 
-Player::Player() : Character('@') {
+
+Player::Player() : Character('@', new ConsoleController) {
 }
 
 

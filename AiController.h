@@ -15,6 +15,7 @@
 #define AICONTROLLER_H
 #include "Controller.h"
 #include "DungeonMap.h"
+#include "GameEngine.h"
 
 class AiController : public Controller {
 public:
@@ -29,7 +30,7 @@ private:
     int strolling();
     int hold();
     
-    Behaviour m_behaviour;    
+    Behaviour m_behaviour;
     
     AiController(const AiController& orig);
 };

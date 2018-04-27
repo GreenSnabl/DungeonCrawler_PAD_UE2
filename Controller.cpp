@@ -23,13 +23,3 @@ Controller::Controller(const Controller& orig) {
 
 Controller::~Controller() {
 }
-
-Controller* Controller::makeController(char sign)
-{
-    switch(sign){
-        case '@' : return new ConsoleController;
-        case 'G' : return new AiController(AiController::PATROL);
-        case 'O' : return new AiController(AiController::STROLLING);
-        case 'z' : return new AiController(AiController::HOLD);
-    }
-}

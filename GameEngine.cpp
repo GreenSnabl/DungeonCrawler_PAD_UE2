@@ -15,14 +15,15 @@
 #include "Player.h"
 #include "NPC.h"
 #include "Switch.h"
+#include "AiController.h"
 
 
 GameEngine::GameEngine(int height, int width, const std::string& data) : m_map{new DungeonMap(height, width, data)} 
 {
     m_charVec.push_back(new Player);
-    m_charVec.push_back(new NPC('G'));
-    m_charVec.push_back(new NPC('O'));
-    m_charVec.push_back(new NPC('z'));
+    m_charVec.push_back(new NPC('G', AiController::PATROL));
+    m_charVec.push_back(new NPC('O', AiController::STROLLING));
+    m_charVec.push_back(new NPC('z', AiController::HOLD));
     
     dynamic_cast<Active*>(m_map->find({5,7}))->registerPassive(dynamic_cast<Passive*>(m_map->find({7,4})));
     
