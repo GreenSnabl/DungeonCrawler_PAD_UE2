@@ -16,6 +16,14 @@
 #include "NPC.h"
 #include "Switch.h"
 #include "AiController.h"
+#include <fstream>
+#include <sstream>
+#include <iostream>
+#include <string>
+#include <vector>
+
+using std::string;
+using std::vector;
 
 
 GameEngine::GameEngine(int height, int width, const std::string& data) : m_map{new DungeonMap(height, width, data)} 
@@ -32,6 +40,59 @@ GameEngine::GameEngine(int height, int width, const std::string& data) : m_map{n
     m_map->place({7,3}, m_charVec[2]);
     m_map->place({10,9}, m_charVec[3]);
 }
+
+    GameEngine::GameEngine(const std::string& mapFile, const std::string& connectorFile)
+    {
+        vector<string> vecMap;
+        if(!loadMap(mapFile, vecMap)) throw;
+        
+        m_map = new DungeonMap(vecMap.size(), vecMap[0].size(), vecMap);
+        m_charVec.push_back(new Player);
+        m_map->place({3,8}, m_charVec[0]);
+        
+        
+        vector<Position> vecPos;        
+        if (!loadConnectors(connectorFile, vecPos)) throw;
+        for (int i = 0; i < vecPos.size() - 1; i = i + 2) {
+            dynamic_cast<Active*>(m_map->find(vecPos[i]))->registerPassive(dynamic_cast<Passive*>(m_map->find(vecPos[i+1])));
+        }
+        
+    }
+    
+    bool GameEngine::loadMap(const string& mapFile, vector<string>& vecMap)
+    {
+        string str = "";
+        std::ifstream ifs;
+        
+        ifs.open(mapFile);
+        while (getline(ifs, str)) {
+            vecMap.push_back(str);
+        }
+        ifs.close();
+        
+        return vecMap.size() > 0 && vecMap[0].size() > 0 && (vecMap[0].size() == vecMap[vecMap.size() - 1].size());
+    }
+    
+    bool GameEngine::loadConnectors(const std::string& connectorFile, std::vector<Position>& vecPos)
+    {
+        Position tempPos;
+        std::stringstream ss;
+        string tempStr;
+        std::ifstream ifs;
+        ifs.open(connectorFile);
+         
+        while (getline(ifs, tempStr)) {
+            ss.str(tempStr);
+            while(ss >> tempPos.y >> tempPos.x){
+                vecPos.push_back(tempPos);   
+            }
+            ss.clear();
+        }
+        
+        ifs.close();
+        return vecPos.size() % 2 == 0;
+    }
+
 
 GameEngine::GameEngine(const GameEngine& orig) {
 }

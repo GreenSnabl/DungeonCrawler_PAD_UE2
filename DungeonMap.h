@@ -28,6 +28,7 @@ class DungeonMap {
 public:
     DungeonMap(int height, int width);
     DungeonMap(int height, int width, const std::string& data);
+    DungeonMap(int height, int width, const std::vector<std::string>& data);
     
     virtual ~DungeonMap();
     

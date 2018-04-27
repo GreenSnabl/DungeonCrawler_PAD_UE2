@@ -26,3 +26,11 @@ void Active::registerPassive(Passive* passive)
 {
     m_passives.push_back(passive);
 }
+
+void Active::unregisterPassive(Passive* passive)
+{
+    for (int i = 0; i < m_passives.size(); ++i)
+    {
+        if (m_passives[i] == passive) m_passives.erase(m_passives.begin() + i);
+    }
+}

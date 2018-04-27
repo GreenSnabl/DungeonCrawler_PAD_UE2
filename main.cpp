@@ -28,7 +28,7 @@ void makeMap(const string& str)
  * 
  */
 int main(int argc, char** argv) {
-
+/*
     const string map =  "############"
                         "####.......#"
                         "###........#"
@@ -44,8 +44,11 @@ int main(int argc, char** argv) {
                         "############";
     
     GameEngine game(13, 12, map);
-    
     game.run();
+  */
+    
+    GameEngine game2("Maps/Map1.txt", "Maps/Connector1.txt");
+    game2.run();
         
     
     return 0;

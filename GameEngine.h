@@ -20,7 +20,10 @@
 
 class GameEngine {
 public:
+    
     GameEngine(int height, int width, const std::string& data);
+    GameEngine(int height, int width, const std::vector<string>& data);
+    GameEngine(const std::string& mapFile, const std::string& connectorFile);
     ~GameEngine();
     
     void run();
@@ -29,6 +32,9 @@ private:
     bool finished();
     bool turn();
 
+    bool loadMap(const std::string& mapFile, std::vector<std::string>& VecMap);    
+    bool loadConnectors(const std::string& connectorFile, std::vector<Position>& vecPos);
+    
     std::vector<Character*> m_charVec;
     DungeonMap* m_map;
 
