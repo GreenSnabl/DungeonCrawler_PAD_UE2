@@ -15,15 +15,16 @@
 #include "ConsoleController.h"
 
 
-Character::Character(char sign) : m_sign{sign} {
-    m_controller = new ConsoleController;
+Character::Character(char sign) : m_sign{sign}, m_controller{Controller::makeController(m_sign)} {
+    
 }
 
 Character::Character(const Character& orig) {
-    delete m_controller;
+
 }
 
 Character::~Character() {
+    delete m_controller;
 }
 
 char Character::getSign() const

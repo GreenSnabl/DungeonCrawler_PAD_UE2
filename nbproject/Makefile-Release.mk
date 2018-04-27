@@ -36,6 +36,7 @@ OBJECTDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}
 # Object Files
 OBJECTFILES= \
 	${OBJECTDIR}/Active.o \
+	${OBJECTDIR}/AiController.o \
 	${OBJECTDIR}/Character.o \
 	${OBJECTDIR}/ConsoleController.o \
 	${OBJECTDIR}/Controller.o \
@@ -43,7 +44,9 @@ OBJECTFILES= \
 	${OBJECTDIR}/DungeonMap.o \
 	${OBJECTDIR}/Floor.o \
 	${OBJECTDIR}/GameEngine.o \
+	${OBJECTDIR}/NPC.o \
 	${OBJECTDIR}/Passive.o \
+	${OBJECTDIR}/Player.o \
 	${OBJECTDIR}/Screen.o \
 	${OBJECTDIR}/Switch.o \
 	${OBJECTDIR}/Tile.o \
@@ -80,6 +83,11 @@ ${OBJECTDIR}/Active.o: Active.cpp
 	${RM} "$@.d"
 	$(COMPILE.cc) -O2 -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Active.o Active.cpp
 
+${OBJECTDIR}/AiController.o: AiController.cpp
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/AiController.o AiController.cpp
+
 ${OBJECTDIR}/Character.o: Character.cpp
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
@@ -115,10 +123,20 @@ ${OBJECTDIR}/GameEngine.o: GameEngine.cpp
 	${RM} "$@.d"
 	$(COMPILE.cc) -O2 -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/GameEngine.o GameEngine.cpp
 
+${OBJECTDIR}/NPC.o: NPC.cpp
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/NPC.o NPC.cpp
+
 ${OBJECTDIR}/Passive.o: Passive.cpp
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
 	$(COMPILE.cc) -O2 -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Passive.o Passive.cpp
+
+${OBJECTDIR}/Player.o: Player.cpp
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Player.o Player.cpp
 
 ${OBJECTDIR}/Screen.o: Screen.cpp
 	${MKDIR} -p ${OBJECTDIR}

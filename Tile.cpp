@@ -75,8 +75,10 @@ Tile* Tile::makeTile(char c){
     }
 }
 
-
-
+void Tile::setSign(char c)
+{
+    m_sign = c;
+}
 
 
 

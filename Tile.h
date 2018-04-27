@@ -34,8 +34,11 @@ public:
     virtual void onEnter(Character *c);
     
     virtual char tileToChar() const;
-    
     static Tile* makeTile(char c);
+    
+    virtual void setSign(char c);
+    
+    
     
     
 private:

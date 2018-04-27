@@ -94,8 +94,8 @@ Position DungeonMap::find(Tile* t) const {
 Position DungeonMap::find(Character* c) const {
     for (int i = 0; i < m_height; ++i) {
         for (int j = 0; j < m_width; ++j) {
-            if (m_tile[j][i]->getCharacter() == c) {
-                return {i, j};
+            if (m_tile[i][j]->getCharacter() == c) {
+                return {j, i};
             }
         }
     }

@@ -1,3 +1,17 @@
-build/Debug/GNU-Linux/Controller.o: Controller.cpp Controller.h
+build/Debug/GNU-Linux/Controller.o: Controller.cpp Controller.h \
+ ConsoleController.h AiController.h DungeonMap.h Tile.h Character.h \
+ Screen.h
 
 Controller.h:
+
+ConsoleController.h:
+
+AiController.h:
+
+DungeonMap.h:
+
+Tile.h:
+
+Character.h:
+
+Screen.h:

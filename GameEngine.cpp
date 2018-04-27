@@ -12,11 +12,24 @@
  */
 
 #include "GameEngine.h"
+#include "Player.h"
+#include "NPC.h"
+#include "Switch.h"
+
 
 GameEngine::GameEngine(int height, int width, const std::string& data) : m_map{new DungeonMap(height, width, data)} 
 {
-    m_charVec.push_back(new Character('@'));
-    m_map->place({1,5}, m_charVec[0]);
+    m_charVec.push_back(new Player);
+    m_charVec.push_back(new NPC('G'));
+    m_charVec.push_back(new NPC('O'));
+    m_charVec.push_back(new NPC('z'));
+    
+    dynamic_cast<Active*>(m_map->find({5,7}))->registerPassive(dynamic_cast<Passive*>(m_map->find({7,4})));
+    
+    m_map->place({5,11}, m_charVec[0]);
+    m_map->place({5,5}, m_charVec[1]);
+    m_map->place({7,3}, m_charVec[2]);
+    m_map->place({10,9}, m_charVec[3]);
 }
 
 GameEngine::GameEngine(const GameEngine& orig) {
@@ -24,20 +37,24 @@ GameEngine::GameEngine(const GameEngine& orig) {
 
 GameEngine::~GameEngine() {
     delete m_map;
-    delete m_charVec[0];
+    for (int i = 0; i < m_charVec.size(); ++i) {
+        delete m_charVec[i];
+    }
 }
 
 bool GameEngine::turn()
 {
-    Position charPos = m_map->find(m_charVec[0]);
-    Position movement = intToPos(m_charVec[0]->move());
-    m_map->find(charPos)->onLeave(m_map->find({charPos.x + movement.x, charPos.y + movement.y}));
-    m_map->print();
+    for (int i = 0; i < m_charVec.size(); ++i) {
+        Position charPos = m_map->find(m_charVec[i]);
+        Position movement = intToPos(m_charVec[i]->move());
+        m_map->find(charPos)->onLeave(m_map->find({charPos.x + movement.x, charPos.y + movement.y}));
+        m_map->print();
+    }
 }
 
 bool GameEngine::finished()
 {
-    return rounds > 10;
+    return rounds > 20;
 }
 
 void GameEngine::run()

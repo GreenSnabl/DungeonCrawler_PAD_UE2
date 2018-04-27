@@ -15,3 +15,14 @@
 
 Active::Active(char sign) : Tile(sign) {}
 Active::~Active() {}
+
+void Active::use() {
+    for (auto it : m_passives){
+        it->notify();
+    }        
+}
+
+void Active::registerPassive(Passive* passive)
+{
+    m_passives.push_back(passive);
+}

@@ -21,6 +21,8 @@ public:
     Door();
     ~Door();
     bool canEnter() const;
+    void notify();
+
 private:
     bool m_isOpen;
 };

@@ -20,10 +20,10 @@ class Switch : public Active {
 public:
     Switch();
     ~Switch();
-    bool use();
+    void use();
+    virtual void onEnter(Character* c);
 private:
     bool m_wasUsed;
-    char m_sign;
     Switch(const Switch& orig);
 };
 

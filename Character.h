@@ -19,16 +19,17 @@
 class Character {
 public:
     Character(char sign);
-    Character(const Character& orig);
-    virtual ~Character();
-    
+    virtual ~Character() = 0;
     
     char getSign() const;
     int move();
 private:
+    
     char m_sign;
     Controller* m_controller;
 
+    
+    Character(const Character& orig);
 };
 
 #endif /* CHARACTER_H */

@@ -17,13 +17,15 @@
 class Controller {
 public:
     Controller();
-    Controller(const Controller& orig);
     virtual ~Controller();
+    
+    static Controller* makeController(char sign);
     
     virtual int move() = 0;
     
 private:
 
+    Controller(const Controller& orig);
 };
 
 #endif /* CONTROLLER_H */

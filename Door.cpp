@@ -20,8 +20,13 @@ Door::Door() : Passive('X'), m_isOpen{false}
 
 Door::~Door() {}
 
+void Door::notify() {
+    setSign('/');
+    m_isOpen = true;
+}
 
 bool Door::canEnter() const {
     if (m_isOpen) return Tile::canEnter();
     else return false;
 }
+

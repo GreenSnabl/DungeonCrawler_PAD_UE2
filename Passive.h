@@ -20,7 +20,7 @@ class Passive : public Tile {
 public:
     Passive(char sign);
     virtual ~Passive() = 0;
-    void notify();
+    virtual void notify() = 0;
 };
 
 #endif /* PASSIVE_H */

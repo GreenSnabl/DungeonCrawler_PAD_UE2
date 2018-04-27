@@ -23,6 +23,7 @@ public:
     virtual ~Active() = 0;
     void registerPassive(Passive*);
     void unregisterPassive(Passive*);
+    virtual void use();
 private:
     std::vector<Passive*> m_passives;
 };

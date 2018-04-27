@@ -19,13 +19,12 @@
 class ConsoleController : public Controller {
 public:
     ConsoleController();
-    ConsoleController(const ConsoleController& orig);
-    virtual ~ConsoleController();
+    ~ConsoleController();
     
     int move();
     
 private:
-
+    ConsoleController(const ConsoleController& orig);
 };
 
 #endif /* CONSOLECONTROLLER_H */
