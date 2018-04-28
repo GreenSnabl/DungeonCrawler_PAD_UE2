@@ -72,7 +72,7 @@ Tile* Tile::makeTile(char c){
         case '#' : return new Wall;
         case 'D' : return new Door;
         case 'S' : return new Switch;
-        case 'C' : return new Floor;
+        case 'C': case 'N': case 'G': return new Floor;
     }
 }
 

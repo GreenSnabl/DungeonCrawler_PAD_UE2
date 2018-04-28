@@ -14,10 +14,11 @@
 #include "NPC.h"
 #include "AiController.h"
 
-NPC::NPC(char sign, AiController::Behaviour behaviour) : Character(sign, new AiController(behaviour)) {
-}
-
+NPC::NPC(char sign, AiController* controller) : Character(sign, controller) {}
 
 NPC::~NPC() {
 }
 
+Enemy::Enemy(char sign, AiController* controller) : NPC(sign, controller) {}
+
+Neutral::Neutral(char sign, AiController* controller) : NPC(sign, controller) {}

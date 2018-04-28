@@ -18,7 +18,7 @@
 class Player : public Character{
 public:
     Player();
-    virtual ~Player();
+    ~Player();
 private:
     Player(const Player& orig);
 };

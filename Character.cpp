@@ -43,6 +43,8 @@ Character* Character::makeCharacter(char sign)
 {
     switch (sign) {
         case 'C'  : return new Player;
+        case 'G'  : return new Enemy(sign, new AiController(AiController::PATROL));
+        case 'N'  : return new Neutral(sign, new AiController(AiController::HOLD));
         default   : return nullptr;
                
     

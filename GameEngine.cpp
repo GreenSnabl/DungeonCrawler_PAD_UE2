@@ -13,7 +13,6 @@
 
 #include "GameEngine.h"
 #include "Player.h"
-#include "NPC.h"
 #include "Switch.h"
 #include "AiController.h"
 #include <fstream>
@@ -29,16 +28,8 @@ using std::vector;
 GameEngine::GameEngine(int height, int width, const std::string& data) : m_map{new DungeonMap(height, width, data)} 
 {
     m_charVec.push_back(new Player);
-    m_charVec.push_back(new NPC('G', AiController::PATROL));
-    m_charVec.push_back(new NPC('O', AiController::STROLLING));
-    m_charVec.push_back(new NPC('z', AiController::HOLD));
-    
-    dynamic_cast<Active*>(m_map->find({5,7}))->registerPassive(dynamic_cast<Passive*>(m_map->find({7,4})));
-    
     m_map->place({5,11}, m_charVec[0]);
-    m_map->place({5,5}, m_charVec[1]);
-    m_map->place({7,3}, m_charVec[2]);
-    m_map->place({10,9}, m_charVec[3]);
+
 }
 
     GameEngine::GameEngine(const std::string& mapFile, const std::string& connectorFile)

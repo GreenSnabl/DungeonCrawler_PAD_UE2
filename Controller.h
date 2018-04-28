@@ -18,9 +18,7 @@ class Controller {
 public:
     Controller();
     virtual ~Controller();
-    
-    static Controller* makeController(char sign);
-    
+     
     virtual int move() = 0;
     
 private:

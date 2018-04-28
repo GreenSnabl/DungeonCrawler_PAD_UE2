@@ -19,11 +19,20 @@
 
 class NPC : public Character{
 public:
-    NPC(char sign, AiController::Behaviour behaviour);
-    virtual ~NPC();
+    NPC(char sign, AiController* controller);
+    virtual ~NPC() = 0;
 private:
     NPC(const NPC& orig);
+};
 
+class Enemy : public NPC{
+public:
+    Enemy(char sign, AiController* controller);
+};
+
+class Neutral : public NPC{
+public:
+    Neutral(char sign, AiController* controller);
 };
 
 #endif /* NPC_H */
