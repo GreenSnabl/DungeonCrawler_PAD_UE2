@@ -33,7 +33,7 @@ public:
     
 private:
     bool finished();
-    bool turn();
+    bool turn(sf::RenderWindow& window);
 
     bool loadMap(const std::string& mapFile, std::vector<std::string>& VecMap);    
     bool loadConnectors(const std::string& connectorFile, std::vector<Position>& vecPos);
@@ -43,10 +43,6 @@ private:
     
     DungeonMap* m_map;
     static int rounds;
-   
-    
-    DungeonGFX::Map* gfxMap;
-    
     
     GameEngine(const GameEngine& orig);
 };

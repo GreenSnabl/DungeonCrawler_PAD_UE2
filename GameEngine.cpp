@@ -108,13 +108,14 @@ GameEngine::~GameEngine() {
     }
 }
 
-bool GameEngine::turn()
+bool GameEngine::turn(sf::RenderWindow& window)
 {
     for (int i = 0; i < m_charVec.size(); ++i) {
         Position charPos = m_map->find(m_charVec[i]);
+        
         Position movement = intToPos(m_charVec[i]->move());
         m_map->find(charPos)->onLeave(m_map->find({charPos.x + movement.x, charPos.y + movement.y}));
-        m_map->print();
+        m_map->print(window);
     }
 }
 
@@ -125,12 +126,15 @@ bool GameEngine::finished()
 
 void GameEngine::run()
 {
-    m_map->print();
-    while (!finished())
+    sf::RenderWindow window(sf::VideoMode(600, 600), "Game running");
+    
+    while (!finished() && window.isOpen())
     {
-        turn();
+        turn(window);
+        
         ++rounds;
     }
+    window.close();
 }
 
 int GameEngine::rounds = 0;

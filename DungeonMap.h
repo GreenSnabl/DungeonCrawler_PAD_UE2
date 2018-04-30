@@ -42,19 +42,14 @@ public:
     
     Tile* find(Position pos) const;
     
-    void print() const;
+    void print(sf::RenderWindow& window) const;
    
     int tileToInt(Tile* tile);
-    
-    sf::RenderWindow* getRenderWindow() const { return window;}
-   
     
 private:
     Tile*** m_tile;
     const int m_height;
     const int m_width;
-    
-    sf::RenderWindow* window;
     
     int* m_intMap;
     

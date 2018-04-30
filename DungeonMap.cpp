@@ -67,9 +67,6 @@ DungeonMap::DungeonMap(int height, int width, const std::vector<std::string>& da
         }
     }
     gfxMap = new DungeonGFX::Map(m_intMap);
-
-    window = new sf::RenderWindow(sf::VideoMode(320, 240), "eyyy");
-
 }
 /*
 DungeonMap::DungeonMap(const DungeonMap& orig) : m_height{orig.m_height}, m_width{orig.m_width}
@@ -101,7 +98,6 @@ DungeonMap::~DungeonMap() {
 
     delete[] m_tile;
     delete[] m_intMap;
-    delete window;
 }
 
 void DungeonMap::place(Position pos, Character* c) {
@@ -132,21 +128,15 @@ Tile* DungeonMap::find(Position pos) const {
     return m_tile[pos.y][pos.x];
 }
 
-void DungeonMap::print() const {
-    Screen screen(m_width, m_height);
+void DungeonMap::print(sf::RenderWindow& window) const {
     
-    for (int i = 0; i < m_height; ++i) {
-        for (int j = 0; j < m_width; ++j) {
-            
-            screen.setChar({j, i}, find({j, i})->tileToChar());
-            
-            if (find({j, i})->hasCharacter()) {
-                screen.setChar({j, i}, find({j, i})->getCharacter()->getSign());
-            }
-        }
-    }
-    gfxMap->draw(*window);
-    //screen.draw();
+    
+    //window.clear();
+    
+    gfxMap->draw(window);
+    window.display();
+    
+    
 }
 
 

@@ -22,10 +22,11 @@ using std::string;
 
 int main(int argc, char** argv) {
 
-    /*
+    
     GameEngine game2("Maps/Map1.txt", "Maps/Connector1.txt");
     game2.run();
-    */
+    
+    /*
     int imap[] = {
         202, 202, 202, 202, 202, 202, 202, 202, 202, 202,
         202, 202, 202, 202, 202, 202, 202, 202, 202, 202,
@@ -51,7 +52,7 @@ int main(int argc, char** argv) {
                 
                 game2.getMap()->getRenderWindow().display();        
         }
-    */
+    
     
     DungeonGFX::Map map(imap);
     sf::RenderWindow window(sf::VideoMode(320, 320), "asd");
@@ -70,7 +71,7 @@ int main(int argc, char** argv) {
                 window.display();        
         }
 
-   
+   */
      return 0;
 }
 
