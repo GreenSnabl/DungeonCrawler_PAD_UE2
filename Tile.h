@@ -37,7 +37,7 @@ public:
     static Tile* makeTile(char c);
     
     virtual void setSign(char c);
-    
+    int getSign() const {return m_sign;}
     
     
     

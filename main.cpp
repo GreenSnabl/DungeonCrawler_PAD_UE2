@@ -14,43 +14,63 @@
 #include <string>
 #include "GameEngine.h"
 
-//#include "DungeonMap.h"
+#include "DungeonGFXMap.h"
 //#include "Character.h"
 
 using std::string;
 
 
-void makeMap(const string& str)
-{
-    DungeonMap map(10,10, str);
-}
-/*
- * 
- */
 int main(int argc, char** argv) {
-/*
-    const string map =  "############"
-                        "####.......#"
-                        "###........#"
-                        "##.........#"
-                        "#......D...#"
-                        "#..........#"
-                        "#..........#"
-                        "#....S.....#"
-                        "#..........#"
-                        "#...#.#....#"
-                        "###...##..##"
-                        "#..........#"
-                        "############";
-    
-    GameEngine game(13, 12, map);
-    game.run();
-  */
-    
+
+    /*
     GameEngine game2("Maps/Map1.txt", "Maps/Connector1.txt");
     game2.run();
-        
+    */
+    int imap[] = {
+        202, 202, 202, 202, 202, 202, 202, 202, 202, 202,
+        202, 202, 202, 202, 202, 202, 202, 202, 202, 202,
+        202, 202, 202, 202, 202, 202, 202, 202, 202, 202,
+        202, 202, 202, 202, 202, 202, 202, 202, 202, 202,
+        202, 202, 202, 202, 202, 2, 202, 202, 202, 202,
+        202, 202, 202, 202, 202, 202, 202, 202, 202, 202,
+        202, 202, 202, 202, 202, 24, 202, 202, 202, 202,
+        202, 202, 202, 202, 202, 202, 202, 202, 202, 202,
+        202, 202, 202, 202, 202, 202, 202, 202, 202, 202,
+        202, 202, 202, 202, 202, 202, 202, 202, 202, 202        
+    };
     
-    return 0;
+    /*
+    while (game2.getMap()->getRenderWindow().isOpen())
+	{
+		sf::Event event;
+		while (game2.getMap()->getRenderWindow().pollEvent(event))
+		{
+			if (event.type == sf::Event::Closed)
+				game2.getMap()->getRenderWindow().close();
+                }
+                
+                game2.getMap()->getRenderWindow().display();        
+        }
+    */
+    
+    DungeonGFX::Map map(imap);
+    sf::RenderWindow window(sf::VideoMode(320, 320), "asd");
+    map.draw(window);
+    
+    
+	while (window.isOpen())
+	{
+		sf::Event event;
+		while (window.pollEvent(event))
+		{
+			if (event.type == sf::Event::Closed)
+				window.close();
+                }
+                map.draw(window);
+                window.display();        
+        }
+
+   
+     return 0;
 }
 

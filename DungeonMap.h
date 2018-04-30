@@ -19,18 +19,21 @@
 #include <vector>
 #include "Screen.h"
 
+#include "DungeonGFXMap.h"
+
+
 struct Position{
     int x;
     int y;
 };
 
 class DungeonMap {
-public:
+public:    
     DungeonMap(int height, int width);
     DungeonMap(int height, int width, const std::string& data);
     DungeonMap(int height, int width, const std::vector<std::string>& data);
     
-    virtual ~DungeonMap();
+    ~DungeonMap();
     
     void place(Position pos, Character* c);
     
@@ -40,12 +43,22 @@ public:
     Tile* find(Position pos) const;
     
     void print() const;
+   
+    int tileToInt(Tile* tile);
     
+    sf::RenderWindow* getRenderWindow() const { return window;}
+   
     
 private:
     Tile*** m_tile;
     const int m_height;
     const int m_width;
+    
+    sf::RenderWindow* window;
+    
+    int* m_intMap;
+    
+    DungeonGFX::Map* gfxMap;
 
     DungeonMap(const DungeonMap& orig);
 };

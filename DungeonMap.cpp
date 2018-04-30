@@ -49,17 +49,26 @@ DungeonMap::DungeonMap(int height, int width, const std::string& data) : m_heigh
 
 DungeonMap::DungeonMap(int height, int width, const std::vector<std::string>& data) : m_height{height}, m_width{width}
 {
+    
+    m_intMap = new int[m_height * m_width];
+    
     m_tile = new Tile**[m_height];
 
     for (int i = 0; i < m_height; ++i) {
         m_tile[i] = new Tile*[m_width];
     }
 
+    
+    
     for (int i = 0; i < m_height; ++i) {
         for (int j = 0; j < m_width; ++j) {
             m_tile[i][j] = Tile::makeTile(data[i][j]);
+            m_intMap[i * m_width + j] = tileToInt(m_tile[i][j]);
         }
     }
+    gfxMap = new DungeonGFX::Map(m_intMap);
+
+    window = new sf::RenderWindow(sf::VideoMode(320, 240), "eyyy");
 
 }
 /*
@@ -91,6 +100,8 @@ DungeonMap::~DungeonMap() {
     }
 
     delete[] m_tile;
+    delete[] m_intMap;
+    delete window;
 }
 
 void DungeonMap::place(Position pos, Character* c) {
@@ -134,5 +145,17 @@ void DungeonMap::print() const {
             }
         }
     }
-    screen.draw();
+    gfxMap->draw(*window);
+    //screen.draw();
+}
+
+
+
+int DungeonMap::tileToInt(Tile* tile)
+{
+    switch (tile->getSign())
+    {
+        case '#' : return DungeonGFX::WALL;
+        default : return DungeonGFX::FLOOR;    
+    }
 }

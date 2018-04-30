@@ -41,6 +41,7 @@ OBJECTFILES= \
 	${OBJECTDIR}/ConsoleController.o \
 	${OBJECTDIR}/Controller.o \
 	${OBJECTDIR}/Door.o \
+	${OBJECTDIR}/DungeonGFXMap.o \
 	${OBJECTDIR}/DungeonMap.o \
 	${OBJECTDIR}/Floor.o \
 	${OBJECTDIR}/GameEngine.o \
@@ -50,6 +51,7 @@ OBJECTFILES= \
 	${OBJECTDIR}/Screen.o \
 	${OBJECTDIR}/Switch.o \
 	${OBJECTDIR}/Tile.o \
+	${OBJECTDIR}/Tilemap.o \
 	${OBJECTDIR}/Wall.o \
 	${OBJECTDIR}/main.o
 
@@ -108,6 +110,11 @@ ${OBJECTDIR}/Door.o: Door.cpp
 	${RM} "$@.d"
 	$(COMPILE.cc) -O2 -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Door.o Door.cpp
 
+${OBJECTDIR}/DungeonGFXMap.o: DungeonGFXMap.cpp
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/DungeonGFXMap.o DungeonGFXMap.cpp
+
 ${OBJECTDIR}/DungeonMap.o: DungeonMap.cpp
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
@@ -152,6 +159,11 @@ ${OBJECTDIR}/Tile.o: Tile.cpp
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
 	$(COMPILE.cc) -O2 -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Tile.o Tile.cpp
+
+${OBJECTDIR}/Tilemap.o: Tilemap.cpp
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Tilemap.o Tilemap.cpp
 
 ${OBJECTDIR}/Wall.o: Wall.cpp
 	${MKDIR} -p ${OBJECTDIR}

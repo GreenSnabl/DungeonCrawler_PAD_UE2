@@ -25,12 +25,12 @@ using std::string;
 using std::vector;
 
 
-GameEngine::GameEngine(int height, int width, const std::string& data) : m_map{new DungeonMap(height, width, data)} 
-{
+    GameEngine::GameEngine(int height, int width, const std::string& data) : m_map{new DungeonMap(height, width, data)} 
+    {
     m_charVec.push_back(new Player);
     m_map->place({5,11}, m_charVec[0]);
 
-}
+    }
 
     GameEngine::GameEngine(const std::string& mapFile, const std::string& connectorFile)
     {

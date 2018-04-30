@@ -41,6 +41,7 @@ OBJECTFILES= \
 	${OBJECTDIR}/ConsoleController.o \
 	${OBJECTDIR}/Controller.o \
 	${OBJECTDIR}/Door.o \
+	${OBJECTDIR}/DungeonGFXMap.o \
 	${OBJECTDIR}/DungeonMap.o \
 	${OBJECTDIR}/Floor.o \
 	${OBJECTDIR}/GameEngine.o \
@@ -50,6 +51,7 @@ OBJECTFILES= \
 	${OBJECTDIR}/Screen.o \
 	${OBJECTDIR}/Switch.o \
 	${OBJECTDIR}/Tile.o \
+	${OBJECTDIR}/Tilemap.o \
 	${OBJECTDIR}/Wall.o \
 	${OBJECTDIR}/main.o
 
@@ -76,7 +78,7 @@ LDLIBSOPTIONS=
 
 ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/dungeoncrawler_pad_ue2: ${OBJECTFILES}
 	${MKDIR} -p ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}
-	${LINK.cc} -o ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/dungeoncrawler_pad_ue2 ${OBJECTFILES} ${LDLIBSOPTIONS}
+	${LINK.cc} -o ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/dungeoncrawler_pad_ue2 ${OBJECTFILES} ${LDLIBSOPTIONS} -lsfml-graphics -lsfml-window -lsfml-system -lsfml-audio
 
 ${OBJECTDIR}/Active.o: Active.cpp
 	${MKDIR} -p ${OBJECTDIR}
@@ -107,6 +109,11 @@ ${OBJECTDIR}/Door.o: Door.cpp
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
 	$(COMPILE.cc) -g -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Door.o Door.cpp
+
+${OBJECTDIR}/DungeonGFXMap.o: DungeonGFXMap.cpp
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} "$@.d"
+	$(COMPILE.cc) -g -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/DungeonGFXMap.o DungeonGFXMap.cpp
 
 ${OBJECTDIR}/DungeonMap.o: DungeonMap.cpp
 	${MKDIR} -p ${OBJECTDIR}
@@ -152,6 +159,11 @@ ${OBJECTDIR}/Tile.o: Tile.cpp
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
 	$(COMPILE.cc) -g -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Tile.o Tile.cpp
+
+${OBJECTDIR}/Tilemap.o: Tilemap.cpp
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} "$@.d"
+	$(COMPILE.cc) -g -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Tilemap.o Tilemap.cpp
 
 ${OBJECTDIR}/Wall.o: Wall.cpp
 	${MKDIR} -p ${OBJECTDIR}

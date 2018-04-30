@@ -10,6 +10,7 @@
       <itemPath>ConsoleController.h</itemPath>
       <itemPath>Controller.h</itemPath>
       <itemPath>Door.h</itemPath>
+      <itemPath>DungeonGFXMap.h</itemPath>
       <itemPath>DungeonMap.h</itemPath>
       <itemPath>Floor.h</itemPath>
       <itemPath>GameEngine.h</itemPath>
@@ -19,6 +20,7 @@
       <itemPath>Screen.h</itemPath>
       <itemPath>Switch.h</itemPath>
       <itemPath>Tile.h</itemPath>
+      <itemPath>Tilemap.h</itemPath>
       <itemPath>Wall.h</itemPath>
     </logicalFolder>
     <logicalFolder name="ResourceFiles"
@@ -34,6 +36,7 @@
       <itemPath>ConsoleController.cpp</itemPath>
       <itemPath>Controller.cpp</itemPath>
       <itemPath>Door.cpp</itemPath>
+      <itemPath>DungeonGFXMap.cpp</itemPath>
       <itemPath>DungeonMap.cpp</itemPath>
       <itemPath>Floor.cpp</itemPath>
       <itemPath>GameEngine.cpp</itemPath>
@@ -43,6 +46,7 @@
       <itemPath>Screen.cpp</itemPath>
       <itemPath>Switch.cpp</itemPath>
       <itemPath>Tile.cpp</itemPath>
+      <itemPath>Tilemap.cpp</itemPath>
       <itemPath>Wall.cpp</itemPath>
       <itemPath>main.cpp</itemPath>
     </logicalFolder>
@@ -70,6 +74,9 @@
         <ccTool>
           <standard>8</standard>
         </ccTool>
+        <linkerTool>
+          <commandLine>-lsfml-graphics -lsfml-window -lsfml-system -lsfml-audio</commandLine>
+        </linkerTool>
       </compileType>
       <item path="Active.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -94,6 +101,10 @@
       <item path="Door.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="Door.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="DungeonGFXMap.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="DungeonGFXMap.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="DungeonMap.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -130,6 +141,10 @@
       <item path="Tile.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="Tile.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Tilemap.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Tilemap.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="Wall.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -183,6 +198,10 @@
       </item>
       <item path="Door.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="DungeonGFXMap.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="DungeonGFXMap.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="DungeonMap.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="DungeonMap.h" ex="false" tool="3" flavor2="0">
@@ -218,6 +237,10 @@
       <item path="Tile.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="Tile.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Tilemap.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Tilemap.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="Wall.cpp" ex="false" tool="1" flavor2="0">
       </item>

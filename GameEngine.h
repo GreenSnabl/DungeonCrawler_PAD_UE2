@@ -18,6 +18,7 @@
 #include <vector>
 #include <string>
 
+
 class GameEngine {
 public:
     
@@ -28,6 +29,8 @@ public:
     
     void run();
     
+    DungeonMap* getMap() const {return m_map;}
+    
 private:
     bool finished();
     bool turn();
@@ -37,10 +40,14 @@ private:
     
     void loadEntities(const std::vector<std::string>& vecMap);
     std::vector<Character*> m_charVec;
+    
     DungeonMap* m_map;
-
     static int rounds;
    
+    
+    DungeonGFX::Map* gfxMap;
+    
+    
     GameEngine(const GameEngine& orig);
 };
 
