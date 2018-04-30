@@ -121,12 +121,12 @@ bool GameEngine::turn(sf::RenderWindow& window)
 
 bool GameEngine::finished()
 {
-    return rounds > 20;
+    return false;// rounds > 20;
 }
 
 void GameEngine::run()
 {
-    sf::RenderWindow window(sf::VideoMode(600, 600), "Game running");
+    sf::RenderWindow window(sf::VideoMode(320, 320), "Game running");
     
     while (!finished() && window.isOpen())
     {

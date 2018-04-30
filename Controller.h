@@ -14,6 +14,10 @@
 #ifndef CONTROLLER_H
 #define CONTROLLER_H
 
+#include <SFML/Window/Window.hpp>
+#include <SFML/Graphics/RenderWindow.hpp>
+
+
 class Controller {
 public:
     Controller();

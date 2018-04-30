@@ -14,6 +14,8 @@
 #ifndef CONSOLECONTROLLER_H
 #define CONSOLECONTROLLER_H
 
+#include <SFML/Graphics/RenderWindow.hpp>
+
 #include "Controller.h"
 
 class ConsoleController : public Controller {

@@ -14,6 +14,8 @@
 #include "ConsoleController.h"
 #include <iostream>
 #include <SFML/Window/Keyboard.hpp>
+#include <SFML/Window/Event.hpp>
+#include <SFML/Graphics/RenderWindow.hpp>
 
 using std::cin;
 
@@ -28,8 +30,10 @@ ConsoleController::~ConsoleController() {
 
 int ConsoleController::move()
 {
+    sf::Event event;
+    
     while (true) {
-        if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Num1)) {
+        if(sf::Event::KeyReleased == event.type) {
             return 1;
         }
         if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Num2)) {
@@ -64,4 +68,5 @@ int ConsoleController::move()
         cin >> c;
     }
     return static_cast<int>(c-'0');    
+    
 }
