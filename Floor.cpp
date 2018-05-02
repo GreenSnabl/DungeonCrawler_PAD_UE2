@@ -13,7 +13,7 @@
 
 #include "Floor.h"
 
-Floor::Floor(Position pos) : Tile('.', pos) 
+Floor::Floor() : Tile('.') 
 {
     setSpriteId(202);
 }

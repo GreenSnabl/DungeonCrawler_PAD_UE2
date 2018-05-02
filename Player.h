@@ -17,7 +17,7 @@
 
 class Player : public Character{
 public:
-    Player();
+    Player(Position pos);
     ~Player();
 private:
     Player(const Player& orig);

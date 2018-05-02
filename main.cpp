@@ -23,7 +23,7 @@ using std::string;
 int main(int argc, char** argv) {
 
     
-    GameEngine game2("Maps/Map1.txt", "Maps/Connector1.txt");
+    GameEngine game2("Maps/Map1.txt", "Maps/Connector1.txt", "./gfx/ProjectUtumno_full.png");
     game2.run();
 
     /*

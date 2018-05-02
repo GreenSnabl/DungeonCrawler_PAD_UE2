@@ -17,14 +17,11 @@
 #include <vector>
 
 
-struct Position{
-    int x;
-    int y;
-};
+
 
 class Tile {
 public:
-    Tile(char sign, Position pos);
+    Tile(char sign);
     virtual ~Tile() = 0;
     Character* getCharacter() const;
 
@@ -40,15 +37,11 @@ public:
     
     virtual void setSign(char c);
     int getSign() const {return m_sign;}
-    
-    Position getPosition() const { return m_pos;}
-    
+        
     void setSpriteId(int id) { m_spriteId = id;}
     int getSpriteIde() const { return m_spriteId;}
     
 private:
-    Position m_pos;
-    
     Character* m_character;
     char m_sign;
 

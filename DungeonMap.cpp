@@ -47,7 +47,7 @@ DungeonMap::DungeonMap(int height, int width, const std::string& data) : m_heigh
     }
 }
 
-DungeonMap::DungeonMap(int height, int width, const std::vector<std::string>& data) : m_height{height}, m_width{width}
+DungeonMap::DungeonMap(int height, int width, const std::vector<std::string>& data, sf::Texture& tileset) : m_height{height}, m_width{width}
 {
     
     m_intMap = new int[m_height * m_width];
@@ -66,7 +66,7 @@ DungeonMap::DungeonMap(int height, int width, const std::vector<std::string>& da
             m_intMap[i * m_width + j] = m_tile[i][j]->getSpriteIde();
         }
     }
-    gfxMap = new DungeonGFX::Map(m_intMap);
+    gfxMap = new DungeonGFX::Map(&tileset, m_intMap);
     
   }
 /*
@@ -136,8 +136,7 @@ void DungeonMap::print(sf::RenderWindow& window) const {
     //window.clear();
     
     gfxMap->draw(window);
-    window.display();
-    
+   
     
 }
 

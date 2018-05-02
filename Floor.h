@@ -19,7 +19,7 @@
 class Floor : public Tile
 {
 public:
-    Floor(Position pos);
+    Floor();
 };
 
 #endif /* FLOOR_H */

@@ -29,10 +29,8 @@ ConsoleController::~ConsoleController() {
 }
 
 int ConsoleController::move() {
-    sf::Event event;
 
-    while (true) {
-        if (sf::Event::KeyReleased == event.type) {
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Num1)) {
             return 1;
         }
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Num2)) {
@@ -59,12 +57,11 @@ int ConsoleController::move() {
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Num9)) {
             return 9;
         }
-
-    }
+     /*
     char c = '0';
     while (c < '1' || c > '9') {
         cin >> c;
     }
     return static_cast<int> (c - '0');
-
+*/
 }

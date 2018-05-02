@@ -14,11 +14,15 @@
 #include "NPC.h"
 #include "AiController.h"
 
-NPC::NPC(char sign, AiController* controller) : Character(sign, controller) {}
+NPC::NPC(char sign, AiController* controller, Position pos) : Character(sign, controller, pos) {}
 
 NPC::~NPC() {
 }
 
-Enemy::Enemy(char sign, AiController* controller) : NPC(sign, controller) {}
+Enemy::Enemy(char sign, AiController* controller, Position pos) : NPC(sign, controller, pos) {
+    NPC::Character::setSpriteId(120);
+}
 
-Neutral::Neutral(char sign, AiController* controller) : NPC(sign, controller) {}
+Neutral::Neutral(char sign, AiController* controller, Position pos) : NPC(sign, controller, pos) {
+   NPC::Character::setSpriteId(120);
+}

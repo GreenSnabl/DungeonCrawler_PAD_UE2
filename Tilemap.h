@@ -21,13 +21,14 @@ class Tilemap
 {
 public:
 	Tilemap(const std::string& tileset, int tileSize, int* tiles, int width, int height);
+        Tilemap(sf::Texture* tileset, int tileSize, int* tiles, int width, int height);
 	virtual void draw(sf::RenderWindow &window); 
-        sf::Texture* getTexture() {return &m_tileset_tex;}
+        sf::Texture* getTexture() {return m_tileset_tex;}
         
         void updateMap(int* tiles) {mp_map = tiles;}
         
 private:
-	sf::Texture m_tileset_tex;
+	sf::Texture* m_tileset_tex;
 	sf::Sprite m_tileset_spr;
  
 	int* mp_map;

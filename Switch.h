@@ -18,7 +18,7 @@
 
 class Switch : public Active {
 public:
-    Switch(Position pos);
+    Switch();
     ~Switch();
     void use();
     virtual void onEnter(Character* c);

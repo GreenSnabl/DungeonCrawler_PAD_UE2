@@ -19,7 +19,7 @@
 
 class NPC : public Character{
 public:
-    NPC(char sign, AiController* controller);
+    NPC(char sign, AiController* controller, Position pos);
     virtual ~NPC() = 0;
 private:
     NPC(const NPC& orig);
@@ -27,12 +27,12 @@ private:
 
 class Enemy : public NPC{
 public:
-    Enemy(char sign, AiController* controller);
+    Enemy(char sign, AiController* controller, Position pos);
 };
 
 class Neutral : public NPC{
 public:
-    Neutral(char sign, AiController* controller);
+    Neutral(char sign, AiController* controller, Position pos);
 };
 
 #endif /* NPC_H */

@@ -27,7 +27,7 @@ class DungeonMap {
 public:    
     DungeonMap(int height, int width);
     DungeonMap(int height, int width, const std::string& data);
-    DungeonMap(int height, int width, const std::vector<std::string>& data);
+    DungeonMap(int height, int width, const std::vector<std::string>& data, sf::Texture& tileset);
     
     ~DungeonMap();
     
@@ -41,6 +41,9 @@ public:
     void print(sf::RenderWindow& window) const;
    
     int tileToInt(Tile* tile);
+
+    int getHeight() const { return m_height;}
+    int getWidth() const { return m_width;}
     
 private:
     Tile*** m_tile;

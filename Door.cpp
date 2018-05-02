@@ -14,7 +14,7 @@
 #include "Door.h"
 
 
-Door::Door(Position pos) : Passive('X', pos), m_isOpen{false} 
+Door::Door() : Passive('X'), m_isOpen{false} 
 {
     setSpriteId(400);
 }

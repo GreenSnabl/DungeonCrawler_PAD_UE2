@@ -18,7 +18,7 @@
 
 class Passive : public Tile {
 public:
-    Passive(char sign, Position pos);
+    Passive(char sign);
     virtual ~Passive() = 0;
     virtual void notify() = 0;
 };

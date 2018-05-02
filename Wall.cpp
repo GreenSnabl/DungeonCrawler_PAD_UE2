@@ -14,9 +14,9 @@
 #include "Wall.h"
 
 
-Wall::Wall(Position pos) : Tile('#', pos) 
+Wall::Wall() : Tile('#') 
 {
-    setSpriteId(137);
+    setSpriteId(159);
 }
 
 bool Wall::canEnter() const {

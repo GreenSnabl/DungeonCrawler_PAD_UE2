@@ -15,8 +15,16 @@
 
 using namespace DungeonGFX;
 
+/*
 Map::Map(int* tiles) 
     : Tilemap("./gfx/ProjectUtumno_full.png", 32, tiles, 10, 10) 
+{
+
+}
+*/
+
+Map::Map(sf::Texture* tileset, int* tiles) 
+    : Tilemap(tileset, 32, tiles, 10, 10) 
 {
 
 }

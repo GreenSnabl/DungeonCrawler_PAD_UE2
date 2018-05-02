@@ -24,7 +24,7 @@ public:
     
     GameEngine(int height, int width, const std::string& data);
     GameEngine(int height, int width, const std::vector<string>& data);
-    GameEngine(const std::string& mapFile, const std::string& connectorFile);
+    GameEngine(const std::string& mapFile, const std::string& connectorFile, const std::string& tileset);
     ~GameEngine();
     
     void run();
@@ -43,6 +43,9 @@ private:
     
     DungeonMap* m_map;
     static int rounds;
+    
+    sf::Texture m_tileset;
+    
     
     GameEngine(const GameEngine& orig);
     

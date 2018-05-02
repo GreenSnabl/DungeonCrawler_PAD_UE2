@@ -14,12 +14,19 @@
 #include "Tilemap.h"
 
 
-Tilemap::Tilemap(const std::string& tileset, int tileSize, int* tiles, int width, int height)
+/*Tilemap::Tilemap(const std::string& tileset, int tileSize, int* tiles, int width, int height)
 	: mp_map(tiles), m_mapWidth(width), m_mapHeight(height), m_tileSize(tileSize)
 {
 	m_tileset_tex.loadFromFile(tileset);
-	m_tileset_spr.setTexture(m_tileset_tex);
+	m_tileset_spr.setTexture(*m_tileset_tex);
+}*/
+
+Tilemap::Tilemap(sf::Texture* tileset, int tileSize, int* tiles, int width, int height)
+	: m_tileset_tex{tileset}, m_tileSize(tileSize), mp_map(tiles), m_mapWidth(width), m_mapHeight(height)
+{
+	m_tileset_spr.setTexture(*m_tileset_tex);
 }
+
  
 void Tilemap::draw(sf::RenderWindow &window)
 {

@@ -17,7 +17,7 @@
 #include "NPC.h"
 
 
-Character::Character(char sign, Controller* controller) : m_sign{sign}, m_controller{controller} {
+Character::Character(char sign, Controller* controller, Position pos) : m_sign{sign}, m_controller{controller} {
     
 }
 
@@ -39,14 +39,30 @@ int Character::move()
     m_controller->move();
 }
 
-Character* Character::makeCharacter(char sign)
+Character* Character::makeCharacter(char sign, Position pos)
 {
     switch (sign) {
-        case 'C'  : return new Player;
-        case 'G'  : return new Enemy(sign, new AiController(AiController::PATROL));
-        case 'N'  : return new Neutral(sign, new AiController(AiController::HOLD));
+        case 'C'  : return new Player(pos);
+        case 'G'  : return new Enemy(sign, new AiController(AiController::PATROL), pos);
+        case 'N'  : return new Neutral(sign, new AiController(AiController::HOLD), pos);
         default   : return nullptr;
                
     
     }
+}
+
+void Character::setSprite(sf::Texture& tileset, int tilesize, sf::Vector2u tilesetSize)
+{
+    m_sprite.setTexture(tileset);
+    
+    int x,y;
+    x = m_spriteId % tilesetSize.x;
+    y = m_spriteId / tilesetSize.x;
+    
+    m_sprite.setTextureRect({x, y, tilesize, tilesize});
+}
+
+void Character::render(sf::RenderWindow& window)
+{
+    window.draw(m_sprite);
 }

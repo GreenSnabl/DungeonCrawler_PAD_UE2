@@ -15,7 +15,8 @@
 #include "ConsoleController.h"
 
 
-Player::Player() : Character('@', new ConsoleController) {
+Player::Player(Position pos) : Character('@', new ConsoleController, pos) {
+    setSpriteId(500);
 }
 
 
