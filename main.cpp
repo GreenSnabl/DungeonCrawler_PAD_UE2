@@ -22,11 +22,12 @@ using std::string;
 
 int main(int argc, char** argv) {
 
-    /*
+    
     GameEngine game2("Maps/Map1.txt", "Maps/Connector1.txt");
     game2.run();
 
-     *     while (game2.getMap()->getRenderWindow().isOpen())
+    /*
+          while (game2.getMap()->getRenderWindow().isOpen())
 	{
 		sf::Event event;
 		while (game2.getMap()->getRenderWindow().pollEvent(event))
@@ -38,9 +39,8 @@ int main(int argc, char** argv) {
                 game2.getMap()->getRenderWindow().display();        
         }
 
-     * 
-     *     */
-    
+     */
+    /*
     int imap[] = {
         202, 202, 202, 202, 202, 202, 202, 202, 202, 202,
         202, 202, 202, 202, 202, 202, 202, 202, 202, 202,
@@ -80,7 +80,7 @@ int main(int argc, char** argv) {
                 map.draw(window);
                 window.display();        
         }
-
+*/
    
      return 0;
 }

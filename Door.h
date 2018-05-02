@@ -18,7 +18,7 @@
 
 class Door : public Passive {
 public:
-    Door();
+    Door(Position pos);
     ~Door();
     bool canEnter() const;
     void notify();

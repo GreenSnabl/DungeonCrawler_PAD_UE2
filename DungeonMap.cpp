@@ -24,7 +24,7 @@ DungeonMap::DungeonMap(int height, int width) : m_height{height}, m_width{width}
 
     for (int i = 0; i < m_height; ++i) {
         for (int j = 0; j < m_width; ++j) {
-            m_tile[i][j] = Tile::makeTile('.');
+            m_tile[i][j] = Tile::makeTile('.', {j,i});
         }
     }
 }
@@ -41,7 +41,7 @@ DungeonMap::DungeonMap(int height, int width, const std::string& data) : m_heigh
 
     for (int i = 0; i < m_height; ++i) {
         for (int j = 0; j < m_width; ++j) {
-            m_tile[i][j] = Tile::makeTile(data[i * m_width + j]);
+            m_tile[i][j] = Tile::makeTile(data[i * m_width + j], {j,i});
 
         }
     }
@@ -62,12 +62,13 @@ DungeonMap::DungeonMap(int height, int width, const std::vector<std::string>& da
     
     for (int i = 0; i < m_height; ++i) {
         for (int j = 0; j < m_width; ++j) {
-            m_tile[i][j] = Tile::makeTile(data[i][j]);
-            m_intMap[i * m_width + j] = tileToInt(m_tile[i][j]);
+            m_tile[i][j] = Tile::makeTile(data[i][j], {j, i});
+            m_intMap[i * m_width + j] = m_tile[i][j]->getSpriteIde();
         }
     }
     gfxMap = new DungeonGFX::Map(m_intMap);
-}
+    
+  }
 /*
 DungeonMap::DungeonMap(const DungeonMap& orig) : m_height{orig.m_height}, m_width{orig.m_width}
 {
@@ -98,6 +99,7 @@ DungeonMap::~DungeonMap() {
 
     delete[] m_tile;
     delete[] m_intMap;
+    delete gfxMap;
 }
 
 void DungeonMap::place(Position pos, Character* c) {

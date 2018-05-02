@@ -13,7 +13,10 @@
 
 #include "Switch.h"
 
-Switch::Switch() : Active('?'), m_wasUsed(false) {}
+Switch::Switch(Position pos) : Active('?', pos), m_wasUsed(false) 
+{
+    setSpriteId(350);
+}
 
 Switch::~Switch() {}
 

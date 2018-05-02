@@ -45,6 +45,7 @@ private:
     static int rounds;
     
     GameEngine(const GameEngine& orig);
+    
 };
 
 Position intToPos(int);

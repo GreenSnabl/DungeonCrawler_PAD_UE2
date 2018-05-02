@@ -19,7 +19,7 @@
 
 class Active : public Tile {
 public:
-    Active(char sign);
+    Active(char sign, Position pos);
     virtual ~Active() = 0;
     void registerPassive(Passive*);
     void unregisterPassive(Passive*);

@@ -19,7 +19,7 @@
 
 class Wall : public Tile {
 public:
-    Wall();
+    Wall(Position pos);
     bool canEnter() const;
     
 };

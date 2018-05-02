@@ -18,8 +18,9 @@
 #include "Door.h"
 
 
-Tile::Tile(char sign) : m_character{nullptr}, m_sign{sign}
+Tile::Tile(char sign, Position pos) : m_character{nullptr}, m_sign{sign}, m_pos{pos}
 {
+    
 }
 
 
@@ -66,13 +67,13 @@ char Tile::tileToChar() const {
 }
 
 
-Tile* Tile::makeTile(char c){
+Tile* Tile::makeTile(char c, Position pos){
     switch(c) {
-        case '.' : return new Floor;
-        case '#' : return new Wall;
-        case 'D' : return new Door;
-        case 'S' : return new Switch;
-        case 'C': case 'N': case 'G': return new Floor;
+        case '.' : return new Floor(pos);
+        case '#' : return new Wall(pos);
+        case 'D' : return new Door(pos);
+        case 'S' : return new Switch(pos);
+        case 'C': case 'N': case 'G': return new Floor(pos);
     }
 }
 

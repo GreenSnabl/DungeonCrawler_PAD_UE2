@@ -126,12 +126,14 @@ bool GameEngine::finished()
 
 void GameEngine::run()
 {
-    sf::RenderWindow window(sf::VideoMode(320, 320), "Game running");
+    sf::RenderWindow window(sf::VideoMode(320,320), " ");
     
     while (!finished() && window.isOpen())
     {
-        turn(window);
-        
+        sf::Event event;
+        while (window.pollEvent(event)) {
+            turn(window);
+        }
         ++rounds;
     }
     window.close();

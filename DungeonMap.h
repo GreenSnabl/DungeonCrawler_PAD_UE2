@@ -22,10 +22,6 @@
 #include "DungeonGFXMap.h"
 
 
-struct Position{
-    int x;
-    int y;
-};
 
 class DungeonMap {
 public:    
