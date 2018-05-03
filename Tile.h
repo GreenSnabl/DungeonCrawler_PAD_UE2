@@ -39,7 +39,7 @@ public:
     int getSign() const {return m_sign;}
         
     void setSpriteId(int id) { m_spriteId = id;}
-    int getSpriteIde() const { return m_spriteId;}
+    int getSpriteId() const { return m_spriteId;}
     
 private:
     Character* m_character;

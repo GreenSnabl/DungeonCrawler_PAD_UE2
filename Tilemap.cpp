@@ -48,7 +48,10 @@ void Tilemap::draw(sf::RenderWindow &window)
 	}
 }
 
-
+void Tilemap::setTileId( Position pos, int id)
+{
+    mp_map[pos.x + pos.y * m_mapWidth] = id;
+}
 
 
 

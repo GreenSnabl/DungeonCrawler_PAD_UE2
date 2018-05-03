@@ -33,7 +33,7 @@ public:
     
 private:
     bool finished();
-    bool turn(sf::RenderWindow& window);
+    void turn(sf::RenderWindow& window);
 
     bool loadMap(const std::string& mapFile, std::vector<std::string>& VecMap);    
     bool loadConnectors(const std::string& connectorFile, std::vector<Position>& vecPos);

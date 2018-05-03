@@ -38,6 +38,8 @@ public:
     
     Tile* find(Position pos) const;
     
+    void updateGFXMap();
+    
     void print(sf::RenderWindow& window) const;
    
     int tileToInt(Tile* tile);

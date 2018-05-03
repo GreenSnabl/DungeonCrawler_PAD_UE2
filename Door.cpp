@@ -16,7 +16,7 @@
 
 Door::Door() : Passive('X'), m_isOpen{false} 
 {
-    setSpriteId(400);
+    setSpriteId(671);
 }
 
 Door::~Door() {}
@@ -24,6 +24,7 @@ Door::~Door() {}
 void Door::notify() {
     setSign('/');
     m_isOpen = true;
+    setSpriteId(680);
 }
 
 bool Door::canEnter() const {

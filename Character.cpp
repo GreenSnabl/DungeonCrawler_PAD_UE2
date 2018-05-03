@@ -59,7 +59,7 @@ void Character::setSprite(sf::Texture& tileset, int tilesize, sf::Vector2u tiles
     x = m_spriteId % tilesetSize.x;
     y = m_spriteId / tilesetSize.x;
     
-    m_sprite.setTextureRect({x, y, tilesize, tilesize});
+    m_sprite.setTextureRect({x * tilesize, y * tilesize, tilesize, tilesize});
 }
 
 void Character::render(sf::RenderWindow& window)

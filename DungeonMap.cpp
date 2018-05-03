@@ -63,7 +63,7 @@ DungeonMap::DungeonMap(int height, int width, const std::vector<std::string>& da
     for (int i = 0; i < m_height; ++i) {
         for (int j = 0; j < m_width; ++j) {
             m_tile[i][j] = Tile::makeTile(data[i][j], {j, i});
-            m_intMap[i * m_width + j] = m_tile[i][j]->getSpriteIde();
+            m_intMap[i * m_width + j] = m_tile[i][j]->getSpriteId();
         }
     }
     gfxMap = new DungeonGFX::Map(&tileset, m_intMap);
@@ -130,11 +130,25 @@ Tile* DungeonMap::find(Position pos) const {
     return m_tile[pos.y][pos.x];
 }
 
+
+void DungeonMap::updateGFXMap()
+{
+    for (int i = 0; i < m_height; ++i) {
+        for (int j = 0; j < m_width; ++j)
+        
+            {
+            gfxMap->setTileId({j,i}, find({j,i})->getSpriteId());
+            }
+        }
+
+}
+
+
+
 void DungeonMap::print(sf::RenderWindow& window) const {
     
     
     //window.clear();
-    
     gfxMap->draw(window);
    
     

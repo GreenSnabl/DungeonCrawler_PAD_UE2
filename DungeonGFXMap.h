@@ -31,8 +31,7 @@ class Map : public Tilemap {
 public:
     Map(int* tiles);
     Map(sf::Texture* tileset, int* tiles);
-    ~Map();
-    
+    ~Map(); 
     
 private:
 

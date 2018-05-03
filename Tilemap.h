@@ -14,7 +14,7 @@
 #ifndef TILEMAP_H
 #define TILEMAP_H
 
-
+#include "Character.h"
 #include <SFML/Graphics.hpp>
 
 class Tilemap
@@ -26,6 +26,8 @@ public:
         sf::Texture* getTexture() {return m_tileset_tex;}
         
         void updateMap(int* tiles) {mp_map = tiles;}
+        
+        void setTileId(Position pos, int id);
         
 private:
 	sf::Texture* m_tileset_tex;

@@ -35,7 +35,7 @@ public:
     void setSpriteId(int spriteId) { m_spriteId = spriteId;}
     
     void render(sf::RenderWindow& window);
-    void setSprite(sf::Texture& tileset, int tilesize, sf::Vector2u size);
+    virtual void setSprite(sf::Texture& tileset, int tilesize, sf::Vector2u size);
     
     void setSpritePosition(float x, float y) {m_sprite.setPosition({x,y});}
     

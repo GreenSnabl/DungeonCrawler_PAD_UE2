@@ -109,27 +109,15 @@ GameEngine::~GameEngine() {
     }
 }
 
-bool GameEngine::turn(sf::RenderWindow& window) {
+void GameEngine::turn(sf::RenderWindow& window) {
 
-    Position charPos = m_map->find(m_charVec[0]);
-    Position movement = {-1, -1};
-    movement = intToPos(m_charVec[0]->move());
-
-    if (movement.x != -1) {
-        m_map->find(charPos)->onLeave(m_map->find({charPos.x + movement.x, charPos.y + movement.y}));
-        m_charVec[0]->setSpritePosition(m_map->find(m_charVec[0]).x * 32, m_map->find(m_charVec[0]).y * 32);
-
-
-
-        for (int i = 1; i < m_charVec.size(); ++i) {
+    Position charPos, movement;
+        for (int i = 0; i < m_charVec.size(); ++i) {
             charPos = m_map->find(m_charVec[i]);
             movement = intToPos(m_charVec[i]->move());
             m_map->find(charPos)->onLeave(m_map->find({charPos.x + movement.x, charPos.y + movement.y}));
             m_charVec[i]->setSpritePosition(m_map->find(m_charVec[i]).x * 32, m_map->find(m_charVec[i]).y * 32);
         }
-        return true;
-    }
-    return false;
 }
 
 bool GameEngine::finished() {
@@ -139,22 +127,22 @@ bool GameEngine::finished() {
 void GameEngine::run() {
     sf::RenderWindow window(sf::VideoMode(320, 320), " ");
     sf::Event event;
+    window.setKeyRepeatEnabled(false);
     while (!finished() && window.isOpen()) {
+        window.clear();
 
-        
-        
-        while (window.pollEvent(event) && turn(window)) {
-            
+        while (window.pollEvent(event)) {
+
+            turn(window);
             if (event.type == sf::Event::KeyPressed) {
-
                 ++rounds;
-                window.clear();
-                m_map->print(window);
-                for (int i = 0; i < m_charVec.size(); ++i) {
-                    m_charVec[i]->render(window);
-                }
-                
+                m_map->updateGFXMap();
             }
+            m_map->print(window);
+            for (int i = 0; i < m_charVec.size(); ++i) {
+                m_charVec[i]->render(window);
+            }
+
             window.display();
             usleep(125000);
         }

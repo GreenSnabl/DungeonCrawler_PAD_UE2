@@ -15,7 +15,7 @@
 
 Switch::Switch() : Active('?'), m_wasUsed(false) 
 {
-    setSpriteId(350);
+    setSpriteId(751);
 }
 
 Switch::~Switch() {}
@@ -24,6 +24,7 @@ void Switch::use() {
     Active::use();
     Tile::setSign('!');
     m_wasUsed = true;
+    setSpriteId(360);
 }
 
 void Switch::onEnter(Character* c)

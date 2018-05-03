@@ -20,9 +20,9 @@ NPC::~NPC() {
 }
 
 Enemy::Enemy(char sign, AiController* controller, Position pos) : NPC(sign, controller, pos) {
-    NPC::Character::setSpriteId(120);
+    NPC::Character::setSpriteId(643);
 }
 
 Neutral::Neutral(char sign, AiController* controller, Position pos) : NPC(sign, controller, pos) {
-   NPC::Character::setSpriteId(120);
+   NPC::Character::setSpriteId(642);
 }
