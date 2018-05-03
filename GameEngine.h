@@ -17,6 +17,7 @@
 #include "DungeonMap.h"
 #include <vector>
 #include <string>
+#include <SFML/Graphics.hpp>
 
 class GameEngine {
 public:
@@ -28,10 +29,22 @@ public:
     
     void run();
     
+    
+    
 private:
     bool finished() const;
     bool turn();
-
+ 
+    void render()
+    {
+        for (int i = 0; i < m_map->getHeight(); ++i){
+            for (int j = 0; j < m_map->getWidth(); ++j)
+            {
+                getSpriteIdm_map->find({j,i})->getSign())
+            }
+        }
+    }
+    
     bool loadMap(const std::string& mapFile, std::vector<std::string>& VecMap);    
     bool loadConnectors(const std::string& connectorFile, std::vector<Position>& vecPos);
     
@@ -40,7 +53,11 @@ private:
     DungeonMap* m_map;
 
     static int rounds;
-   
+    
+    sf::Texture mapTex;
+    sf::Sprite mapSprite;
+    
+    
     GameEngine(const GameEngine& orig);
 };
 

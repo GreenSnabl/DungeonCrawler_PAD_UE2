@@ -41,6 +41,9 @@ public:
     
     void print() const;
     
+    int getHeight() const {return m_height;}
+    int getWidth() const {return m_width;}
+    
     
 private:
     Tile*** m_tile;
