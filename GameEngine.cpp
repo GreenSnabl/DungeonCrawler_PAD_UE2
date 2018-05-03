@@ -113,7 +113,7 @@ bool GameEngine::turn() {
     m_map->print();
 }
 
-bool GameEngine::finished() {
+bool GameEngine::finished() const {
     return rounds > 20;
 }
 

@@ -29,7 +29,7 @@ public:
     void run();
     
 private:
-    bool finished();
+    bool finished() const;
     bool turn();
 
     bool loadMap(const std::string& mapFile, std::vector<std::string>& VecMap);    
