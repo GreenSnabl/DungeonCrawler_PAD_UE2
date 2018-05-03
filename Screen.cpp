@@ -140,7 +140,7 @@ void Screen::draw(Screen& s)
     
 }
 
-void Screen::draw()
+void Screen::draw() const
 {
     for (int i = 0; i < m_screens.size(); ++i)
     {
