@@ -22,8 +22,10 @@ public:
     ~ConsoleController();
     
     int move();
+    void set_next_move(int);
     
 private:
+    int m_next_move;
     ConsoleController(const ConsoleController& orig);
 };
 

@@ -18,6 +18,7 @@
 #include <vector>
 #include <string>
 #include <SFML/Graphics.hpp>
+#include "ConsoleController.h"
 
 
 
@@ -50,6 +51,8 @@ private:
     DungeonMap* m_map;
 
     
+    
+    
     void renderTile(sf::Vector2f tilePos, sf::Vector2f mapPos);
     void renderChar(sf::Vector2f tilePos, sf::Vector2f mapPos);
     
@@ -61,6 +64,11 @@ private:
     sf::Texture m_mapTex;
     sf::Sprite m_mapSprite;
     sf::RenderWindow *m_window;
+    
+    void handlePlayerInput(sf::Keyboard::Key&);
+    
+    
+    ConsoleController* m_playerControl;
     
 
     GameEngine(const GameEngine& orig);

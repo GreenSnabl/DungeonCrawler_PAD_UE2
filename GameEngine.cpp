@@ -78,9 +78,9 @@ GameEngine::GameEngine(const std::string& mapFile, const std::string& connectorF
 
     m_mapTex.loadFromFile("./gfx/ProjectUtumno_full.png");
     m_mapSprite.setTexture(m_mapTex);
-    
-    m_window = new sf::RenderWindow(sf::VideoMode(m_map->getHeight() * m_tileSize.x, m_map->getWidth() * m_tileSize.y), "Game running!");  
-    
+
+    m_window = new sf::RenderWindow(sf::VideoMode(m_map->getHeight() * m_tileSize.x, m_map->getWidth() * m_tileSize.y), "Game running!");
+
 }
 
 bool GameEngine::loadMap(const string& mapFile, vector<string>& vecMap) {
@@ -123,6 +123,11 @@ void GameEngine::loadEntities(const vector<string>& vecMap) {
                 m_charVec.push_back(temp);
                 m_map->place({j, i}, m_charVec[m_charVec.size() - 1]);
                 temp = nullptr;
+
+                if (vecMap[i][j] == 'C') {
+                    m_playerControl = dynamic_cast<ConsoleController*> (m_charVec[m_charVec.size() - 1]->getController());
+                }
+
             }
         }
     }
@@ -154,29 +159,22 @@ bool GameEngine::finished() const {
 }
 
 void GameEngine::run() {
-//    sf::RenderWindow window(sf::VideoMode(m_map->getHeight() * m_tileSize.x, m_map->getWidth() * m_tileSize.y), "Game running!");
+    //    sf::RenderWindow window(sf::VideoMode(m_map->getHeight() * m_tileSize.x, m_map->getWidth() * m_tileSize.y), "Game running!");
 
 
     m_map->print();
     render();
-    m_window->display();
-    
+
     sf::Event event;
-    
+
     while (m_window->isOpen()) {
-        while (m_window->pollEvent(event)) {
-            if (event.type == sf::Event::Closed || finished()) {
-                m_window->close();
-            }
-            //if (event.type == sf::Event::)
-            m_window->clear();
-            turn();
-            render();
-            m_window->display();
-            ++m_rounds;
-        }
+        //if (event.type == sf::Event::)
+        processEvents();
+        render();
+        m_window->display();
     }
 }
+
 
 int GameEngine::m_rounds = 0;
 
@@ -194,26 +192,24 @@ Position intToPos(int dir) {
     }
 }
 
-
-
-
-
 void GameEngine::render() {
     sf::Vector2f tilePos;
+    m_window->clear();
     for (int i = 0; i < m_map->getHeight(); ++i) {
         for (int j = 0; j < m_map->getWidth(); ++j) {
 
             tilePos = spriteIds::charToSpriteId(m_map->find({j, i})->getSign());
-            renderTile(tilePos,{static_cast<float>(j), static_cast<float>(i)});
+            renderTile(tilePos,{static_cast<float> (j), static_cast<float> (i)});
             m_window->draw(m_mapSprite);
         }
     }
     for (int i = 0; i < m_charVec.size(); ++i) {
         Position charPos = m_map->find(m_charVec[i]);
         tilePos = spriteIds::charToSpriteId(m_charVec[i]->getSign());
-        renderChar(tilePos,{static_cast<float>(charPos.x), static_cast<float>(charPos.y)});
+        renderChar(tilePos,{static_cast<float> (charPos.x), static_cast<float> (charPos.y)});
         m_window->draw(m_mapSprite);
     }
+    m_window->display();
 
 }
 
@@ -226,30 +222,63 @@ void GameEngine::renderTile(sf::Vector2f tilePos, sf::Vector2f mapPos) {
     width = m_tileSize.x;
     height = m_tileSize.y;
     m_mapSprite.setTextureRect({posX, posY, width, height});
-    
-    
+
+
     //m_mapSprite.setTextureRect({tilePos.x * m_tileSize.x, tilePos.y * m_tileSize.y, m_tileSize.x, m_tileSize.y});
     m_mapSprite.setPosition(mapPos.x * m_tileSize.x, mapPos.y * m_tileSize.y);
     m_window->draw(m_mapSprite);
 }
 
-void GameEngine::renderChar(sf::Vector2f tilePos, sf::Vector2f mapPos)
-{
-    
+void GameEngine::renderChar(sf::Vector2f tilePos, sf::Vector2f mapPos) {
+
     int posX, posY, width, height;
     posX = tilePos.x * m_tileSize.x;
     posY = tilePos.y * m_tileSize.y;
     width = m_tileSize.x;
     height = m_tileSize.y;
     m_mapSprite.setTextureRect({posX, posY, width, height});
-    
+
     //m_mapSprite.setTextureRect({static_cast<int>(tilePos.x * m_tileSize.x), static_cast<int>(tilePos.y * m_tileSize.y), m_tileSize.x, m_tileSize.y});
     m_mapSprite.setPosition(mapPos.x * m_tileSize.x, mapPos.y * m_tileSize.y);
     m_window->draw(m_mapSprite);
 }
 
-    void GameEngine::processEvents()
-    {
-        sf::Event event;
-        while (m_window->pollEvent(event));
+void GameEngine::processEvents() {
+    sf::Event event;
+    while (m_window->pollEvent(event)) {
+        switch (event.type) {
+            case sf::Event::KeyPressed:
+                handlePlayerInput(event.key.code);
+                turn();
+                ++m_rounds;
+                break;
+            case sf::Event::Closed:
+                m_window->close();
+                break;
+            case sf::Event::Resized:
+                m_window->display();
+                break;
+        }
     }
+}
+
+void GameEngine::handlePlayerInput(sf::Keyboard::Key& key) {
+    if (key == sf::Keyboard::Num1)
+        m_playerControl->set_next_move(1);
+    else if (key == sf::Keyboard::Num2)
+        m_playerControl->set_next_move(2);
+    else if (key == sf::Keyboard::Num3)
+        m_playerControl->set_next_move(3);
+    else if (key == sf::Keyboard::Num4)
+        m_playerControl->set_next_move(4);
+    else if (key == sf::Keyboard::Num5)
+        m_playerControl->set_next_move(5);
+    else if (key == sf::Keyboard::Num6)
+        m_playerControl->set_next_move(6);
+    else if (key == sf::Keyboard::Num7)
+        m_playerControl->set_next_move(7);
+    else if (key == sf::Keyboard::Num8)
+        m_playerControl->set_next_move(8);
+    else if (key == sf::Keyboard::Num9)
+        m_playerControl->set_next_move(9);
+}

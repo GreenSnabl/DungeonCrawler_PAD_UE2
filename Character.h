@@ -23,7 +23,9 @@ public:
     
     char getSign() const;
     int move();
-
+    
+    Controller* getController() const {return m_controller;}
+    
     static Character* makeCharacter(char c);
 private:
     

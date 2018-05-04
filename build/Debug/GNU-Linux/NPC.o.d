@@ -1,5 +1,6 @@
 build/Debug/GNU-Linux/NPC.o: NPC.cpp NPC.h Character.h Controller.h \
- AiController.h DungeonMap.h Tile.h Screen.h GameEngine.h
+ AiController.h DungeonMap.h Tile.h Screen.h GameEngine.h \
+ ConsoleController.h
 
 NPC.h:
 
@@ -16,3 +17,5 @@ Tile.h:
 Screen.h:
 
 GameEngine.h:
+
+ConsoleController.h:
