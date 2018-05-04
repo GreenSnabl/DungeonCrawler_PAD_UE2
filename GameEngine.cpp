@@ -127,7 +127,6 @@ void GameEngine::loadEntities(const vector<string>& vecMap) {
                 if (vecMap[i][j] == 'C') {
                     m_playerControl = dynamic_cast<ConsoleController*> (m_charVec[m_charVec.size() - 1]->getController());
                 }
-
             }
         }
     }
@@ -159,19 +158,15 @@ bool GameEngine::finished() const {
 }
 
 void GameEngine::run() {
-    //    sf::RenderWindow window(sf::VideoMode(m_map->getHeight() * m_tileSize.x, m_map->getWidth() * m_tileSize.y), "Game running!");
 
 
     m_map->print();
     render();
-
     sf::Event event;
 
     while (m_window->isOpen()) {
-        //if (event.type == sf::Event::)
         processEvents();
         render();
-        m_window->display();
     }
 }
 
@@ -210,7 +205,6 @@ void GameEngine::render() {
         m_window->draw(m_mapSprite);
     }
     m_window->display();
-
 }
 
 void GameEngine::renderTile(sf::Vector2f tilePos, sf::Vector2f mapPos) {
@@ -250,6 +244,7 @@ void GameEngine::processEvents() {
             case sf::Event::KeyPressed:
                 handlePlayerInput(event.key.code);
                 turn();
+                m_map->print();
                 ++m_rounds;
                 break;
             case sf::Event::Closed:
