@@ -78,6 +78,9 @@ GameEngine::GameEngine(const std::string& mapFile, const std::string& connectorF
 
     m_mapTex.loadFromFile("./gfx/ProjectUtumno_full.png");
     m_mapSprite.setTexture(m_mapTex);
+    
+    m_window = new sf::RenderWindow(sf::VideoMode(m_map->getHeight() * m_tileSize.x, m_map->getWidth() * m_tileSize.y), "Game running!");  
+    
 }
 
 bool GameEngine::loadMap(const string& mapFile, vector<string>& vecMap) {
@@ -133,6 +136,7 @@ GameEngine::~GameEngine() {
     for (int i = 0; i < m_charVec.size(); ++i) {
         delete m_charVec[i];
     }
+    delete m_window;
 }
 
 bool GameEngine::turn() {
@@ -150,22 +154,25 @@ bool GameEngine::finished() const {
 }
 
 void GameEngine::run() {
-    sf::RenderWindow window(sf::VideoMode(m_map->getHeight() * m_tileSize.x, m_map->getWidth() * m_tileSize.y), "Game running!");
+//    sf::RenderWindow window(sf::VideoMode(m_map->getHeight() * m_tileSize.x, m_map->getWidth() * m_tileSize.y), "Game running!");
 
 
     m_map->print();
-    render(window);
-    window.display();
+    render();
+    m_window->display();
+    
     sf::Event event;
-    while (window.isOpen()) {
-        while (window.pollEvent(event)) {
+    
+    while (m_window->isOpen()) {
+        while (m_window->pollEvent(event)) {
             if (event.type == sf::Event::Closed || finished()) {
-                window.close();
+                m_window->close();
             }
-            window.clear();
+            //if (event.type == sf::Event::)
+            m_window->clear();
             turn();
-            render(window);
-            window.display();
+            render();
+            m_window->display();
             ++m_rounds;
         }
     }
@@ -191,28 +198,28 @@ Position intToPos(int dir) {
 
 
 
-void GameEngine::render(sf::RenderWindow& window) {
+void GameEngine::render() {
     sf::Vector2f tilePos;
     for (int i = 0; i < m_map->getHeight(); ++i) {
         for (int j = 0; j < m_map->getWidth(); ++j) {
 
             tilePos = spriteIds::charToSpriteId(m_map->find({j, i})->getSign());
-            renderTile(window, tilePos,{static_cast<float>(j), static_cast<float>(i)});
-            window.draw(m_mapSprite);
+            renderTile(tilePos,{static_cast<float>(j), static_cast<float>(i)});
+            m_window->draw(m_mapSprite);
         }
     }
     for (int i = 0; i < m_charVec.size(); ++i) {
         Position charPos = m_map->find(m_charVec[i]);
         tilePos = spriteIds::charToSpriteId(m_charVec[i]->getSign());
-        renderChar(window, tilePos,{static_cast<float>(charPos.x), static_cast<float>(charPos.y)});
-        window.draw(m_mapSprite);
+        renderChar(tilePos,{static_cast<float>(charPos.x), static_cast<float>(charPos.y)});
+        m_window->draw(m_mapSprite);
     }
 
 }
 
-void GameEngine::renderTile(sf::RenderWindow& window, sf::Vector2f tilePos, sf::Vector2f mapPos) {
+void GameEngine::renderTile(sf::Vector2f tilePos, sf::Vector2f mapPos) {
 
-    if (tilePos != spriteIds::FLOOR) renderTile(window, spriteIds::FLOOR, mapPos);
+    if (tilePos != spriteIds::FLOOR) renderTile(spriteIds::FLOOR, mapPos);
     int posX, posY, width, height;
     posX = tilePos.x * m_tileSize.x;
     posY = tilePos.y * m_tileSize.y;
@@ -223,10 +230,10 @@ void GameEngine::renderTile(sf::RenderWindow& window, sf::Vector2f tilePos, sf::
     
     //m_mapSprite.setTextureRect({tilePos.x * m_tileSize.x, tilePos.y * m_tileSize.y, m_tileSize.x, m_tileSize.y});
     m_mapSprite.setPosition(mapPos.x * m_tileSize.x, mapPos.y * m_tileSize.y);
-    window.draw(m_mapSprite);
+    m_window->draw(m_mapSprite);
 }
 
-void GameEngine::renderChar(sf::RenderWindow& window, sf::Vector2f tilePos, sf::Vector2f mapPos)
+void GameEngine::renderChar(sf::Vector2f tilePos, sf::Vector2f mapPos)
 {
     
     int posX, posY, width, height;
@@ -238,5 +245,11 @@ void GameEngine::renderChar(sf::RenderWindow& window, sf::Vector2f tilePos, sf::
     
     //m_mapSprite.setTextureRect({static_cast<int>(tilePos.x * m_tileSize.x), static_cast<int>(tilePos.y * m_tileSize.y), m_tileSize.x, m_tileSize.y});
     m_mapSprite.setPosition(mapPos.x * m_tileSize.x, mapPos.y * m_tileSize.y);
-    window.draw(m_mapSprite);
+    m_window->draw(m_mapSprite);
 }
+
+    void GameEngine::processEvents()
+    {
+        sf::Event event;
+        while (m_window->pollEvent(event));
+    }

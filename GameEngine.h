@@ -38,7 +38,9 @@ private:
     bool finished() const;
     bool turn();
 
-    void render(sf::RenderWindow& window);
+    void processEvents();
+    
+    void render();
 
     bool loadMap(const std::string& mapFile, std::vector<std::string>& VecMap);
     bool loadConnectors(const std::string& connectorFile, std::vector<Position>& vecPos);
@@ -48,8 +50,8 @@ private:
     DungeonMap* m_map;
 
     
-    void renderTile(sf::RenderWindow& window, sf::Vector2f tilePos, sf::Vector2f mapPos);
-    void renderChar(sf::RenderWindow& window, sf::Vector2f tilePos, sf::Vector2f mapPos);
+    void renderTile(sf::Vector2f tilePos, sf::Vector2f mapPos);
+    void renderChar(sf::Vector2f tilePos, sf::Vector2f mapPos);
     
     
     static int m_rounds;
@@ -58,7 +60,8 @@ private:
     
     sf::Texture m_mapTex;
     sf::Sprite m_mapSprite;
-
+    sf::RenderWindow *m_window;
+    
 
     GameEngine(const GameEngine& orig);
 };
