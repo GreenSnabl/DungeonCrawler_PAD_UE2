@@ -24,6 +24,35 @@
 using std::string;
 using std::vector;
 
+namespace spriteIds {
+
+    static const sf::Vector2f FLOOR{10, 3};
+    static const sf::Vector2f WALL{0, 18};
+    static const sf::Vector2f SWITCH_UNUSED{0, 1};
+    static const sf::Vector2f SWITCH_USED{2, 1};
+    static const sf::Vector2f DOOR_CLOSED{11, 11};
+    static const sf::Vector2f DOOR_OPEN{13, 11};
+    static const sf::Vector2f PLAYER{0, 60};
+    static const sf::Vector2f GOBLIN{28, 61};
+    static const sf::Vector2f NEUTRAL{1, 59};
+    static const sf::Vector2f DRAGON{3, 60};
+
+    sf::Vector2f charToSpriteId(char c) {
+        switch (c) {
+            case '.': return FLOOR;
+            case '#': return WALL;
+            case '?': return SWITCH_UNUSED;
+            case '!': return SWITCH_USED;
+            case 'X': return DOOR_CLOSED;
+            case '/': return DOOR_OPEN;
+            case '@': return PLAYER;
+            case 'G': return GOBLIN;
+            case 'N': return NEUTRAL;
+            case 'D': return DRAGON;
+        }
+    }
+};
+
 
 GameEngine::GameEngine(int height, int width, const std::string& data) : m_map{new DungeonMap(height, width, data)}
 {
@@ -32,7 +61,8 @@ GameEngine::GameEngine(int height, int width, const std::string& data) : m_map{n
 
 }
 
-GameEngine::GameEngine(const std::string& mapFile, const std::string& connectorFile) {
+GameEngine::GameEngine(const std::string& mapFile, const std::string& connectorFile) : m_tileSize{sf::Vector2f(32, 32)}
+{
     vector<string> vecMap;
     if (!loadMap(mapFile, vecMap)) throw;
 
@@ -46,6 +76,8 @@ GameEngine::GameEngine(const std::string& mapFile, const std::string& connectorF
         dynamic_cast<Active*> (m_map->find(vecPos[i]))->registerPassive(dynamic_cast<Passive*> (m_map->find(vecPos[i + 1])));
     }
 
+    m_mapTex.loadFromFile("./gfx/ProjectUtumno_full.png");
+    m_mapSprite.setTexture(m_mapTex);
 }
 
 bool GameEngine::loadMap(const string& mapFile, vector<string>& vecMap) {
@@ -114,18 +146,32 @@ bool GameEngine::turn() {
 }
 
 bool GameEngine::finished() const {
-    return rounds > 20;
+    return m_rounds > 20;
 }
 
 void GameEngine::run() {
+    sf::RenderWindow window(sf::VideoMode(m_map->getHeight() * m_tileSize.x, m_map->getWidth() * m_tileSize.y), "Game running!");
+
+
     m_map->print();
-    while (!finished()) {
-        turn();
-        ++rounds;
+    render(window);
+    window.display();
+    sf::Event event;
+    while (window.isOpen()) {
+        while (window.pollEvent(event)) {
+            if (event.type == sf::Event::Closed || finished()) {
+                window.close();
+            }
+            window.clear();
+            turn();
+            render(window);
+            window.display();
+            ++m_rounds;
+        }
     }
 }
 
-int GameEngine::rounds = 0;
+int GameEngine::m_rounds = 0;
 
 Position intToPos(int dir) {
     switch (dir) {
@@ -139,4 +185,58 @@ Position intToPos(int dir) {
         case 8: return { 0, -1};
         case 9: return { 1, -1};
     }
+}
+
+
+
+
+
+void GameEngine::render(sf::RenderWindow& window) {
+    sf::Vector2f tilePos;
+    for (int i = 0; i < m_map->getHeight(); ++i) {
+        for (int j = 0; j < m_map->getWidth(); ++j) {
+
+            tilePos = spriteIds::charToSpriteId(m_map->find({j, i})->getSign());
+            renderTile(window, tilePos,{static_cast<float>(j), static_cast<float>(i)});
+            window.draw(m_mapSprite);
+        }
+    }
+    for (int i = 0; i < m_charVec.size(); ++i) {
+        Position charPos = m_map->find(m_charVec[i]);
+        tilePos = spriteIds::charToSpriteId(m_charVec[i]->getSign());
+        renderChar(window, tilePos,{static_cast<float>(charPos.x), static_cast<float>(charPos.y)});
+        window.draw(m_mapSprite);
+    }
+
+}
+
+void GameEngine::renderTile(sf::RenderWindow& window, sf::Vector2f tilePos, sf::Vector2f mapPos) {
+
+    if (tilePos != spriteIds::FLOOR) renderTile(window, spriteIds::FLOOR, mapPos);
+    int posX, posY, width, height;
+    posX = tilePos.x * m_tileSize.x;
+    posY = tilePos.y * m_tileSize.y;
+    width = m_tileSize.x;
+    height = m_tileSize.y;
+    m_mapSprite.setTextureRect({posX, posY, width, height});
+    
+    
+    //m_mapSprite.setTextureRect({tilePos.x * m_tileSize.x, tilePos.y * m_tileSize.y, m_tileSize.x, m_tileSize.y});
+    m_mapSprite.setPosition(mapPos.x * m_tileSize.x, mapPos.y * m_tileSize.y);
+    window.draw(m_mapSprite);
+}
+
+void GameEngine::renderChar(sf::RenderWindow& window, sf::Vector2f tilePos, sf::Vector2f mapPos)
+{
+    
+    int posX, posY, width, height;
+    posX = tilePos.x * m_tileSize.x;
+    posY = tilePos.y * m_tileSize.y;
+    width = m_tileSize.x;
+    height = m_tileSize.y;
+    m_mapSprite.setTextureRect({posX, posY, width, height});
+    
+    //m_mapSprite.setTextureRect({static_cast<int>(tilePos.x * m_tileSize.x), static_cast<int>(tilePos.y * m_tileSize.y), m_tileSize.x, m_tileSize.y});
+    m_mapSprite.setPosition(mapPos.x * m_tileSize.x, mapPos.y * m_tileSize.y);
+    window.draw(m_mapSprite);
 }
