@@ -276,4 +276,6 @@ void GameEngine::handlePlayerInput(sf::Keyboard::Key& key) {
         m_playerControl->set_next_move(8);
     else if (key == sf::Keyboard::Num9)
         m_playerControl->set_next_move(9);
+    else if (key == sf::Keyboard::Escape)
+        m_window->close();
 }

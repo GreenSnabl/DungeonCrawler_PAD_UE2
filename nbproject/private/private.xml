@@ -7,35 +7,13 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/home/snbl/NetBeansProjects/PAD2_SS2018/DungeonCrawler_PAD_UE2/Passive.h</file>
-            <file>file:/home/snbl/NetBeansProjects/PAD2_SS2018/DungeonCrawler_PAD_UE2/NPC.h</file>
-            <file>file:/home/snbl/NetBeansProjects/PAD2_SS2018/DungeonCrawler_PAD_UE2/DungeonMap.h</file>
-            <file>file:/home/snbl/NetBeansProjects/PAD2_SS2018/DungeonCrawler_PAD_UE2/Screen.h</file>
-            <file>file:/home/snbl/NetBeansProjects/PAD2_SS2018/DungeonCrawler_PAD_UE2/AiController.h</file>
-            <file>file:/home/snbl/NetBeansProjects/PAD2_SS2018/DungeonCrawler_PAD_UE2/main.cpp</file>
-            <file>file:/home/snbl/NetBeansProjects/PAD2_SS2018/DungeonCrawler_PAD_UE2/Controller.h</file>
-            <file>file:/home/snbl/NetBeansProjects/PAD2_SS2018/DungeonCrawler_PAD_UE2/Tile.cpp</file>
-            <file>file:/home/snbl/NetBeansProjects/PAD2_SS2018/DungeonCrawler_PAD_UE2/Active.h</file>
-            <file>file:/home/snbl/NetBeansProjects/PAD2_SS2018/DungeonCrawler_PAD_UE2/Switch.h</file>
-            <file>file:/home/snbl/NetBeansProjects/PAD2_SS2018/DungeonCrawler_PAD_UE2/GameEngine.h</file>
-            <file>file:/home/snbl/NetBeansProjects/PAD2_SS2018/DungeonCrawler_PAD_UE2/Screen.cpp</file>
-            <file>file:/home/snbl/NetBeansProjects/PAD2_SS2018/DungeonCrawler_PAD_UE2/Player.cpp</file>
-            <file>file:/home/snbl/NetBeansProjects/PAD2_SS2018/DungeonCrawler_PAD_UE2/NPC.cpp</file>
-            <file>file:/home/snbl/NetBeansProjects/PAD2_SS2018/DungeonCrawler_PAD_UE2/Character.cpp</file>
-            <file>file:/home/snbl/NetBeansProjects/PAD2_SS2018/DungeonCrawler_PAD_UE2/Wall.h</file>
-            <file>file:/home/snbl/NetBeansProjects/PAD2_SS2018/DungeonCrawler_PAD_UE2/Switch.cpp</file>
-            <file>file:/home/snbl/NetBeansProjects/PAD2_SS2018/DungeonCrawler_PAD_UE2/GameEngine.cpp</file>
-            <file>file:/home/snbl/NetBeansProjects/PAD2_SS2018/DungeonCrawler_PAD_UE2/Character.h</file>
-            <file>file:/home/snbl/NetBeansProjects/PAD2_SS2018/DungeonCrawler_PAD_UE2/Door.h</file>
-            <file>file:/home/snbl/NetBeansProjects/PAD2_SS2018/DungeonCrawler_PAD_UE2/Player.h</file>
-            <file>file:/home/snbl/NetBeansProjects/PAD2_SS2018/DungeonCrawler_PAD_UE2/ConsoleController.h</file>
-            <file>file:/home/snbl/NetBeansProjects/PAD2_SS2018/DungeonCrawler_PAD_UE2/ConsoleController.cpp</file>
-            <file>file:/home/snbl/NetBeansProjects/PAD2_SS2018/DungeonCrawler_PAD_UE2/Tile.h</file>
-            <file>file:/home/snbl/NetBeansProjects/PAD2_SS2018/DungeonCrawler_PAD_UE2/Floor.h</file>
-            <file>file:/home/snbl/NetBeansProjects/PAD2_SS2018/DungeonCrawler_PAD_UE2/Wall.cpp</file>
-            <file>file:/home/snbl/NetBeansProjects/PAD2_SS2018/DungeonCrawler_PAD_UE2/DungeonMap.cpp</file>
-            <file>file:/home/snbl/NetBeansProjects/PAD2_SS2018/DungeonCrawler_PAD_UE2/Passive.cpp</file>
-            <file>file:/home/snbl/NetBeansProjects/PAD2_SS2018/DungeonCrawler_PAD_UE2/AiController.cpp</file>
+            <file>file:/home/den/dev/PAD2_SS2018/DungeonCrawler_PAD_UE2/Character.cpp</file>
+            <file>file:/home/den/dev/PAD2_SS2018/DungeonCrawler_PAD_UE2/Player.cpp</file>
+            <file>file:/home/den/dev/PAD2_SS2018/DungeonCrawler_PAD_UE2/DungeonMap.h</file>
+            <file>file:/home/den/dev/PAD2_SS2018/DungeonCrawler_PAD_UE2/Tile.h</file>
+            <file>file:/home/den/dev/PAD2_SS2018/DungeonCrawler_PAD_UE2/GameEngine.cpp</file>
+            <file>file:/home/den/dev/PAD2_SS2018/DungeonCrawler_PAD_UE2/GameEngine.h</file>
+            <file>file:/home/den/dev/PAD2_SS2018/DungeonCrawler_PAD_UE2/ConsoleController.cpp</file>
         </group>
     </open-files>
 </project-private>

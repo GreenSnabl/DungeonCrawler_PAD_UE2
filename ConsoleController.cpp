@@ -16,7 +16,7 @@
 
 using std::cin;
 
-ConsoleController::ConsoleController() {
+ConsoleController::ConsoleController() : m_next_move{5} {
 }
 
 ConsoleController::ConsoleController(const ConsoleController& orig) {
@@ -27,7 +27,9 @@ ConsoleController::~ConsoleController() {
 
 int ConsoleController::move()
 {
-    return m_next_move;
+    int temp = m_next_move;
+    m_next_move = 5;
+    return temp;
     /*
     char c = '0';
     while (c < '1' || c > '9') {
