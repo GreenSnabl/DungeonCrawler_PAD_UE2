@@ -19,7 +19,7 @@
 
 class AiController : public Controller {
 public:
-    enum Behaviour{STROLLING, HOLD, PATROL};
+    enum Behaviour{STROLL, HOLD, PATROL};
     
     AiController(Behaviour behaviour);
     ~AiController();
@@ -27,7 +27,7 @@ public:
     int move();
 private:
     int patrol();
-    int strolling();
+    int stroll();
     int hold();
     
     Behaviour m_behaviour;

@@ -24,8 +24,8 @@ int AiController::move()
     switch(m_behaviour) { 
         case PATROL : return patrol();
         case HOLD   : return hold();
-        case STROLLING : return strolling();
-        default : return strolling();
+        case STROLL : return stroll();
+        default : return stroll();
     }
 }
 
@@ -37,7 +37,7 @@ int AiController::patrol()
     
 }
 
-int AiController::strolling()
+int AiController::stroll()
 {
     return (std::rand() % 9) + 1;
 }
