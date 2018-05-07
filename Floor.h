@@ -15,11 +15,17 @@
 #define FLOOR_H
 
 #include "Tile.h"
+#include "Item.h"
 
-class Floor : public Tile
-{
+class Floor : public Tile {
 public:
     Floor();
+
+    Item* getItem() const;
+    void setItem(Item* item);
+    
+private:
+    Item* m_item;
 };
 
 #endif /* FLOOR_H */

@@ -14,3 +14,11 @@
 #include "Floor.h"
 
 Floor::Floor() : Tile('.') {}
+
+
+Item* Floor::getItem() const {
+    return m_item;
+}
+void Floor::setItem(Item* item) {
+    m_item = item;
+}

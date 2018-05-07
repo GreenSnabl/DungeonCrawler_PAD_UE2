@@ -29,6 +29,8 @@ public:
     GameEngine(int height, int width, const std::string& data);
     GameEngine(int height, int width, const std::vector<string>& data);
     GameEngine(const std::string& mapFile, const std::string& connectorFile);
+    GameEngine(const std::string& mapFile);
+    
     ~GameEngine();
 
     void run();
@@ -43,27 +45,28 @@ private:
     
     void render();
 
+    bool loadFromFile(const std::string& mapFile);
+    
+
+
+
     bool loadMap(const std::string& mapFile, std::vector<std::string>& VecMap);
     bool loadConnectors(const std::string& connectorFile, std::vector<Position>& vecPos);
-
     void loadEntities(const std::vector<std::string>& vecMap);
+    
     std::vector<Character*> m_charVec;
     DungeonMap* m_map;
-
-    
-    
     
     void renderTile(sf::Vector2f tilePos, sf::Vector2f mapPos);
     void renderChar(sf::Vector2f tilePos, sf::Vector2f mapPos);
     
-    
     static int m_rounds;
     
-    const sf::Vector2u m_tileSize;
-    
+    const sf::Vector2u m_tileSize;    
     sf::Texture m_mapTex;
     sf::Sprite m_mapSprite;
     sf::RenderWindow *m_window;
+    
     
     void handlePlayerInput(sf::Keyboard::Key&);
     

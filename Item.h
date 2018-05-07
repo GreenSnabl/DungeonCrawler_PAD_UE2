@@ -18,24 +18,59 @@ class Item {
 public:
     Item();
     virtual ~Item();
-    
-   // virtual int modifyStrength() = 0;
-    virtual int modifyStrength(int strength)  = 0;
-   // virtual int modifyStamina() = 0;
-    virtual int modifyStamina(int stamina) = 0;    
+
+    // virtual int modifyStrength() = 0;
+    virtual int modifyStrength(int strength) = 0;
+    // virtual int modifyStamina() = 0;
+    virtual int modifyStamina(int stamina) = 0;
 private:
     Item(const Item& orig);
 };
 
+class ArmingSword : public Item {
+public:
+    int modifyStamina(int stamina) override;
+    int modifyStrength(int strength) override;
+};
 
-class ArmingSword : public Item {};
-class Greatsword : public Item {};
-class Club : public Item {};
-class RapierAndDagger : public Item {};
-class Gameson : public Item {};
-class MailArmour : public Item {};
-class Shield : public Item {};
-class FullPlateArmour : public Item {};
+class Greatsword : public Item {
+public:
+    int modifyStamina(int stamina) override;
+    int modifyStrength(int strength) override;
+};
+
+class Club : public Item {
+public:
+    int modifyStamina(int stamina) override;
+    int modifyStrength(int strength) override;
+};
+
+class RapierAndDagger : public Item {
+public:
+    int modifyStamina(int stamina) override;
+    int modifyStrength(int strength) override;
+};
+
+class Gambeson : public Item {
+public:
+    int modifyStamina(int stamina) override;
+    int modifyStrength(int strength) override;
+};
+
+class MailArmour : public Item {
+    int modifyStamina(int stamina) override;
+    int modifyStrength(int strength) override;
+};
+
+class Shield : public Item {
+    int modifyStamina(int stamina) override;
+    int modifyStrength(int strength) override;
+};
+
+class FullPlateArmour : public Item {
+    int modifyStamina(int stamina) override;
+    int modifyStrength(int strength) override;
+};
 
 #endif /* ITEM_H */
 

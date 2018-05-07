@@ -61,7 +61,6 @@ Character* Character::makeCharacter(char sign)
         //    stamina += *it->modifyStamina(m_stamina);
         for (int i = 0; i < m_items.size(); ++i) 
             stamina += m_items[i]->modifyStamina(m_stamina);
-        
         return stamina;
     }
     
