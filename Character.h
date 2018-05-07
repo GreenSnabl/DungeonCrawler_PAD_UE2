@@ -14,24 +14,38 @@
 #ifndef CHARACTER_H
 #define CHARACTER_H
 #include "Controller.h"
-
+#include "Item.h"
+#include <vector>
 
 class Character {
 public:
     Character(char sign, Controller* controller);
+    Character(char sign, Controller* controller, int strength, int stamina);
     virtual ~Character() = 0;
     
     char getSign() const;
     int move();
+    
+    void showInfo() const;
+    int getMaxHP() const;
+    
+    void addItem(Item*);
+    int getStrength() const;
+    int getStamina() const;
     
     Controller* getController() const {return m_controller;}
     
     static Character* makeCharacter(char c);
 private:
     
+    int m_strength;
+    int m_stamina;
+    int m_hitpoints;
+    
     char m_sign;
     Controller* m_controller;
 
+    std::vector<Item*> m_items;
     
     Character(const Character& orig);
 };

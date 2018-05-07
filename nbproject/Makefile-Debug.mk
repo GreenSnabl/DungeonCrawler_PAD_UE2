@@ -44,6 +44,7 @@ OBJECTFILES= \
 	${OBJECTDIR}/DungeonMap.o \
 	${OBJECTDIR}/Floor.o \
 	${OBJECTDIR}/GameEngine.o \
+	${OBJECTDIR}/Item.o \
 	${OBJECTDIR}/NPC.o \
 	${OBJECTDIR}/Passive.o \
 	${OBJECTDIR}/Player.o \
@@ -122,6 +123,11 @@ ${OBJECTDIR}/GameEngine.o: GameEngine.cpp
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
 	$(COMPILE.cc) -g -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/GameEngine.o GameEngine.cpp
+
+${OBJECTDIR}/Item.o: Item.cpp
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} "$@.d"
+	$(COMPILE.cc) -g -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Item.o Item.cpp
 
 ${OBJECTDIR}/NPC.o: NPC.cpp
 	${MKDIR} -p ${OBJECTDIR}
