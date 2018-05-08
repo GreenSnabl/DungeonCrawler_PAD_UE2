@@ -16,12 +16,13 @@
 #include "Controller.h"
 #include "Item.h"
 #include <vector>
+#include <string>
 
 class Character {
 public:
     Character(char sign, Controller* controller);
-    Character(char sign, Controller* controller, int strength, int stamina);
-    virtual ~Character() = 0;
+    Character(char sign, int stamina, int strength, Controller* controller);
+    ~Character();
     
     char getSign() const;
     int move();
@@ -35,7 +36,8 @@ public:
     
     Controller* getController() const {return m_controller;}
     
-    static Character* makeCharacter(char c);
+    
+    static Character* makeCharacter(const std::string& data);
 private:
     
     int m_strength;

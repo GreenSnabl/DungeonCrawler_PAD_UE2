@@ -85,3 +85,24 @@ int FullPlateArmour::modifyStamina(int stamina) {
 int FullPlateArmour::modifyStrength(int strength) {
     return -2;
 }
+
+
+bool Item::isItem(const std::string& str) {
+    for (int i = 0; i < items.size(); ++i)
+        if (items[i] == str) return true;
+    return false;
+}
+
+
+
+
+const std::vector<std::string> Item::items{
+    "GreatSword",
+    "ArmingSword",
+    "Club",
+    "RapierAndDagger",
+    "Gambeson",
+    "MailArmour",
+    "Shield",
+    "FullPlateArmour"
+};

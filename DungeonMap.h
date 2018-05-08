@@ -29,10 +29,13 @@ public:
     DungeonMap(int height, int width);
     DungeonMap(int height, int width, const std::string& data);
     DungeonMap(int height, int width, const std::vector<std::string>& data);
+    DungeonMap(const std::vector<std::string>& dataVec);
     
     virtual ~DungeonMap();
     
     void place(Position pos, Character* c);
+    
+    bool replaceTile(const std::string& name, Position pos);
     
     Position find(Tile* t) const;
     Position find(Character* c) const;
@@ -47,8 +50,8 @@ public:
     
 private:
     Tile*** m_tile;
-    const int m_height;
-    const int m_width;
+    int m_height;
+    int m_width;
 
     DungeonMap(const DungeonMap& orig);
 };

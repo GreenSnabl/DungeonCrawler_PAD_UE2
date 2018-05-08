@@ -13,16 +13,15 @@
 
 #include "Character.h"
 #include "ConsoleController.h"
-#include "Player.h"
-#include "NPC.h"
+#include "AiController.h"
+#include <sstream>
 
 
 Character::Character(char sign, Controller* controller) : m_sign{sign}, m_controller{controller} {
 }
 
-Character::Character(char sign, Controller* controller, int strength, int stamina) : m_sign{sign}, m_controller{controller}, m_strength{strength}, m_stamina{stamina}, m_hitpoints{getMaxHP()} {
+Character::Character(char sign, int strength, int stamina, Controller* controller) : m_sign{sign}, m_strength{strength}, m_stamina{stamina}, m_controller{controller}, m_hitpoints{getMaxHP()} {
 }
-
 
 Character::Character(const Character& orig) {
 
@@ -42,14 +41,23 @@ int Character::move()
     m_controller->move();
 }
 
-Character* Character::makeCharacter(char sign)
+
+Character* Character::makeCharacter(const std::string& data)
 {
-    switch (sign) {
-        case 'C'  : return new Player;
-        case 'G'  : return new Enemy(sign, new AiController(AiController::STROLL));
-        case 'N'  : return new Neutral(sign, new AiController(AiController::HOLD));
-        default   : return nullptr;
+    std::stringstream ss;
+    ss << data;
+    std::string name, controllerType;
+    Position pos;
+    char sign;
+    int strength, stamina;
+    ss >> name >> sign >> pos.y >> pos.x >> controllerType >> strength >> stamina;  
+    if (controllerType == "StationaryController") {
+        return new Character(sign, stamina, strength, new AiController(AiController::STROLL));
     }
+    else if (controllerType == "ConsoleController") {
+        return new Character(sign, stamina, strength, new ConsoleController);
+    }
+    return nullptr;
 }
 
 

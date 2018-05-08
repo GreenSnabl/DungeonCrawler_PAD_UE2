@@ -45,9 +45,7 @@ OBJECTFILES= \
 	${OBJECTDIR}/Floor.o \
 	${OBJECTDIR}/GameEngine.o \
 	${OBJECTDIR}/Item.o \
-	${OBJECTDIR}/NPC.o \
 	${OBJECTDIR}/Passive.o \
-	${OBJECTDIR}/Player.o \
 	${OBJECTDIR}/Screen.o \
 	${OBJECTDIR}/Switch.o \
 	${OBJECTDIR}/Tile.o \
@@ -129,20 +127,10 @@ ${OBJECTDIR}/Item.o: Item.cpp
 	${RM} "$@.d"
 	$(COMPILE.cc) -g -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Item.o Item.cpp
 
-${OBJECTDIR}/NPC.o: NPC.cpp
-	${MKDIR} -p ${OBJECTDIR}
-	${RM} "$@.d"
-	$(COMPILE.cc) -g -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/NPC.o NPC.cpp
-
 ${OBJECTDIR}/Passive.o: Passive.cpp
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
 	$(COMPILE.cc) -g -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Passive.o Passive.cpp
-
-${OBJECTDIR}/Player.o: Player.cpp
-	${MKDIR} -p ${OBJECTDIR}
-	${RM} "$@.d"
-	$(COMPILE.cc) -g -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Player.o Player.cpp
 
 ${OBJECTDIR}/Screen.o: Screen.cpp
 	${MKDIR} -p ${OBJECTDIR}

@@ -14,6 +14,9 @@
 #ifndef ITEM_H
 #define ITEM_H
 
+#include <string>
+#include <vector>
+
 class Item {
 public:
     Item();
@@ -23,8 +26,14 @@ public:
     virtual int modifyStrength(int strength) = 0;
     // virtual int modifyStamina() = 0;
     virtual int modifyStamina(int stamina) = 0;
+    
+    
+    static bool isItem(const std::string& str);
+    
 private:
     Item(const Item& orig);
+    
+    const static std::vector<std::string> items;
 };
 
 class ArmingSword : public Item {

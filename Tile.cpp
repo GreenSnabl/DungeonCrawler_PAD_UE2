@@ -76,6 +76,14 @@ Tile* Tile::makeTile(char c){
     }
 }
 
+Tile* Tile::makeTile(const std::string& name)
+{
+    if (name == "Switch") return new Switch;
+    else if (name == "Door") return new Door;
+    return nullptr;
+}
+
+
 void Tile::setSign(char c)
 {
     m_sign = c;
@@ -83,5 +91,17 @@ void Tile::setSign(char c)
 
 
 
+const std::vector<std::string> Tile::specialTiles{
+    "Door",
+    "Switch",
+    "Trap",
+    "Lever"
+};
 
 
+
+bool Tile::isSpecialTile(const std::string& str) {
+    for (int i = 0; i < specialTiles.size(); ++i)
+        if (specialTiles[i] == str) return true;
+    return false;
+}

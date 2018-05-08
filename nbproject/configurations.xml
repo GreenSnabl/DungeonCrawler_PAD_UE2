@@ -14,9 +14,7 @@
       <itemPath>Floor.h</itemPath>
       <itemPath>GameEngine.h</itemPath>
       <itemPath>Item.h</itemPath>
-      <itemPath>NPC.h</itemPath>
       <itemPath>Passive.h</itemPath>
-      <itemPath>Player.h</itemPath>
       <itemPath>Screen.h</itemPath>
       <itemPath>Switch.h</itemPath>
       <itemPath>Tile.h</itemPath>
@@ -39,9 +37,7 @@
       <itemPath>Floor.cpp</itemPath>
       <itemPath>GameEngine.cpp</itemPath>
       <itemPath>Item.cpp</itemPath>
-      <itemPath>NPC.cpp</itemPath>
       <itemPath>Passive.cpp</itemPath>
-      <itemPath>Player.cpp</itemPath>
       <itemPath>Screen.cpp</itemPath>
       <itemPath>Switch.cpp</itemPath>
       <itemPath>Tile.cpp</itemPath>
@@ -116,17 +112,9 @@
       </item>
       <item path="Item.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="NPC.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="NPC.h" ex="false" tool="3" flavor2="0">
-      </item>
       <item path="Passive.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="Passive.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="Player.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="Player.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="Screen.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -208,17 +196,9 @@
       </item>
       <item path="Item.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="NPC.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="NPC.h" ex="false" tool="3" flavor2="0">
-      </item>
       <item path="Passive.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="Passive.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="Player.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="Player.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="Screen.cpp" ex="false" tool="1" flavor2="0">
       </item>

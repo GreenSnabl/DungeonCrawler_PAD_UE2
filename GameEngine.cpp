@@ -12,7 +12,6 @@
  */
 
 #include "GameEngine.h"
-#include "Player.h"
 #include "Switch.h"
 #include "AiController.h"
 #include <fstream>
@@ -20,7 +19,12 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <utility>
 
+using std::cout;
+using std::endl;
+using std::stringstream;
+using std::ifstream;
 using std::string;
 using std::vector;
 
@@ -46,6 +50,7 @@ namespace spriteIds {
             case 'X': return DOOR_CLOSED;
             case '/': return DOOR_OPEN;
             case '@': return PLAYER;
+            case '%': return NEUTRAL;
             case 'G': return GOBLIN;
             case 'N': return NEUTRAL;
             case 'D': return DRAGON;
@@ -53,13 +58,92 @@ namespace spriteIds {
     }
 };
 
+GameEngine::GameEngine(const std::string& mapFile) : m_tileSize{sf::Vector2f(32, 32)} {
 
-GameEngine::GameEngine(int height, int width, const std::string& data) : m_map{new DungeonMap(height, width, data)}
-{
-    m_charVec.push_back(new Player);
-    m_map->place({5, 11}, m_charVec[0]);
-
+    loadFromFile(mapFile);
 }
+
+bool GameEngine::loadFromFile(const std::string& mapFile) {
+    vector<string> mapVec;
+    ifstream ifs;
+    ifs.open(mapFile);
+    string temp;
+    while (ifs.good()) {
+        std::getline(ifs, temp);
+        mapVec.push_back(temp);
+    }
+
+    m_map = new DungeonMap(mapVec);
+
+    for (int i = m_map->getHeight() + 1; i < mapVec.size(); ++i) {
+        loadEntity(mapVec[i]);
+    }
+}
+
+bool GameEngine::loadEntity(const std::string& data) {
+    std::stringstream ss;
+    std::string name;
+    Position pos;
+    ss << data;
+    ss >> name;
+
+    if (name == "Character") {
+        ss >> pos.y >> pos.x;
+        if (Character * character = Character::makeCharacter(data)) {
+            m_charVec.push_back(character);
+            m_map->place(pos, character);
+            //cout << "Character " << character->m_sign <<  " {" << character->m_pos.x << "," << character->m_pos.y << "} " << character->m_controller << " " << character->m_stamina << " " << character->m_strength << endl;
+        }   
+    } 
+    
+    
+    
+    else if (Tile::isSpecialTile(name)) {
+        
+        vector<std::pair<string, Position> > tiles;
+        ss >> pos.y >> pos.x;
+        while (ss.good())
+        {
+            ss >> name >> pos.y >> pos.x;
+            tiles.push_back(std::make_pair(name, pos));
+        }
+        
+        for (int i = 0; i < tiles.size(); ++i)
+        {
+            m_map->replaceTile(tiles[i].first, tiles[i].second);
+        }
+        
+       
+           
+        //if(Tile* tile = Tile::makeTile(name, str))
+        {
+        }
+        
+        
+        
+        
+    } else if (Item::isItem(name)) {
+        /* if (Item* item = Item::makeItem(name, str)) 
+        {
+            m_itemVec.push_back(item);
+        } */
+    }
+
+
+
+
+
+    m_mapTex.loadFromFile("./gfx/ProjectUtumno_full.png");
+    m_mapSprite.setTexture(m_mapTex);
+    m_window = new sf::RenderWindow(sf::VideoMode(m_map->getHeight() * m_tileSize.x, m_map->getWidth() * m_tileSize.y), "Game running!");
+}
+
+
+
+
+
+
+
 
 GameEngine::GameEngine(const std::string& mapFile, const std::string& connectorFile) : m_tileSize{sf::Vector2f(32, 32)}
 {
@@ -68,7 +152,7 @@ GameEngine::GameEngine(const std::string& mapFile, const std::string& connectorF
 
     m_map = new DungeonMap(vecMap.size(), vecMap[0].size(), vecMap);
 
-    loadEntities(vecMap);
+    //loadEntities(vecMap);
 
     vector<Position> vecPos;
     if (!loadConnectors(connectorFile, vecPos)) throw;
@@ -92,7 +176,6 @@ bool GameEngine::loadMap(const string& mapFile, vector<string>& vecMap) {
         vecMap.push_back(str);
     }
     ifs.close();
-
     return vecMap.size() > 0 && vecMap[0].size() > 0 && (vecMap[0].size() == vecMap[vecMap.size() - 1].size());
 }
 
@@ -102,7 +185,6 @@ bool GameEngine::loadConnectors(const std::string& connectorFile, std::vector<Po
     string tempStr;
     std::ifstream ifs;
     ifs.open(connectorFile);
-
     while (getline(ifs, tempStr)) {
         ss.str(tempStr);
         while (ss >> tempPos.y >> tempPos.x) {
@@ -110,26 +192,8 @@ bool GameEngine::loadConnectors(const std::string& connectorFile, std::vector<Po
         }
         ss.clear();
     }
-
     ifs.close();
     return vecPos.size() % 2 == 0;
-}
-
-void GameEngine::loadEntities(const vector<string>& vecMap) {
-    Character* temp = nullptr;
-    for (int i = 0; i < vecMap.size(); ++i) {
-        for (int j = 0; j < vecMap[i].size(); ++j) {
-            if (temp = Character::makeCharacter(vecMap[i][j])) {
-                m_charVec.push_back(temp);
-                m_map->place({j, i}, m_charVec[m_charVec.size() - 1]);
-                temp = nullptr;
-
-                if (vecMap[i][j] == 'C') {
-                    m_playerControl = dynamic_cast<ConsoleController*> (m_charVec[m_charVec.size() - 1]->getController());
-                }
-            }
-        }
-    }
 }
 
 GameEngine::GameEngine(const GameEngine& orig) {
@@ -148,7 +212,6 @@ bool GameEngine::turn() {
         Position charPos = m_map->find(m_charVec[i]);
         Position movement = intToPos(m_charVec[i]->move());
         m_map->find(charPos)->onLeave(m_map->find({charPos.x + movement.x, charPos.y + movement.y}));
-
     }
     m_map->print();
 }
@@ -158,12 +221,9 @@ bool GameEngine::finished() const {
 }
 
 void GameEngine::run() {
-
-
     m_map->print();
     render();
     sf::Event event;
-
     while (m_window->isOpen()) {
         processEvents();
         render();
@@ -279,3 +339,6 @@ void GameEngine::handlePlayerInput(sf::Keyboard::Key& key) {
     else if (key == sf::Keyboard::Escape)
         m_window->close();
 }
+
+
+

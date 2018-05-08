@@ -34,16 +34,21 @@ public:
     virtual void onEnter(Character *c);
     
     virtual char tileToChar() const;
+    
     static Tile* makeTile(char c);
+    static Tile* makeTile(const std::string& name);
+    
     
     virtual void setSign(char c);
     char getSign() const {return m_sign;}
     
-    
+    static bool isSpecialTile(const std::string& str);
     
 private:
     Character* m_character;
     char m_sign;
+    
+    const static std::vector<std::string> specialTiles;
 };
 
 #endif /* TILE_H */
