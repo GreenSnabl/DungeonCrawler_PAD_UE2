@@ -29,10 +29,15 @@ public:
     
     void showInfo() const;
     int getMaxHP() const;
+    int getCurrentHP() const;
+    
+    bool takeDamage(int);
+    
     
     void addItem(Item*);
     int getStrength() const;
     int getStamina() const;
+    bool isAlive() const;
     
     Controller* getController() const {return m_controller;}
     
@@ -40,9 +45,12 @@ public:
     static Character* makeCharacter(const std::string& data);
 private:
     
+    void updateCurrentHP(double);
+    
     int m_strength;
     int m_stamina;
     int m_hitpoints;
+    bool m_alive;
     
     char m_sign;
     Controller* m_controller;

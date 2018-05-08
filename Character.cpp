@@ -17,11 +17,14 @@
 #include <sstream>
 
 
-Character::Character(char sign, Controller* controller) : m_sign{sign}, m_controller{controller} {
+Character::Character(char sign, Controller* controller) : m_sign{sign}, m_controller{controller}
+{
 }
 
-Character::Character(char sign, int strength, int stamina, Controller* controller) : m_sign{sign}, m_strength{strength}, m_stamina{stamina}, m_controller{controller} {
+Character::Character(char sign, int strength, int stamina, Controller* controller) : m_sign{sign}, m_strength{strength}, m_stamina{stamina}, m_controller{controller}
+{
     m_hitpoints = getMaxHP();
+    m_alive = isAlive();
 }
 
 Character::Character(const Character& orig) {
@@ -34,56 +37,75 @@ Character::~Character() {
     delete m_controller;
 }
 
-char Character::getSign() const
-{
+char Character::getSign() const {
     return m_sign;
 }
 
-int Character::move()
-{
+int Character::move() {
     m_controller->move();
 }
 
-
-Character* Character::makeCharacter(const std::string& data)
-{
+Character* Character::makeCharacter(const std::string& data) {
     std::stringstream ss;
     ss << data;
     std::string name, controllerType;
     Position pos;
     char sign;
     int strength, stamina;
-    ss >> name >> sign >> pos.y >> pos.x >> controllerType >> stamina >> strength;  
+    ss >> name >> sign >> pos.y >> pos.x >> controllerType >> stamina >> strength;
     if (controllerType == "StationaryController") {
         return new Character(sign, stamina, strength, new AiController(AiController::STROLL));
-    }
-    else if (controllerType == "ConsoleController") {
+    } else if (controllerType == "ConsoleController") {
         return new Character(sign, stamina, strength, new ConsoleController);
     }
     return nullptr;
 }
 
+int Character::getMaxHP() const {
+    return 20 + getStamina() * 5;
+}
 
-    int Character::getMaxHP() const {return 20 + getStamina() * 5;}
-    
-    int Character::getStamina() const {
-        int stamina = m_stamina;
-        //for (auto it : m_items)
-        //    stamina += *it->modifyStamina(m_stamina);
-        for (int i = 0; i < m_items.size(); ++i) 
-            stamina += m_items[i]->modifyStamina(m_stamina);
-        return stamina;
-    }
-    
-        int Character::getStrength() const {
-        int strength = m_strength;
-        //for (auto it : m_items)
-        //    stamina += *it->modifyStrength(m_strength);
-        for (int i = 0; i < m_items.size(); ++i)
-            strength += m_items[i]->modifyStrength(strength);
-        return strength;
-    }
-        
-  void Character::addItem(Item* item) {
-      m_items.push_back(item);
-  }
+int Character::getCurrentHP() const {
+    return m_hitpoints;
+}
+
+bool Character::isAlive() const {
+    return m_hitpoints > 0;
+}
+
+bool Character::takeDamage(int damage)
+{
+    m_hitpoints -= damage;
+    return !isAlive();
+}
+
+int Character::getStamina() const {
+    int stamina = m_stamina;
+    //for (auto it : m_items)
+    //    stamina += *it->modifyStamina(m_stamina);
+    for (int i = 0; i < m_items.size(); ++i)
+        stamina += m_items[i]->modifyStamina(m_stamina);
+    return stamina;
+}
+
+int Character::getStrength() const {
+    int strength = m_strength;
+    //for (auto it : m_items)
+    //    stamina += *it->modifyStrength(m_strength);
+    for (int i = 0; i < m_items.size(); ++i)
+        strength += m_items[i]->modifyStrength(strength);
+    return strength;
+}
+
+void Character::updateCurrentHP(double percentageOfRemainingHP)
+{
+    m_hitpoints = static_cast<int>(getMaxHP() * percentageOfRemainingHP);    
+}
+
+void Character::addItem(Item* item) {
+    int prevMaxHP = getMaxHP();
+    double percentage = m_hitpoints / static_cast<double>(prevMaxHP);
+    m_items.push_back(item);
+    updateCurrentHP(percentage);
+}
+

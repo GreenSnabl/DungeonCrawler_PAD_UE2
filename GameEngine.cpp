@@ -233,9 +233,14 @@ void GameEngine::renderTile(sf::Vector2f tilePos, sf::Vector2f mapPos) {
 void GameEngine::renderStatus()
 {
     stringstream ss;
-    ss << "Player Stats\n" << "Stamina: " << m_player->getStamina() << "\nStrength: " << m_player->getStrength() << "\nMax HP: " << m_player->getMaxHP();
+    ss      << "Player Stats\n" 
+            << "Stamina: " << m_player->getStamina() 
+            << "\nStrength: " << m_player->getStrength() 
+            << "\nMax HP: " << m_player->getMaxHP()
+            << "\nCurrent HP: " << m_player->getCurrentHP();
+    
     m_status.setString(ss.str());
-    m_status.setPosition(m_map->getWidth() * 32 + 20, m_map->getHeight() * 32 / 3);
+    m_status.setPosition(m_map->getWidth() * 32 + 20, m_map->getHeight() * 32 / 4);
     m_window->draw(m_status);
 }
 

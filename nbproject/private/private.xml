@@ -9,10 +9,12 @@
         <group>
             <file>file:/home/snbl/NetBeansProjects/PAD2_SS2018/DungeonCrawler_PAD_UE2/Tile.h</file>
             <file>file:/home/snbl/NetBeansProjects/PAD2_SS2018/DungeonCrawler_PAD_UE2/Floor.h</file>
+            <file>file:/home/snbl/NetBeansProjects/PAD2_SS2018/DungeonCrawler_PAD_UE2/Character.cpp</file>
             <file>file:/home/snbl/NetBeansProjects/PAD2_SS2018/DungeonCrawler_PAD_UE2/Floor.cpp</file>
             <file>file:/home/snbl/NetBeansProjects/PAD2_SS2018/DungeonCrawler_PAD_UE2/Item.cpp</file>
             <file>file:/home/snbl/NetBeansProjects/PAD2_SS2018/DungeonCrawler_PAD_UE2/GameEngine.cpp</file>
             <file>file:/home/snbl/NetBeansProjects/PAD2_SS2018/DungeonCrawler_PAD_UE2/Item.h</file>
+            <file>file:/home/snbl/NetBeansProjects/PAD2_SS2018/DungeonCrawler_PAD_UE2/Character.h</file>
             <file>file:/home/snbl/NetBeansProjects/PAD2_SS2018/DungeonCrawler_PAD_UE2/DungeonMap.cpp</file>
             <file>file:/home/snbl/NetBeansProjects/PAD2_SS2018/DungeonCrawler_PAD_UE2/Tile.cpp</file>
             <file>file:/home/snbl/NetBeansProjects/PAD2_SS2018/DungeonCrawler_PAD_UE2/GameEngine.h</file>
