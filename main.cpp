@@ -47,7 +47,7 @@ int main(int argc, char** argv) {
     game.run();
   */
     
-    GameEngine game2("Maps/Map1.txt", "Maps/Connector1.txt");
+    GameEngine game2("Maps/level1.txt");
     game2.run();
         
     

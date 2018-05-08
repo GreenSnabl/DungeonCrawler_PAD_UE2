@@ -20,7 +20,8 @@
 Character::Character(char sign, Controller* controller) : m_sign{sign}, m_controller{controller} {
 }
 
-Character::Character(char sign, int strength, int stamina, Controller* controller) : m_sign{sign}, m_strength{strength}, m_stamina{stamina}, m_controller{controller}, m_hitpoints{getMaxHP()} {
+Character::Character(char sign, int strength, int stamina, Controller* controller) : m_sign{sign}, m_strength{strength}, m_stamina{stamina}, m_controller{controller} {
+    m_hitpoints = getMaxHP();
 }
 
 Character::Character(const Character& orig) {
@@ -52,7 +53,7 @@ Character* Character::makeCharacter(const std::string& data)
     Position pos;
     char sign;
     int strength, stamina;
-    ss >> name >> sign >> pos.y >> pos.x >> controllerType >> strength >> stamina;  
+    ss >> name >> sign >> pos.y >> pos.x >> controllerType >> stamina >> strength;  
     if (controllerType == "StationaryController") {
         return new Character(sign, stamina, strength, new AiController(AiController::STROLL));
     }

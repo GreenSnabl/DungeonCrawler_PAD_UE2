@@ -19,9 +19,7 @@
 #..................#
 #..................#
 ####################
-5
 Character @ 5 5 ConsoleController 9 9
 Character % 2 2 StationaryController 3 4
 Greatsword 1 4
-Door 13 9 Lever 11 9
-Trap 10 9
+Switch 5 7 Door 13 9 Door 11 9

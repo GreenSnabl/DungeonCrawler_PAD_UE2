@@ -79,6 +79,11 @@ bool GameEngine::loadFromFile(const std::string& mapFile) {
     for (int i = m_map->getHeight() + 1; i < mapVec.size(); ++i) {
         loadEntity(mapVec[i]);
     }
+    
+    m_mapTex.loadFromFile("./gfx/ProjectUtumno_full.png");
+    m_mapSprite.setTexture(m_mapTex);
+    m_window = new sf::RenderWindow(sf::VideoMode(m_map->getHeight() * m_tileSize.x, m_map->getWidth() * m_tileSize.y), "Game running!");
+    
 }
 
 bool GameEngine::loadEntity(const std::string& data) {
@@ -89,7 +94,8 @@ bool GameEngine::loadEntity(const std::string& data) {
     ss >> name;
 
     if (name == "Character") {
-        ss >> pos.y >> pos.x;
+        char sign;
+        ss >> sign >> pos.y >> pos.x;
         if (Character * character = Character::makeCharacter(data)) {
             m_charVec.push_back(character);
             m_map->place(pos, character);
@@ -125,14 +131,6 @@ bool GameEngine::loadEntity(const std::string& data) {
         m_map->find(pos);
         dynamic_cast<Floor*>(m_map->find(pos))->setItem(Item::makeItem(name));
     }
-
-
-
-
-
-    m_mapTex.loadFromFile("./gfx/ProjectUtumno_full.png");
-    m_mapSprite.setTexture(m_mapTex);
-    m_window = new sf::RenderWindow(sf::VideoMode(m_map->getHeight() * m_tileSize.x, m_map->getWidth() * m_tileSize.y), "Game running!");
 }
 
 
