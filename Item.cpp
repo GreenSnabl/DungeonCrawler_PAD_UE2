@@ -93,6 +93,18 @@ bool Item::isItem(const std::string& str) {
     return false;
 }
 
+Item* Item::makeItem(const std::string& name)
+{
+    if (name == "ArmingSword") return new ArmingSword;
+    if (name == "Greatsword") return new Greatsword;
+    if (name == "Club") return new Club;
+    if (name == "RapierAndDagger") return new RapierAndDagger;
+    if (name == "Gambeson") return new Gambeson;
+    if (name == "MailArmour") return new MailArmour;
+    if (name == "Shield") return new Shield;
+    if (name == "FullPlateArmour") return new FullPlateArmour;
+    return nullptr;
+}
 
 
 

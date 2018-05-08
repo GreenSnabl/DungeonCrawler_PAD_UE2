@@ -28,6 +28,8 @@ Character::Character(const Character& orig) {
 }
 
 Character::~Character() {
+    for (int i = 0; i < m_items.size(); ++i)
+        delete m_items[i];
     delete m_controller;
 }
 
@@ -80,3 +82,7 @@ Character* Character::makeCharacter(const std::string& data)
             strength += m_items[i]->modifyStrength(strength);
         return strength;
     }
+        
+  void Character::addItem(Item* item) {
+      m_items.push_back(item);
+  }

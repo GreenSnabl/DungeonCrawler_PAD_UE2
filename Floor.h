@@ -20,7 +20,11 @@
 class Floor : public Tile {
 public:
     Floor();
-
+    ~Floor();
+    
+    void onEnter(Character* c);
+    
+    Item* takeItem();
     Item* getItem() const;
     void setItem(Item* item);
     

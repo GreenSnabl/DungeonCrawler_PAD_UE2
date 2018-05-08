@@ -13,11 +13,34 @@
 
 #include "Floor.h"
 
-Floor::Floor() : Tile('.') {}
+Floor::Floor() : Tile('.'), m_item{nullptr} {}
+
+Floor::~Floor() {
+    if (m_item)
+    {
+        delete m_item;
+    }
+}
+
+void Floor::onEnter(Character* c)
+{
+    if (getItem())
+    {
+        c->addItem(takeItem());    
+    }
+    Tile::onEnter(c);
+}
 
 
-Item* Floor::getItem() const {
+Item* Floor::getItem() const
+{
     return m_item;
+}
+
+Item* Floor::takeItem() {
+    Item* temp = m_item;
+    m_item = nullptr;
+    return temp;
 }
 void Floor::setItem(Item* item) {
     m_item = item;

@@ -14,6 +14,7 @@
 #include "GameEngine.h"
 #include "Switch.h"
 #include "AiController.h"
+#include "Floor.h"
 #include <fstream>
 #include <sstream>
 #include <iostream>
@@ -113,20 +114,16 @@ bool GameEngine::loadEntity(const std::string& data) {
             m_map->replaceTile(tiles[i].first, tiles[i].second);
         }
         
-       
-           
-        //if(Tile* tile = Tile::makeTile(name, str))
+        if (tiles.size() > 1)
         {
-        }
-        
-        
-        
+            for (int i = 1; i < tiles.size(); ++i)
+            dynamic_cast<Active*>(m_map->find(tiles[0].second))->registerPassive(dynamic_cast<Passive*>(m_map->find(tiles[i].second)));        
+        }        
         
     } else if (Item::isItem(name)) {
-        /* if (Item* item = Item::makeItem(name, str)) 
-        {
-            m_itemVec.push_back(item);
-        } */
+        ss >> pos.y >> pos.x;
+        m_map->find(pos);
+        dynamic_cast<Floor*>(m_map->find(pos))->setItem(Item::makeItem(name));
     }
 
 

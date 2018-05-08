@@ -160,9 +160,11 @@ void DungeonMap::print() const {
 }
 
 bool DungeonMap::replaceTile(const std::string& name, Position pos) {
-    if (Tile* tile = Tile::makeTile(name)) 
-    {
-        delete find(pos);
-        m_tile[pos.y][pos.x] = tile;
+    if (Tile* tempTile = find(pos)) {
+        if (Tile* newTile = Tile::makeTile(name)) 
+        {
+        delete tempTile;
+        m_tile[pos.y][pos.x] = newTile;
+        }
     }
 }

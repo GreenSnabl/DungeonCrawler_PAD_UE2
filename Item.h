@@ -27,7 +27,7 @@ public:
     // virtual int modifyStamina() = 0;
     virtual int modifyStamina(int stamina) = 0;
     
-    
+    static Item* makeItem(const std::string& name);
     static bool isItem(const std::string& str);
     
 private:
