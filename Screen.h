@@ -39,7 +39,7 @@ public:
 
 	void fill(char c);
 
-	void draw() const;
+	void draw();
 
 	void addSubScreen(Screen* subs, Pos2d anchor, const string& name);
 	Screen* getSubScreen(const string& name);
