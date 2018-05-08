@@ -11,41 +11,12 @@
  * Created on April 19, 2018, 8:32 PM
  */
 
-#include <string>
+
 #include "GameEngine.h"
 
-//#include "DungeonMap.h"
-//#include "Character.h"
 
-using std::string;
-
-
-void makeMap(const string& str)
-{
-    DungeonMap map(10,10, str);
-}
-/*
- * 
- */
 int main(int argc, char** argv) {
-/*
-    const string map =  "############"
-                        "####.......#"
-                        "###........#"
-                        "##.........#"
-                        "#......D...#"
-                        "#..........#"
-                        "#..........#"
-                        "#....S.....#"
-                        "#..........#"
-                        "#...#.#....#"
-                        "###...##..##"
-                        "#..........#"
-                        "############";
-    
-    GameEngine game(13, 12, map);
-    game.run();
-  */
+
     
     GameEngine game2("Maps/level1.txt");
     game2.run();

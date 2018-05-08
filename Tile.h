@@ -40,7 +40,7 @@ public:
     
     
     virtual void setSign(char c);
-    char getSign() const {return m_sign;}
+    char getSign() const;
     
     static bool isSpecialTile(const std::string& str);
     

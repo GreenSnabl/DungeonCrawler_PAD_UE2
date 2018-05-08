@@ -28,6 +28,8 @@ public:
     Item* getItem() const;
     void setItem(Item* item);
     
+    char tileToChar() const;
+    
 private:
     Item* m_item;
 };

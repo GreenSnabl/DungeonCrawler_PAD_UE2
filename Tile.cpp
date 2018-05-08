@@ -105,3 +105,7 @@ bool Tile::isSpecialTile(const std::string& str) {
         if (specialTiles[i] == str) return true;
     return false;
 }
+
+
+
+char Tile::getSign() const {return m_sign;}

@@ -1,0 +1,18 @@
+10 10
+##########
+####.S.#.#
+##N....D.#
+####D#####
+#.....G..#
+#...G....#
+####D#####
+#....S...#
+#.C......#
+##########
+
+Character @ 8 2 ConsoleController 9 9
+Character % 2 3 AiController 3 4
+Greatsword 1 4
+PlateMail 5 5
+Switch 7 5 Door 6 4 Door 3 4
+Switch 1 5 Door 2 7

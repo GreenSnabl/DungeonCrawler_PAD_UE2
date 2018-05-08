@@ -45,3 +45,9 @@ Item* Floor::takeItem() {
 void Floor::setItem(Item* item) {
     m_item = item;
 }
+
+char Floor::tileToChar() const
+{
+    if (getItem()) return '*';
+    return Tile::getSign();
+}

@@ -41,6 +41,8 @@ namespace spriteIds {
     static const sf::Vector2f GOBLIN{28, 61};
     static const sf::Vector2f NEUTRAL{1, 59};
     static const sf::Vector2f DRAGON{3, 60};
+    static const sf::Vector2f SWORD{38, 45};
+    static const sf::Vector2f ARMOUR{14, 38};
 
     sf::Vector2f charToSpriteId(char c) {
         switch (c) {
@@ -55,11 +57,17 @@ namespace spriteIds {
             case 'G': return GOBLIN;
             case 'N': return NEUTRAL;
             case 'D': return DRAGON;
+            case '*': return SWORD;
+            case 'A': return ARMOUR;
         }
     }
 };
 
-GameEngine::GameEngine(const std::string& mapFile) : m_tileSize{sf::Vector2f(32, 32)} {
+int GameEngine::m_rounds = 0;
+
+
+GameEngine::GameEngine(const std::string& mapFile) : m_tileSize{sf::Vector2f(32, 32)}
+{
 
     loadFromFile(mapFile);
 }
@@ -79,11 +87,11 @@ bool GameEngine::loadFromFile(const std::string& mapFile) {
     for (int i = m_map->getHeight() + 1; i < mapVec.size(); ++i) {
         loadEntity(mapVec[i]);
     }
-    
+
     m_mapTex.loadFromFile("./gfx/ProjectUtumno_full.png");
     m_mapSprite.setTexture(m_mapTex);
     m_window = new sf::RenderWindow(sf::VideoMode(m_map->getHeight() * m_tileSize.x, m_map->getWidth() * m_tileSize.y), "Game running!");
-    
+
 }
 
 bool GameEngine::loadEntity(const std::string& data) {
@@ -100,98 +108,31 @@ bool GameEngine::loadEntity(const std::string& data) {
             m_charVec.push_back(character);
             m_map->place(pos, character);
             if (controller == "ConsoleController")
-                m_playerControl = dynamic_cast<ConsoleController*>(character->getController());
-            //cout << "Character " << character->m_sign <<  " {" << character->m_pos.x << "," << character->m_pos.y << "} " << character->m_controller << " " << character->m_stamina << " " << character->m_strength << endl;
-        }   
-    } 
-    
-    
-    
+                m_playerControl = dynamic_cast<ConsoleController*> (character->getController());
+       }
+    }
     else if (Tile::isSpecialTile(name)) {
-        
         vector<std::pair<string, Position> > tiles;
         ss.str("");
         ss << data;
-        while (ss.good())
-        {
+        while (ss.good()) {
             ss >> name >> pos.y >> pos.x;
             tiles.push_back(std::make_pair(name, pos));
         }
-        
-        for (int i = 0; i < tiles.size(); ++i)
-        {
+        for (int i = 0; i < tiles.size(); ++i) {
             m_map->replaceTile(tiles[i].first, tiles[i].second);
         }
-        
-        if (tiles.size() > 1)
-        {
+        if (tiles.size() > 1) {
             for (int i = 1; i < tiles.size(); ++i)
-            dynamic_cast<Active*>(m_map->find(tiles[0].second))->registerPassive(dynamic_cast<Passive*>(m_map->find(tiles[i].second)));        
-        }        
-        
-    } else if (Item::isItem(name)) {
+                dynamic_cast<Active*> (m_map->find(tiles[0].second))->registerPassive(dynamic_cast<Passive*> (m_map->find(tiles[i].second)));
+        }    
+    } 
+    
+    else if (Item::isItem(name)) {
         ss >> pos.y >> pos.x;
         m_map->find(pos);
-        dynamic_cast<Floor*>(m_map->find(pos))->setItem(Item::makeItem(name));
+        dynamic_cast<Floor*> (m_map->find(pos))->setItem(Item::makeItem(name));
     }
-}
-
-
-
-
-
-
-
-
-GameEngine::GameEngine(const std::string& mapFile, const std::string& connectorFile) : m_tileSize{sf::Vector2f(32, 32)}
-{
-    vector<string> vecMap;
-    if (!loadMap(mapFile, vecMap)) throw;
-
-    m_map = new DungeonMap(vecMap.size(), vecMap[0].size(), vecMap);
-
-    //loadEntities(vecMap);
-
-    vector<Position> vecPos;
-    if (!loadConnectors(connectorFile, vecPos)) throw;
-    for (int i = 0; i < vecPos.size() - 1; i = i + 2) {
-        dynamic_cast<Active*> (m_map->find(vecPos[i]))->registerPassive(dynamic_cast<Passive*> (m_map->find(vecPos[i + 1])));
-    }
-
-    m_mapTex.loadFromFile("./gfx/ProjectUtumno_full.png");
-    m_mapSprite.setTexture(m_mapTex);
-
-    m_window = new sf::RenderWindow(sf::VideoMode(m_map->getHeight() * m_tileSize.x, m_map->getWidth() * m_tileSize.y), "Game running!");
-
-}
-
-bool GameEngine::loadMap(const string& mapFile, vector<string>& vecMap) {
-    string str = "";
-    std::ifstream ifs;
-
-    ifs.open(mapFile);
-    while (getline(ifs, str)) {
-        vecMap.push_back(str);
-    }
-    ifs.close();
-    return vecMap.size() > 0 && vecMap[0].size() > 0 && (vecMap[0].size() == vecMap[vecMap.size() - 1].size());
-}
-
-bool GameEngine::loadConnectors(const std::string& connectorFile, std::vector<Position>& vecPos) {
-    Position tempPos;
-    std::stringstream ss;
-    string tempStr;
-    std::ifstream ifs;
-    ifs.open(connectorFile);
-    while (getline(ifs, tempStr)) {
-        ss.str(tempStr);
-        while (ss >> tempPos.y >> tempPos.x) {
-            vecPos.push_back(tempPos);
-        }
-        ss.clear();
-    }
-    ifs.close();
-    return vecPos.size() % 2 == 0;
 }
 
 GameEngine::GameEngine(const GameEngine& orig) {
@@ -228,9 +169,6 @@ void GameEngine::run() {
     }
 }
 
-
-int GameEngine::m_rounds = 0;
-
 Position intToPos(int dir) {
     switch (dir) {
         case 1: return {-1, 1};
@@ -251,7 +189,7 @@ void GameEngine::render() {
     for (int i = 0; i < m_map->getHeight(); ++i) {
         for (int j = 0; j < m_map->getWidth(); ++j) {
 
-            tilePos = spriteIds::charToSpriteId(m_map->find({j, i})->getSign());
+            tilePos = spriteIds::charToSpriteId(m_map->find({j, i})->tileToChar());
             renderTile(tilePos,{static_cast<float> (j), static_cast<float> (i)});
             m_window->draw(m_mapSprite);
         }

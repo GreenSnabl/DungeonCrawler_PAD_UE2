@@ -106,10 +106,8 @@ Item* Item::makeItem(const std::string& name)
     return nullptr;
 }
 
-
-
 const std::vector<std::string> Item::items{
-    "GreatSword",
+    "Greatsword",
     "ArmingSword",
     "Club",
     "RapierAndDagger",

@@ -33,6 +33,7 @@ public:
 private:
     Item(const Item& orig);
     
+    
     const static std::vector<std::string> items;
 };
 
