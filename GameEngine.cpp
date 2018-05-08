@@ -88,17 +88,19 @@ bool GameEngine::loadFromFile(const std::string& mapFile) {
 
 bool GameEngine::loadEntity(const std::string& data) {
     std::stringstream ss;
-    std::string name;
+    std::string name, controller;
     Position pos;
     ss << data;
     ss >> name;
 
     if (name == "Character") {
         char sign;
-        ss >> sign >> pos.y >> pos.x;
+        ss >> sign >> pos.y >> pos.x >> controller;
         if (Character * character = Character::makeCharacter(data)) {
             m_charVec.push_back(character);
             m_map->place(pos, character);
+            if (controller == "ConsoleController")
+                m_playerControl = dynamic_cast<ConsoleController*>(character->getController());
             //cout << "Character " << character->m_sign <<  " {" << character->m_pos.x << "," << character->m_pos.y << "} " << character->m_controller << " " << character->m_stamina << " " << character->m_strength << endl;
         }   
     } 
@@ -108,7 +110,8 @@ bool GameEngine::loadEntity(const std::string& data) {
     else if (Tile::isSpecialTile(name)) {
         
         vector<std::pair<string, Position> > tiles;
-        ss >> pos.y >> pos.x;
+        ss.str("");
+        ss << data;
         while (ss.good())
         {
             ss >> name >> pos.y >> pos.x;
