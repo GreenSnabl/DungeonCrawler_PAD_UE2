@@ -70,6 +70,18 @@ GameEngine::GameEngine(const std::string& mapFile) : m_tileSize{sf::Vector2f(32,
 {
 
     loadFromFile(mapFile);
+    
+    m_font.loadFromFile("./font/UbuntuMono-B.ttf");
+    m_status.setFont(m_font);
+    m_status.setColor(sf::Color(255,255,255));
+    m_status.setCharacterSize(30);
+    
+    m_mapTex.loadFromFile("./gfx/ProjectUtumno_full.png");
+    m_mapSprite.setTexture(m_mapTex);
+    
+    
+    //m_window = new sf::RenderWindow(sf::VideoMode(1024, 640), "Game running!");    
+    m_window = new sf::RenderWindow(sf::VideoMode(m_map->getHeight() * m_tileSize.x + 300.f, m_map->getWidth() * m_tileSize.y), "Game running!");    
 }
 
 bool GameEngine::loadFromFile(const std::string& mapFile) {
@@ -87,11 +99,6 @@ bool GameEngine::loadFromFile(const std::string& mapFile) {
     for (int i = m_map->getHeight() + 1; i < mapVec.size(); ++i) {
         loadEntity(mapVec[i]);
     }
-
-    m_mapTex.loadFromFile("./gfx/ProjectUtumno_full.png");
-    m_mapSprite.setTexture(m_mapTex);
-    m_window = new sf::RenderWindow(sf::VideoMode(m_map->getHeight() * m_tileSize.x, m_map->getWidth() * m_tileSize.y), "Game running!");
-
 }
 
 bool GameEngine::loadEntity(const std::string& data) {
@@ -107,8 +114,10 @@ bool GameEngine::loadEntity(const std::string& data) {
         if (Character * character = Character::makeCharacter(data)) {
             m_charVec.push_back(character);
             m_map->place(pos, character);
-            if (controller == "ConsoleController")
+            if (controller == "ConsoleController") {
                 m_playerControl = dynamic_cast<ConsoleController*> (character->getController());
+                m_player = character;
+            }
        }
     }
     else if (Tile::isSpecialTile(name)) {
@@ -184,7 +193,7 @@ Position intToPos(int dir) {
 }
 
 void GameEngine::render() {
-    sf::Vector2f tilePos;
+    sf::Vector2f tilePos; 
     m_window->clear();
     for (int i = 0; i < m_map->getHeight(); ++i) {
         for (int j = 0; j < m_map->getWidth(); ++j) {
@@ -199,7 +208,9 @@ void GameEngine::render() {
         tilePos = spriteIds::charToSpriteId(m_charVec[i]->getSign());
         renderChar(tilePos,{static_cast<float> (charPos.x), static_cast<float> (charPos.y)});
         m_window->draw(m_mapSprite);
-    }
+    }    
+    renderStatus();
+    
     m_window->display();
 }
 
@@ -219,8 +230,18 @@ void GameEngine::renderTile(sf::Vector2f tilePos, sf::Vector2f mapPos) {
     m_window->draw(m_mapSprite);
 }
 
+void GameEngine::renderStatus()
+{
+    stringstream ss;
+    ss << "Player Stats\n" << "Stamina: " << m_player->getStamina() << "\nStrength: " << m_player->getStrength() << "\nMax HP: " << m_player->getMaxHP();
+    m_status.setString(ss.str());
+    m_status.setPosition(m_map->getWidth() * 32 + 20, m_map->getHeight() * 32 / 3);
+    m_window->draw(m_status);
+}
+
 void GameEngine::renderChar(sf::Vector2f tilePos, sf::Vector2f mapPos) {
 
+        
     int posX, posY, width, height;
     posX = tilePos.x * m_tileSize.x;
     posY = tilePos.y * m_tileSize.y;

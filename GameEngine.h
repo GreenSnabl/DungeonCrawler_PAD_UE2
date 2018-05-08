@@ -39,6 +39,7 @@ private:
     void render();
     void renderTile(sf::Vector2f tilePos, sf::Vector2f mapPos);
     void renderChar(sf::Vector2f tilePos, sf::Vector2f mapPos);
+    void renderStatus();
     void handlePlayerInput(sf::Keyboard::Key&);
     
     bool loadFromFile(const std::string& mapFile);
@@ -53,7 +54,10 @@ private:
     sf::Texture m_mapTex;
     sf::Sprite m_mapSprite;
     sf::RenderWindow *m_window;
+    sf::Text m_status;
+    sf::Font m_font;
     
+    Character* m_player;
     ConsoleController* m_playerControl;
 
     GameEngine(const GameEngine& orig);
