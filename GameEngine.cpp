@@ -96,19 +96,17 @@ bool GameEngine::loadEntity(const std::string& data) {
     if (name == "Character") {
         char sign;
         ss >> sign >> pos.y >> pos.x;
-        if (Character * character = Character::makeCharacter(data)) {
+        if (Character* character = Character::makeCharacter(data)) {
             m_charVec.push_back(character);
             m_map->place(pos, character);
             //cout << "Character " << character->m_sign <<  " {" << character->m_pos.x << "," << character->m_pos.y << "} " << character->m_controller << " " << character->m_stamina << " " << character->m_strength << endl;
         }   
     } 
-    
-    
-    
-    else if (Tile::isSpecialTile(name)) {
         
+    if (Tile::isSpecialTile(name)) {
+        ss.str("");
+        ss << data;
         vector<std::pair<string, Position> > tiles;
-        ss >> pos.y >> pos.x;
         while (ss.good())
         {
             ss >> name >> pos.y >> pos.x;
