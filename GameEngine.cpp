@@ -46,11 +46,10 @@ namespace spriteIds {
     static const sf::Vector2f DRAGON{3, 60};
     static const sf::Vector2f SWORD{38, 45};
     static const sf::Vector2f ARMOUR{14, 38};
-    static const sf::Vector2f LEVER{1,1};
-    static const sf::Vector2f LEVER_USED{6,1};
+    static const sf::Vector2f LEVER{1, 1};
+    static const sf::Vector2f LEVER_USED{6, 1};
     static const sf::Vector2f TRAP_USED{8, 13};
-    
-    
+
     sf::Vector2f charToSpriteId(char c) {
         switch (c) {
             case '.': return FLOOR;
@@ -80,18 +79,18 @@ GameEngine::GameEngine(const std::string& mapFile) : m_tileSize{sf::Vector2f(32,
 {
 
     loadFromFile(mapFile);
-    
+
     m_font.loadFromFile("./font/UbuntuMono-B.ttf");
     m_status.setFont(m_font);
-    m_status.setColor(sf::Color(255,255,255));
+    m_status.setColor(sf::Color(255, 255, 255));
     m_status.setCharacterSize(30);
-    
+
     m_mapTex.loadFromFile("./gfx/ProjectUtumno_full.png");
     m_mapSprite.setTexture(m_mapTex);
-    
-    
+
+
     //m_window = new sf::RenderWindow(sf::VideoMode(1024, 640), "Game running!");    
-    m_window = new sf::RenderWindow(sf::VideoMode(m_map->getHeight() * m_tileSize.x + 300.f, m_map->getWidth() * m_tileSize.y), "Game running!");    
+    m_window = new sf::RenderWindow(sf::VideoMode(m_map->getHeight() * m_tileSize.x + 300.f, m_map->getWidth() * m_tileSize.y), "Game running!");
 }
 
 bool GameEngine::loadFromFile(const std::string& mapFile) {
@@ -128,9 +127,8 @@ bool GameEngine::loadEntity(const std::string& data) {
                 m_playerControl = dynamic_cast<ConsoleController*> (character->getController());
                 m_player = character;
             }
-       }
-    }
-    else if (Tile::isSpecialTile(name)) {
+        }
+    } else if (Tile::isSpecialTile(name)) {
         vector<std::pair<string, Position> > tiles;
         ss.str("");
         ss << data;
@@ -144,9 +142,9 @@ bool GameEngine::loadEntity(const std::string& data) {
         if (tiles.size() > 1) {
             for (int i = 1; i < tiles.size(); ++i)
                 dynamic_cast<Active*> (m_map->find(tiles[0].second))->registerPassive(dynamic_cast<Passive*> (m_map->find(tiles[i].second)));
-        }    
-    } 
-    
+        }
+    }
+
     else if (Item::isItem(name)) {
         ss >> pos.y >> pos.x;
         m_map->find(pos);
@@ -166,9 +164,29 @@ GameEngine::~GameEngine() {
 }
 
 bool GameEngine::turn() {
+    
+    for (int i = 0; i < m_charVec.size(); ++i)
+    {
+        if (m_charVec[i]->getCurrentHP() <= 0)
+        {
+            if (ConsoleController* c = dynamic_cast<ConsoleController*>(m_charVec[i]->getController())) 
+            {
+                enterMenuState(true);
+            }
+            else {
+            delete m_charVec[i];
+            m_charVec.erase(m_charVec.begin() + i);
+            }
+        }
+    }
+     
+
     for (int i = 0; i < m_charVec.size(); ++i) {
         Position charPos = m_map->find(m_charVec[i]);
         Position movement = intToPos(m_charVec[i]->move());
+
+        // Hier kommt die Kampfphase hin
+
         m_map->find(charPos)->onLeave(m_map->find({charPos.x + movement.x, charPos.y + movement.y}));
     }
     m_map->print();
@@ -204,7 +222,7 @@ Position intToPos(int dir) {
 }
 
 void GameEngine::render() {
-    sf::Vector2f tilePos; 
+    sf::Vector2f tilePos;
     m_window->clear();
     for (int i = 0; i < m_map->getHeight(); ++i) {
         for (int j = 0; j < m_map->getWidth(); ++j) {
@@ -219,9 +237,9 @@ void GameEngine::render() {
         tilePos = spriteIds::charToSpriteId(m_charVec[i]->getSign());
         renderChar(tilePos,{static_cast<float> (charPos.x), static_cast<float> (charPos.y)});
         m_window->draw(m_mapSprite);
-    }    
+    }
     renderStatus();
-    
+
     m_window->display();
 }
 
@@ -241,23 +259,26 @@ void GameEngine::renderTile(sf::Vector2f tilePos, sf::Vector2f mapPos) {
     m_window->draw(m_mapSprite);
 }
 
-void GameEngine::renderStatus()
-{
+void GameEngine::setStatus() {
     stringstream ss;
-    ss      << "Player Stats\n" 
-            << "Stamina: " << m_player->getStamina() 
-            << "\nStrength: " << m_player->getStrength() 
+    ss << "Player Stats\n"
+            << "Stamina: " << m_player->getStamina()
+            << "\nStrength: " << m_player->getStrength()
             << "\nMax HP: " << m_player->getMaxHP()
             << "\nCurrent HP: " << m_player->getCurrentHP();
-    
+
     m_status.setString(ss.str());
+}
+
+void GameEngine::renderStatus() {
+    setStatus();
     m_status.setPosition(m_map->getWidth() * 32 + 20, m_map->getHeight() * 32 / 4);
     m_window->draw(m_status);
 }
 
 void GameEngine::renderChar(sf::Vector2f tilePos, sf::Vector2f mapPos) {
 
-        
+
     int posX, posY, width, height;
     posX = tilePos.x * m_tileSize.x;
     posY = tilePos.y * m_tileSize.y;
@@ -311,10 +332,83 @@ void GameEngine::handlePlayerInput(sf::Keyboard::Key& key) {
         m_playerControl->set_next_move(9);
     else if (key == sf::Keyboard::Escape)
         m_window->close();
+    else if (key == sf::Keyboard::Num0)
+        enterMenuState(false);
+}
+
+void GameEngine::update() {
+    //if (m_player->getCurrentHP() <= 0)
+    //    m_window->close();
 }
 
 
-void GameEngine::update() {
-    if (m_player->getCurrentHP() <= 0)
-        m_window->close();
+
+void GameEngine::enterMenuState(bool gameEnd) {
+    setStatus();
+
+    sf::Text showInfo;
+    sf::Text back;
+    sf::Text end;
+    sf::Text dead;
+
+    if (gameEnd) {
+    dead.setFont(m_font);
+    dead.setCharacterSize(30);
+    dead.setString("Spielende. Du bist tot");
+    dead.setPosition(300, 50);
+    }
+    end.setFont(m_font);
+    end.setCharacterSize(30);
+    end.setString("0. Spiel beenden");
+    end.setPosition(40, 100);
+
+    back.setFont(m_font);
+    back.setCharacterSize(30);
+    back.setString("1. Zurueck zum Spiel");
+    back.setPosition(40, 150);
+
+    showInfo.setFont(m_font);
+    showInfo.setCharacterSize(30);
+    showInfo.setPosition(40, 200);
+    showInfo.setString("2. Spielerinformationen anzeigen");
+
+    m_status.setPosition(400, 250);
+    
+    sf::Event event;
+    
+    bool showStatus = false;
+
+    while (m_window->isOpen()) {
+        while (m_window->pollEvent(event)) {
+            m_window->clear();
+            m_window->draw(end);
+            m_window->draw(back);
+            m_window->draw(showInfo);
+            if (showStatus) m_window->draw(m_status);
+            if (gameEnd) m_window->draw(dead);
+            m_window->display();
+
+            if (event.type == sf::Event::KeyPressed) {
+                if (event.key.code == sf::Keyboard::Num0 || event.key.code == sf::Keyboard::Escape) {
+                    m_window->close();
+                } 
+                else if (event.key.code == sf::Keyboard::Num1)
+                {
+                    m_window->clear();
+                    return;                
+                }
+                else if (event.key.code == sf::Keyboard::Num2)
+                {
+                    showStatus = !showStatus;
+                }
+                
+            }
+            else if (event.type == sf::Event::Closed)
+            {
+                m_window->close();
+            }
+        }
+    }
+
+
 }

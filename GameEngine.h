@@ -37,14 +37,23 @@ private:
     void processEvents();
     void update();
     
+    bool loadFromFile(const std::string& mapFile);
+    bool loadEntity(const std::string& data);
+
+
+
     void render();
     void renderTile(sf::Vector2f tilePos, sf::Vector2f mapPos);
     void renderChar(sf::Vector2f tilePos, sf::Vector2f mapPos);
+    
+    void setStatus();
     void renderStatus();
+    
     void handlePlayerInput(sf::Keyboard::Key&);
     
-    bool loadFromFile(const std::string& mapFile);
-    bool loadEntity(const std::string& data);
+    
+    void enterMenuState(bool gameEnd);
+
     
     std::vector<Character*> m_charVec;
     DungeonMap* m_map;
