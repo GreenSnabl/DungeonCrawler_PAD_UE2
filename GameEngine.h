@@ -35,6 +35,7 @@ private:
     bool finished() const;
     bool turn();
     void processEvents();
+    void update();
     
     void render();
     void renderTile(sf::Vector2f tilePos, sf::Vector2f mapPos);

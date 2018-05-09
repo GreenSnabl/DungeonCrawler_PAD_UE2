@@ -4,6 +4,9 @@
  * and open the template in the editor.
  */
 
+#include <SFML/System/Vector2.hpp>
+
+
 /* 
  * File:   GameEngine.cpp
  * Author: den
@@ -43,7 +46,11 @@ namespace spriteIds {
     static const sf::Vector2f DRAGON{3, 60};
     static const sf::Vector2f SWORD{38, 45};
     static const sf::Vector2f ARMOUR{14, 38};
-
+    static const sf::Vector2f LEVER{1,1};
+    static const sf::Vector2f LEVER_USED{6,1};
+    static const sf::Vector2f TRAP_USED{8, 13};
+    
+    
     sf::Vector2f charToSpriteId(char c) {
         switch (c) {
             case '.': return FLOOR;
@@ -59,6 +66,9 @@ namespace spriteIds {
             case 'D': return DRAGON;
             case '*': return SWORD;
             case 'A': return ARMOUR;
+            case 'L': return LEVER;
+            case 'l': return LEVER_USED;
+            case 't': return TRAP_USED;
         }
     }
 };
@@ -174,6 +184,7 @@ void GameEngine::run() {
     sf::Event event;
     while (m_window->isOpen()) {
         processEvents();
+        update();
         render();
     }
 }
@@ -303,4 +314,7 @@ void GameEngine::handlePlayerInput(sf::Keyboard::Key& key) {
 }
 
 
-
+void GameEngine::update() {
+    if (m_player->getCurrentHP() <= 0)
+        m_window->close();
+}

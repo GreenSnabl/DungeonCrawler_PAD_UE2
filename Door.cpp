@@ -21,8 +21,8 @@ Door::Door() : Passive('X'), m_isOpen{false}
 Door::~Door() {}
 
 void Door::notify() {
-    setSign('/');
-    m_isOpen = true;
+    m_isOpen = !m_isOpen;
+    m_isOpen ? setSign('/') : setSign('X');
 }
 
 bool Door::canEnter() const {

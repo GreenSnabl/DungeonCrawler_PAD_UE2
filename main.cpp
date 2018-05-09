@@ -18,7 +18,7 @@
 int main(int argc, char** argv) {
 
     
-    GameEngine game2("Maps/level1.txt");
+    GameEngine game2("Maps/level2.txt");
     game2.run();
         
     

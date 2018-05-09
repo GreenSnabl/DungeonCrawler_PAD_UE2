@@ -16,6 +16,8 @@
 #include "Wall.h"
 #include "Switch.h"
 #include "Door.h"
+#include "Lever.h"
+#include "Trap.h"
 
 
 Tile::Tile(char sign) : m_character{nullptr}, m_sign{sign}
@@ -80,6 +82,8 @@ Tile* Tile::makeTile(const std::string& name)
 {
     if (name == "Switch") return new Switch;
     else if (name == "Door") return new Door;
+    else if (name == "Trap") return new Trap;
+    else if (name == "Lever") return new Lever;
     return nullptr;
 }
 

@@ -5,29 +5,27 @@
  */
 
 /* 
- * File:   Switch.h
- * Author: snbl
+ * File:   Trap.h
+ * Author: den
  *
- * Created on April 27, 2018, 4:39 PM
+ * Created on May 9, 2018, 8:29 AM
  */
 
-#ifndef SWITCH_H
-#define SWITCH_H
+#ifndef TRAP_H
+#define TRAP_H
 
 #include "Active.h"
 
-class Switch : public Active {
+class Trap  : public Active {
 public:
-    Switch();
-    ~Switch();
+    Trap();
+    ~Trap();
     void use();
     virtual void onEnter(Character* c);
 private:
     bool m_wasUsed;
-    Switch(const Switch& orig);
+    Trap(const Trap& orig);
 };
 
-
-
-#endif /* SWITCH_H */
+#endif /* TRAP_H */
 

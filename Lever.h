@@ -5,29 +5,29 @@
  */
 
 /* 
- * File:   Switch.h
- * Author: snbl
+ * File:   Lever.h
+ * Author: den
  *
- * Created on April 27, 2018, 4:39 PM
+ * Created on May 9, 2018, 8:20 AM
  */
 
-#ifndef SWITCH_H
-#define SWITCH_H
+#ifndef LEVER_H
+#define LEVER_H
 
 #include "Active.h"
 
-class Switch : public Active {
+class Lever : public Active {
 public:
-    Switch();
-    ~Switch();
+    Lever();
+    virtual ~Lever();
     void use();
     virtual void onEnter(Character* c);
+
 private:
     bool m_wasUsed;
-    Switch(const Switch& orig);
+    
+    Lever(const Lever& orig);
 };
 
-
-
-#endif /* SWITCH_H */
+#endif /* LEVER_H */
 

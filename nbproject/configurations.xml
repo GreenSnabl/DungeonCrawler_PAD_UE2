@@ -14,10 +14,12 @@
       <itemPath>Floor.h</itemPath>
       <itemPath>GameEngine.h</itemPath>
       <itemPath>Item.h</itemPath>
+      <itemPath>Lever.h</itemPath>
       <itemPath>Passive.h</itemPath>
       <itemPath>Screen.h</itemPath>
       <itemPath>Switch.h</itemPath>
       <itemPath>Tile.h</itemPath>
+      <itemPath>Trap.h</itemPath>
       <itemPath>Wall.h</itemPath>
     </logicalFolder>
     <logicalFolder name="ResourceFiles"
@@ -37,10 +39,12 @@
       <itemPath>Floor.cpp</itemPath>
       <itemPath>GameEngine.cpp</itemPath>
       <itemPath>Item.cpp</itemPath>
+      <itemPath>Lever.cpp</itemPath>
       <itemPath>Passive.cpp</itemPath>
       <itemPath>Screen.cpp</itemPath>
       <itemPath>Switch.cpp</itemPath>
       <itemPath>Tile.cpp</itemPath>
+      <itemPath>Trap.cpp</itemPath>
       <itemPath>Wall.cpp</itemPath>
       <itemPath>main.cpp</itemPath>
     </logicalFolder>
@@ -123,6 +127,10 @@
       </item>
       <item path="Item.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="Lever.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Lever.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="Passive.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="Passive.h" ex="false" tool="3" flavor2="0">
@@ -138,6 +146,10 @@
       <item path="Tile.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="Tile.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Trap.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Trap.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="Wall.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -207,6 +219,10 @@
       </item>
       <item path="Item.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="Lever.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Lever.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="Passive.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="Passive.h" ex="false" tool="3" flavor2="0">
@@ -222,6 +238,10 @@
       <item path="Tile.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="Tile.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Trap.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Trap.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="Wall.cpp" ex="false" tool="1" flavor2="0">
       </item>
