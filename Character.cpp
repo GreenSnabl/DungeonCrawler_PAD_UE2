@@ -75,7 +75,9 @@ bool Character::isAlive() const {
 
 bool Character::takeDamage(int damage)
 {
-    m_hitpoints -= damage;
+    if (m_hitpoints - damage > 0) m_hitpoints -= damage;
+    else m_hitpoints = 0;
+    
     return !isAlive();
 }
 

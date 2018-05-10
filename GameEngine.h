@@ -33,7 +33,7 @@ public:
     
 private:
     bool finished() const;
-    bool turn();
+    void turn();
     void processEvents();
     void update();
     

@@ -163,7 +163,7 @@ GameEngine::~GameEngine() {
     delete m_window;
 }
 
-bool GameEngine::turn() {
+void GameEngine::turn() {
     
     for (int i = 0; i < m_charVec.size(); ++i)
     {
@@ -172,6 +172,7 @@ bool GameEngine::turn() {
             if (ConsoleController* c = dynamic_cast<ConsoleController*>(m_charVec[i]->getController())) 
             {
                 enterMenuState(true);
+                return;
             }
             else {
             delete m_charVec[i];

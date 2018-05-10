@@ -202,14 +202,11 @@ bool DungeonMap::replaceTile(const std::string& name, Position pos) {
 
 bool DungeonMap::checkLine(Position from, Position to) const
 {
-    int dy = to.y - from.y;
-    int dx = to.x - from.x;
-    int nx = std::abs(dx); 
-    int ny = std::abs(dy);
-    
+    double dy = to.y - from.y;
+    double dx = to.x - from.x;
+    double nx = std::abs(dx); double ny = std::abs(dy);
     int sign_x = dx > 0 ? 1 : -1;
     int sign_y = dy > 0 ? 1 : -1;
-    
     double err = 0.5;
     
     Position p{from.x, from.y};
@@ -219,17 +216,17 @@ bool DungeonMap::checkLine(Position from, Position to) const
     while (ix < nx || iy < ny)
     {
 //        if (((err + ix) / nx) == ((err + iy) / ny)) {
-        if (((err + ix) / static_cast<double>(nx)) == ((err + iy) / static_cast<double>(ny))) {
+        if (((err + ix) / nx) == ((err + iy) / ny)) {
             p.x += sign_x;
             p.y += sign_y;
             ix++;
             iy++;
         }
-        else if (((err + ix) / static_cast<double>(nx)) < ((err + iy) / static_cast<double>(ny))) {
+        else if (((err + ix) / nx) < ((err + iy) / ny)) {
             p.x += sign_x;
             ix++;        
         }
-        else if (((err + ix) / static_cast<double>(nx)) > ((err + iy) / static_cast<double>(ny))) 
+        else if (((err + ix) / nx) > ((err + iy) / ny)) 
         {
             p.y += sign_y;
             iy++;
