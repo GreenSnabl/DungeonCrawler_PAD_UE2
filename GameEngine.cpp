@@ -72,8 +72,6 @@ namespace spriteIds {
     }
 };
 
-int GameEngine::m_rounds = 0;
-
 
 GameEngine::GameEngine(const std::string& mapFile) : m_tileSize{sf::Vector2f(32, 32)}
 {
@@ -119,7 +117,7 @@ bool GameEngine::loadEntity(const std::string& data) {
 
     if (name == "Character") {
         char sign;
-        ss >> sign >> pos.y >> pos.x >> controller;
+        ss >> sign >> pos >> controller;
         if (Character * character = Character::makeCharacter(data)) {
             m_charVec.push_back(character);
             m_map->place(pos, character);
@@ -133,7 +131,7 @@ bool GameEngine::loadEntity(const std::string& data) {
         ss.str("");
         ss << data;
         while (ss.good()) {
-            ss >> name >> pos.y >> pos.x;
+            ss >> name >> pos;
             tiles.push_back(std::make_pair(name, pos));
         }
         for (int i = 0; i < tiles.size(); ++i) {
@@ -146,7 +144,7 @@ bool GameEngine::loadEntity(const std::string& data) {
     }
 
     else if (Item::isItem(name)) {
-        ss >> pos.y >> pos.x;
+        ss >> pos;
         m_map->find(pos);
         dynamic_cast<Floor*> (m_map->find(pos))->setItem(Item::makeItem(name));
     }
@@ -193,9 +191,6 @@ void GameEngine::turn() {
     m_map->print(m_map->find(m_player));
 }
 
-bool GameEngine::finished() const {
-    return m_rounds > 20;
-}
 
 void GameEngine::run() {
     m_map->print(m_map->find(m_player));
@@ -305,8 +300,6 @@ void GameEngine::processEvents() {
             case sf::Event::KeyPressed:
                 handlePlayerInput(event.key.code);
                 turn();
-                //m_map->print(m_map->find(m_player);
-                ++m_rounds;
                 break;
             case sf::Event::Closed:
                 m_window->close();

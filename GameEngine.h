@@ -32,7 +32,6 @@ public:
     void run();
     
 private:
-    bool finished() const;
     void turn();
     void processEvents();
     void update();
@@ -57,8 +56,6 @@ private:
     
     std::vector<Character*> m_charVec;
     DungeonMap* m_map;
-
-    static int m_rounds;
     
     const sf::Vector2u m_tileSize;    
     sf::Texture m_mapTex;

@@ -22,20 +22,15 @@
 struct Position{
     int x;
     int y;
-    
-//    friend std::ostream& operator<<(std::ostream& os) const { os << "{" << this->x << "," << this->y << "}"; return os;}
-    friend std::ostream& operator<<(std::ostream& os, const Position& pos) { os << pos.y << pos.x; return os;}
-    friend std::istream& operator>>(std::istream& is, Position& pos) {is >> pos.x >> pos.y; return is;} 
+
+    friend std::ostream& operator<<(std::ostream& os, const Position& pos);
+    friend std::istream& operator>>(std::istream& is, Position& pos);
 };
 
 class DungeonMap {
 public:
-    DungeonMap(int height, int width);
-    DungeonMap(int height, int width, const std::string& data);
-    DungeonMap(int height, int width, const std::vector<std::string>& data);
     DungeonMap(const std::vector<std::string>& dataVec);
-    
-    virtual ~DungeonMap();
+    ~DungeonMap();
     
     void place(Position pos, Character* c);
     
