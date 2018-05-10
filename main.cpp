@@ -14,13 +14,14 @@
 
 #include "GameEngine.h"
 
+#include <iostream>
+using std::cout;
+using std::cin;
 
 int main(int argc, char** argv) {
 
-    
     GameEngine game2("Maps/level2.txt");
     game2.run();
-        
     
     return 0;
 }
