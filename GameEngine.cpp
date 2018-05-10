@@ -260,7 +260,6 @@ void GameEngine::renderTile(sf::Vector2f tilePos, sf::Vector2f mapPos) {
     height = m_tileSize.y;
     m_mapSprite.setTextureRect({posX, posY, width, height});
 
-
     //m_mapSprite.setTextureRect({tilePos.x * m_tileSize.x, tilePos.y * m_tileSize.y, m_tileSize.x, m_tileSize.y});
     m_mapSprite.setPosition(mapPos.x * m_tileSize.x, mapPos.y * m_tileSize.y);
     m_window->draw(m_mapSprite);
@@ -416,6 +415,4 @@ void GameEngine::enterMenuState(bool gameEnd) {
             }
         }
     }
-
-
 }
