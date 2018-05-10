@@ -20,7 +20,8 @@
 #include "Trap.h"
 
 
-Tile::Tile(char sign) : m_character{nullptr}, m_sign{sign}
+Tile::Tile(char sign, bool transparent) : m_character{nullptr}, m_sign{sign}, m_transparent{transparent}
+
 {
 }
 
@@ -113,3 +114,13 @@ bool Tile::isSpecialTile(const std::string& str) {
 
 
 char Tile::getSign() const {return m_sign;}
+
+void Tile::setTransparency(bool transparent)
+{
+    m_transparent = transparent;
+}
+
+bool Tile::isTransparent() const
+{
+    return m_transparent;
+}

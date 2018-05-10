@@ -14,7 +14,7 @@
 #include "Door.h"
 
 
-Door::Door() : Passive('X'), m_isOpen{false} 
+Door::Door() : Passive('X', false), m_isOpen{false} 
 {
 }
 
@@ -22,11 +22,17 @@ Door::~Door() {}
 
 void Door::notify() {
     m_isOpen = !m_isOpen;
-    m_isOpen ? setSign('/') : setSign('X');
+    if (m_isOpen) {
+        setSign('/');
+        Tile::setTransparency(true);
+    }
+    else {
+        setSign('X');
+        Tile::setTransparency(false);
+    }
 }
 
 bool Door::canEnter() const {
     if (m_isOpen) return Tile::canEnter();
     else return false;
 }
-

@@ -13,7 +13,7 @@
 
 #include "Lever.h"
 
-Lever::Lever() : Active('L'), m_wasUsed(false) {}
+Lever::Lever() : Active('L', true), m_wasUsed(false) {}
 
 Lever::~Lever() {}
 

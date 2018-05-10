@@ -21,7 +21,7 @@
 
 class Tile {
 public:
-    Tile(char sign);
+    Tile(char sign, bool transparent);
 //    Tile(const Tile& other);
     virtual ~Tile() = 0;
     Character* getCharacter() const;
@@ -44,9 +44,14 @@ public:
     
     static bool isSpecialTile(const std::string& str);
     
+    virtual bool isTransparent() const;
+    void setTransparency(bool);
+    
 private:
     Character* m_character;
     char m_sign;
+    
+    bool m_transparent;
     
     const static std::vector<std::string> specialTiles;
 };

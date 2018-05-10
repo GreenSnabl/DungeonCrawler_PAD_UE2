@@ -14,5 +14,5 @@
 #include "Passive.h"
 
 
-Passive::Passive(char sign) : Tile(sign) {}
+Passive::Passive(char sign, bool transparent) : Tile(sign, transparent) {}
 Passive::~Passive() {}

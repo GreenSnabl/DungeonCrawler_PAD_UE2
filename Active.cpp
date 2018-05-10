@@ -13,7 +13,7 @@
 
 #include "Active.h"
 
-Active::Active(char sign) : Tile(sign) {}
+Active::Active(char sign, bool transparent) : Tile(sign, transparent) {}
 Active::~Active() {}
 
 void Active::use() {

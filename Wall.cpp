@@ -14,7 +14,7 @@
 #include "Wall.h"
 
 
-Wall::Wall() : Tile('#') {}
+Wall::Wall() : Tile('#', false) {}
 
 bool Wall::canEnter() const {
         return false;

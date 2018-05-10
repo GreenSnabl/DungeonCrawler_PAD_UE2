@@ -14,6 +14,7 @@
 #include "DungeonMap.h"
 #include <fstream>
 #include <sstream>
+#include <cmath>
 
 using std::ifstream;
 using std::stringstream;
@@ -143,6 +144,30 @@ Tile* DungeonMap::find(Position pos) const {
     return m_tile[pos.y][pos.x];
 }
 
+void DungeonMap::print(Position pos) const
+{
+    Screen screen(m_width, m_height);
+
+    for (int i = 0; i < m_height; ++i) {
+        for (int j = 0; j < m_width; ++j) {
+
+            if (checkLine(pos, {j, i})) {
+            screen.setChar({j, i}, find({j, i})->tileToChar());
+
+            if (find({j, i})->hasCharacter()) {
+                screen.setChar({j, i}, find({j, i})->getCharacter()->getSign());
+            }
+            }
+            else 
+            {
+                screen.setChar({j,i},'#');
+            }
+        }
+    }
+    screen.draw();
+}
+
+
 void DungeonMap::print() const {
     Screen screen(m_width, m_height);
 
@@ -173,3 +198,40 @@ bool DungeonMap::replaceTile(const std::string& name, Position pos) {
     }
  */
 }
+
+
+bool DungeonMap::checkLine(Position from, Position to) const
+{
+    double dy = to.y - from.y;
+    double dx = to.x - from.x;
+    double nx = std::abs(dx); double ny = std::abs(dy);
+    int sign_x = dx > 0 ? 1 : -1;
+    int sign_y = dy > 0 ? 1 : -1;
+    double err = 0.4;
+    
+    Position p{from.x, from.y};
+        
+    int ix = 0; int iy = 0;
+    
+    while (ix < nx || iy < ny)
+    {
+        if ((err + ix) / nx == (err + iy) / ny) {
+            p.x += sign_x;
+            p.y += sign_y;
+            ix++;
+            iy++;
+        }
+        else if ((err + ix / nx) < (err + iy) / ny) {
+            p.x += sign_x;
+            ix++;        
+        }
+        else {
+            p.y += sign_y;
+            iy++;
+        }
+        if (!m_tile[p.y][p.x]->isTransparent()) return false;
+        if (p.x == to.x && p.y == to.y) return true;
+    }
+    return true;
+}
+

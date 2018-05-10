@@ -189,7 +189,7 @@ bool GameEngine::turn() {
 
         m_map->find(charPos)->onLeave(m_map->find({charPos.x + movement.x, charPos.y + movement.y}));
     }
-    m_map->print();
+    m_map->print(m_map->find(m_player));
 }
 
 bool GameEngine::finished() const {
@@ -197,7 +197,7 @@ bool GameEngine::finished() const {
 }
 
 void GameEngine::run() {
-    m_map->print();
+    m_map->print(m_map->find(m_player));
     render();
     sf::Event event;
     while (m_window->isOpen()) {
@@ -226,17 +226,24 @@ void GameEngine::render() {
     m_window->clear();
     for (int i = 0; i < m_map->getHeight(); ++i) {
         for (int j = 0; j < m_map->getWidth(); ++j) {
-
+            if (m_map->checkLine(m_map->find(m_player), {j,i})) {
             tilePos = spriteIds::charToSpriteId(m_map->find({j, i})->tileToChar());
             renderTile(tilePos,{static_cast<float> (j), static_cast<float> (i)});
             m_window->draw(m_mapSprite);
+            }
+            else {
+            renderTile(spriteIds::WALL,{static_cast<float> (j), static_cast<float> (i)});
+            m_window->draw(m_mapSprite);
+            }            }
         }
-    }
+    
     for (int i = 0; i < m_charVec.size(); ++i) {
         Position charPos = m_map->find(m_charVec[i]);
+        if (m_map->checkLine(m_map->find(m_player), charPos)) {
         tilePos = spriteIds::charToSpriteId(m_charVec[i]->getSign());
         renderChar(tilePos,{static_cast<float> (charPos.x), static_cast<float> (charPos.y)});
         m_window->draw(m_mapSprite);
+        }
     }
     renderStatus();
 
@@ -298,7 +305,7 @@ void GameEngine::processEvents() {
             case sf::Event::KeyPressed:
                 handlePlayerInput(event.key.code);
                 turn();
-                m_map->print();
+                //m_map->print(m_map->find(m_player);
                 ++m_rounds;
                 break;
             case sf::Event::Closed:
@@ -354,7 +361,7 @@ void GameEngine::enterMenuState(bool gameEnd) {
     if (gameEnd) {
     dead.setFont(m_font);
     dead.setCharacterSize(30);
-    dead.setString("Spielende. Du bist tot");
+    dead.setString("Ups, du bist tot");
     dead.setPosition(300, 50);
     }
     end.setFont(m_font);
@@ -372,7 +379,7 @@ void GameEngine::enterMenuState(bool gameEnd) {
     showInfo.setPosition(40, 200);
     showInfo.setString("2. Spielerinformationen anzeigen");
 
-    m_status.setPosition(400, 250);
+    m_status.setPosition(40, 250);
     
     sf::Event event;
     

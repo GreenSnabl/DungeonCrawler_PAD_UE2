@@ -13,7 +13,7 @@
 
 #include "Trap.h"
 
-Trap::Trap() : Active('.'), m_wasUsed(false) {
+Trap::Trap() : Active('.', true), m_wasUsed(false) {
 }
 
 

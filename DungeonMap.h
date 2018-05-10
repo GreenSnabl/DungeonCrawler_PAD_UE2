@@ -43,9 +43,12 @@ public:
     Tile* find(Position pos) const;
     
     void print() const;
+    void print(Position) const;
     
     int getHeight() const {return m_height;}
     int getWidth() const {return m_width;}
+    
+    bool checkLine(Position from, Position to) const;
     
     
 private:

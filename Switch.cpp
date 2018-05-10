@@ -13,7 +13,7 @@
 
 #include "Switch.h"
 
-Switch::Switch() : Active('?'), m_wasUsed(false) {}
+Switch::Switch() : Active('?', true), m_wasUsed(false) {}
 
 Switch::~Switch() {}
 

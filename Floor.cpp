@@ -13,7 +13,7 @@
 
 #include "Floor.h"
 
-Floor::Floor() : Tile('.'), m_item{nullptr} {}
+Floor::Floor() : Tile('.', true), m_item{nullptr} {}
 
 Floor::~Floor() {
     if (m_item)
