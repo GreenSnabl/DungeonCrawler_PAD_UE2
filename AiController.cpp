@@ -17,7 +17,7 @@
 
 using std::map;
 
-AiController::AiController(Behaviour behaviour) : m_behaviour{behaviour} {
+AiController::AiController(Behaviour behaviour) : m_behaviour{behaviour}, next_move{Position({0,0})} {
 
 }
 
