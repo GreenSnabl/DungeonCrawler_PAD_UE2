@@ -25,6 +25,13 @@ struct Position{
 
     friend std::ostream& operator<<(std::ostream& os, const Position& pos);
     friend std::istream& operator>>(std::istream& is, Position& pos);
+    
+    bool operator!=(const Position &other) const;
+    bool operator==(const Position &other) const;
+    bool operator<(const Position& pos) const;
+    Position& operator=(const Position& other);
+    
+    
 };
 
 class DungeonMap {

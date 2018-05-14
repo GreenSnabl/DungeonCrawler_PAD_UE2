@@ -25,6 +25,7 @@ int AiController::move()
         case PATROL : return patrol();
         case HOLD   : return hold();
         case STROLL : return stroll();
+        case ATTACK : return attack();
         default : return stroll();
     }
 }
@@ -33,7 +34,7 @@ int AiController::patrol()
 {
     static int patrolIndex = -1;
     vector<int> patrolMovement{4,4,4,8,8,8,8,6,6,6,2,2,2,2,2,2};
-    return patrolMovement[++patrolIndex%patrolMovement.size()];
+    return patrolMovement[++patrolIndex % patrolMovement.size()];
     
 }
 
@@ -45,4 +46,34 @@ int AiController::stroll()
 int AiController::hold()
 {
     return 5;
+}
+
+int AiController::attack() 
+{
+    if (m_attackPath.size() == 0) return stroll();
+    return posToInt(m_attackPath[0]);
+}
+
+AiController::Behaviour AiController::getBehaviour() const
+{
+    return m_behaviour;
+}
+void AiController::setBehaviour(AiController::Behaviour behaviour) 
+{
+    m_behaviour = behaviour;
+}
+
+void AiController::updateBehaviour(const DungeonMap& map, Position from, Position to)
+{
+    if (map.checkLine(from, to)) {
+        setBehaviour(ATTACK);
+        updateShortestPath();
+    }
+
+}
+
+
+void AiController::updateShortestPath() 
+{
+
 }

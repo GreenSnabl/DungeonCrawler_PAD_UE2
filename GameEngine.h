@@ -71,6 +71,7 @@ private:
 };
 
 Position intToPos(int);
+int posToInt(Position);
 
 #endif /* GAMEENGINE_H */
 

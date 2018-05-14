@@ -14,7 +14,10 @@
 #include "Wall.h"
 
 
-Wall::Wall() : Tile('#', false) {}
+Wall::Wall() : Tile('#', false) 
+{
+    setWalkable(false);
+}
 
 bool Wall::canEnter() const {
         return false;

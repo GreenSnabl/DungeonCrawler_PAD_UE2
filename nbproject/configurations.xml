@@ -5,6 +5,7 @@
                    displayName="Header Files"
                    projectFiles="true">
       <itemPath>Active.h</itemPath>
+      <itemPath>Ai.h</itemPath>
       <itemPath>AiController.h</itemPath>
       <itemPath>Character.h</itemPath>
       <itemPath>ConsoleController.h</itemPath>
@@ -30,6 +31,7 @@
                    displayName="Source Files"
                    projectFiles="true">
       <itemPath>Active.cpp</itemPath>
+      <itemPath>Ai.cpp</itemPath>
       <itemPath>AiController.cpp</itemPath>
       <itemPath>Character.cpp</itemPath>
       <itemPath>ConsoleController.cpp</itemPath>
@@ -90,6 +92,10 @@
       <item path="Active.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="Active.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Ai.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Ai.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="AiController.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -182,6 +188,10 @@
       <item path="Active.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="Active.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Ai.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Ai.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="AiController.cpp" ex="false" tool="1" flavor2="0">
       </item>

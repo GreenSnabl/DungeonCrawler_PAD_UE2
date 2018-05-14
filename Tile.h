@@ -47,11 +47,16 @@ public:
     virtual bool isTransparent() const;
     void setTransparency(bool);
     
+    bool isWalkable() const;
+    void setWalkable(bool);
+    
+    
 private:
     Character* m_character;
     char m_sign;
     
     bool m_transparent;
+    bool m_walkable;
     
     const static std::vector<std::string> specialTiles;
 };

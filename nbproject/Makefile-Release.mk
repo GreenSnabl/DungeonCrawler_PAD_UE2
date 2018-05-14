@@ -36,6 +36,7 @@ OBJECTDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}
 # Object Files
 OBJECTFILES= \
 	${OBJECTDIR}/Active.o \
+	${OBJECTDIR}/Ai.o \
 	${OBJECTDIR}/AiController.o \
 	${OBJECTDIR}/Character.o \
 	${OBJECTDIR}/ConsoleController.o \
@@ -83,6 +84,11 @@ ${OBJECTDIR}/Active.o: Active.cpp
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
 	$(COMPILE.cc) -O2 -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Active.o Active.cpp
+
+${OBJECTDIR}/Ai.o: Ai.cpp
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Ai.o Ai.cpp
 
 ${OBJECTDIR}/AiController.o: AiController.cpp
 	${MKDIR} -p ${OBJECTDIR}

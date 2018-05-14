@@ -17,20 +17,30 @@
 #include "DungeonMap.h"
 #include "GameEngine.h"
 
+
 class AiController : public Controller {
 public:
-    enum Behaviour{STROLL, HOLD, PATROL};
+    enum Behaviour{STROLL, HOLD, PATROL, ATTACK};
     
     AiController(Behaviour behaviour);
     ~AiController();
     
     int move();
+    
+    void updateBehaviour(const DungeonMap& map, Position from, Position to);
+    void updateShortestPath();
+    
+    Behaviour getBehaviour() const;
+    void setBehaviour(Behaviour behaviour);
+    
 private:
     int patrol();
     int stroll();
     int hold();
+    int attack();
     
     Behaviour m_behaviour;
+    vector<Position> m_attackPath;
     
     AiController(const AiController& orig);
 };

@@ -29,6 +29,23 @@ std::istream& operator>>(std::istream& is, Position& pos) {
     return is;
 }
 
+
+    bool Position::operator!=(const Position &other) const {
+        return (this->x != other.x && this->y != other.y);
+    }
+    bool Position::operator==(const Position &other) const {
+        return (this->x == other.x && this->y == other.y);
+    }
+    bool Position::operator<(const Position& pos) const {
+        if (this->y != pos.y) return this->y < pos.y;
+        return this->x < pos.x;
+    }
+    
+    Position& Position::operator=(const Position& other) {this->x = other.x; this->y = other.y; return *this;}
+
+
+
+
 DungeonMap::DungeonMap(const std::vector<std::string>& dataVec) {
 
     stringstream ss;

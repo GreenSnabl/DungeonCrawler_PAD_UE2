@@ -217,6 +217,18 @@ Position intToPos(int dir) {
     }
 }
 
+int posToInt(Position pos) {
+    if (pos == Position({-1, 1})) return 1;
+    else if (pos == Position({0, 1})) return 2;
+    else if (pos == Position({1, 1})) return 3;
+    else if (pos == Position({-1, 0})) return 4;
+    else if (pos == Position({0, 0})) return 5;
+    else if (pos == Position({1, 0})) return 6;
+    else if (pos == Position({-1, -1})) return 7;
+    else if (pos == Position({0, -1})) return 8;
+    else if (pos == Position({1, -1})) return 9;
+}
+
 void GameEngine::render() {
     sf::Vector2f tilePos;
     m_window->clear();

@@ -20,7 +20,7 @@
 #include "Trap.h"
 
 
-Tile::Tile(char sign, bool transparent) : m_character{nullptr}, m_sign{sign}, m_transparent{transparent}
+Tile::Tile(char sign, bool transparent) : m_character{nullptr}, m_sign{sign}, m_transparent{transparent}, m_walkable{true}
 
 {
 }
@@ -123,4 +123,9 @@ void Tile::setTransparency(bool transparent)
 bool Tile::isTransparent() const
 {
     return m_transparent;
+}
+
+void Tile::setWalkable(bool walkable)
+{
+    m_walkable = walkable;
 }
