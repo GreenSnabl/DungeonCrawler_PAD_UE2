@@ -13,12 +13,12 @@
 
 #include "Ai.h"
 
-Ai::Ai() {
+Graph::Graph(const DungeonMap& map)
+{
+    fillGraph(map);
 }
 
-Ai::Ai(const Ai& orig) {
+void Graph::fillGraph(const DungeonMap& map)
+{
+    ;
 }
-
-Ai::~Ai() {
-}
-

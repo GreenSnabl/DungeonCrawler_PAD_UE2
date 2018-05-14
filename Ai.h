@@ -13,14 +13,18 @@
 
 #ifndef AI_H
 #define AI_H
+#include <map>
+#include "DungeonMap.h"
 
-class Ai {
-public:
-    Ai();
-    Ai(const Ai& orig);
-    virtual ~Ai();
+
+
+class Graph{
+    Graph(const DungeonMap& map);
+    void fillGraph(const DungeonMap& map);
+    void getShortestPath(vector<Position>& shortestPath, const std::map<Position, Position>& previous);
+    void dijkstra(Position from, Position to, std::map<Position, Position>& previous);
 private:
-
+    std::map <Position, std::map<Position, int> >m_graph;
 };
 
 #endif /* AI_H */
