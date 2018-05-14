@@ -185,7 +185,7 @@ bool DungeonMap::checkLine(Position from, Position to) const {
             p.y += sign_y;
             iy++;
         }
-        if (!m_tile[p.y][p.x]->isTransparent()) return false;
+        if (!find({p.x, p.y})->isTransparent()) return false;
     }
     return true;
 }

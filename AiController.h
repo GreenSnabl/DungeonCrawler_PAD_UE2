@@ -27,11 +27,11 @@ public:
     
     int move();
     
-//    void updateBehaviour(const DungeonMap& map, Position from, Position to);
-//    void updateAttackPath(const vector<Position>& attackPath);
+    void updateBehaviour(DungeonMap* map, Position from, Position to);
+    void updateAttackPath(const vector<Position>& attackPath);
     
-    Behaviour getBehaviour() const;
-  //  void setBehaviour(Behaviour behaviour);
+  Behaviour getBehaviour() const;
+  void setBehaviour(Behaviour behaviour);
     
 private:
     int patrol();
@@ -40,7 +40,7 @@ private:
     int attack();
     
     Behaviour m_behaviour;
-    vector<Position> m_attackPath;
+    Position next_move;
     
     AiController(const AiController& orig);
 };

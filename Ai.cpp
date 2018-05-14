@@ -21,16 +21,15 @@ const int INF = std::numeric_limits<int>::max();
 using std::map;
 using std::set;
 
-void fillGraph(const DungeonMap& map, std::map<Position, std::map<Position, int> >& graph) {
-    graph.clear();
-    for (int i = 0; i < map.getHeight(); ++i) {
-        for (int j = 0; j < map.getWidth(); ++j) {
-            if (map.find({j, i})->isWalkable()) {
+void fillGraph(DungeonMap* map, std::map<Position, std::map<Position, int> >& graph) {
+    for (int i = 0; i < map->getHeight(); ++i) {
+        for (int j = 0; j < map->getWidth(); ++j) {
+            if (map->find({j, i})->isWalkable()) {
 
                 for (int k = i - 1; k < i + 2; ++k) {
                     for (int l = j - 1; l < j + 2; ++l) {
-                        if (k < 0 || k >= map.getHeight() || l < 0 || l >= map.getWidth() || (k == i && l == j)) continue;
-                        if (map.find({l, k})->isWalkable()) graph[{j, i}][{l, k}] = 1;
+                        if (k < 0 || k >= map->getHeight() || l < 0 || l >= map->getWidth() || (k == i && l == j)) continue;
+                        if (map->find({l, k})->isWalkable()) graph[{j, i}][{l, k}] = 1;
                     }
                 }
             }
@@ -88,4 +87,5 @@ bool getShortestPath(vector<Position>& shortestPath, Position from, Position to,
         if (shortestPath[shortestPath.size() - 1] == from) break;
     } 
     std::reverse(shortestPath.begin(), shortestPath.end());
+    return true;
 }

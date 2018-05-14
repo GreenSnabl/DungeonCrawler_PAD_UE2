@@ -13,8 +13,12 @@
 
 #include "AiController.h"
 #include "Ai.h"
+#include <map>
+
+using std::map;
 
 AiController::AiController(Behaviour behaviour) : m_behaviour{behaviour} {
+
 }
 
 AiController::~AiController() {
@@ -51,31 +55,32 @@ int AiController::hold()
 
 int AiController::attack() 
 {
-    if (m_attackPath.size() == 0) return stroll();
-    return posToInt(m_attackPath[0]);
+    if (next_move == Position({0,0})) return stroll();
+   // if (m_attackPath.size() == 0) return stroll();
+    return posToInt(next_move);
 }
 
 AiController::Behaviour AiController::getBehaviour() const
 {
     return m_behaviour;
 }
-/*
+
 
 void AiController::setBehaviour(AiController::Behaviour behaviour) 
 {
     m_behaviour = behaviour;
 }
 
-void AiController::updateBehaviour(const DungeonMap& map, Position from, Position to)
+void AiController::updateBehaviour(DungeonMap* m_map, Position from, Position to)
 {
-    if (map.checkLine(from, to)) {
+    if (m_map->checkLine(from, to)) {
         setBehaviour(AiController::ATTACK);
         
-        std::map<Position, std::map<Position, int> > graph;
+        map<Position, map<Position, int> > graph;
         std::map<Position, Position> previous;
         vector<Position> attackPath;
         
-        fillGraph(map, graph);
+        fillGraph(m_map, graph);
         dijkstra(from, graph, previous);
         
         if(getShortestPath(attackPath, from, to, previous))
@@ -90,6 +95,6 @@ void AiController::updateBehaviour(const DungeonMap& map, Position from, Positio
 
 void AiController::updateAttackPath(const vector<Position>& attackPath) 
 {
-    m_attackPath = attackPath;
+    if (attackPath.size() < 1) {setBehaviour(AiController::STROLL);return;}
+    next_move = {attackPath[1].x - attackPath[0].x, attackPath[1].y - attackPath[0].y};
 }
- * */
