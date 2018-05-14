@@ -19,12 +19,15 @@
 
 
 class Graph{
+public:
+    Graph();
     Graph(const DungeonMap& map);
     void fillGraph(const DungeonMap& map);
-    void getShortestPath(vector<Position>& shortestPath, const std::map<Position, Position>& previous);
-    void dijkstra(Position from, Position to, std::map<Position, Position>& previous);
+    void getShortestPath(vector<Position>& shortestPath, Position from, Position to);
+    void dijkstra(Position from);
 private:
-    std::map <Position, std::map<Position, int> >m_graph;
+    std::map <Position, std::map<Position, int> > m_graph;
+    std::map<Position,Position> m_previous;
 };
 
 #endif /* AI_H */

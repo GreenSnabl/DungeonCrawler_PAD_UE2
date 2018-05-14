@@ -129,3 +129,5 @@ void Tile::setWalkable(bool walkable)
 {
     m_walkable = walkable;
 }
+
+bool Tile::isWalkable() const {return m_walkable;}
