@@ -11,18 +11,56 @@
  * Created on April 19, 2018, 8:32 PM
  */
 
-
+/*
 #include "GameEngine.h"
-
 #include <iostream>
 using std::cout;
 using std::cin;
 
 int main(int argc, char** argv) {
 
-    GameEngine game2("Maps/level2.txt");
-    game2.run();
+      GameEngine game2("Maps/level2.txt");
+      game2.run();
     
     return 0;
 }
+*/
 
+
+#include "DungeonMap.h"
+#include "Ai.h"
+#include <vector>
+#include <string>
+#include <iostream>
+
+using std::cout;
+using std::endl;
+using std::vector;
+using std::string;
+
+int main() {
+    
+    vector<Position> pos;
+    
+    vector<string> mapVec = {
+        {"5 5"},
+        {"#####"},
+        {"#...#"},
+        {"#...#"},
+        {"#...#"},
+        {"#####"}
+    };
+    DungeonMap map(mapVec);
+    
+    Graph gra;
+    std::map<Position, std::map<Position, int> > graph;
+    std::map<Position, Position> previous;
+    gra.fillGraph(map, graph);
+    gra.dijkstra({3,3}, graph, previous);
+    gra.getShortestPath(pos, {3,3},{1,1}, previous);
+    
+    for (auto it : pos)
+        cout << it << endl;
+    
+    return 0;
+}

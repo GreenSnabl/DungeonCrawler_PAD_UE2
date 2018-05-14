@@ -14,7 +14,7 @@
 #include "AiController.h"
 
 AiController::AiController(Behaviour behaviour) : m_behaviour{behaviour} {
-}
+                                                                         }
 
 AiController::~AiController() {
 }
@@ -63,17 +63,19 @@ void AiController::setBehaviour(AiController::Behaviour behaviour)
     m_behaviour = behaviour;
 }
 
-void AiController::updateBehaviour(const DungeonMap& map, Position from, Position to)
+void AiController::updateBehaviour(const DungeonMap& map, const vector<Position>& attackPath, Position from, Position to)
 {
     if (map.checkLine(from, to)) {
         setBehaviour(ATTACK);
-        updateShortestPath();
+        updateAttackPath(attackPath);
     }
-
+    else {
+        setBehaviour(STROLL);    
+    }
 }
 
 
-void AiController::updateShortestPath() 
+void AiController::updateAttackPath(const vector<Position>& attackPath) 
 {
-
+    
 }

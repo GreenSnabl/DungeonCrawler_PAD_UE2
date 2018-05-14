@@ -21,7 +21,6 @@
 
 
 Tile::Tile(char sign, bool transparent) : m_character{nullptr}, m_sign{sign}, m_transparent{transparent}, m_walkable{true}
-
 {
 }
 

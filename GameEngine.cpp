@@ -182,8 +182,15 @@ void GameEngine::turn() {
 
     for (int i = 0; i < m_charVec.size(); ++i) {
         Position charPos = m_map->find(m_charVec[i]);
+        
+     /*   AiController* control = dynamic_cast<AiController*>(m_charVec[i]->getController());
+        if (control) {
+        
+            control->updateBehaviour(*m_map, m_map->find(m_charVec[i]), m_map->find(m_player));
+        }
+     */   
         Position movement = intToPos(m_charVec[i]->move());
-
+        
         // Hier kommt die Kampfphase hin
 
         m_map->find(charPos)->onLeave(m_map->find({charPos.x + movement.x, charPos.y + movement.y}));

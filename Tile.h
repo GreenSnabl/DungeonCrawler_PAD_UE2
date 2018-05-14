@@ -47,7 +47,7 @@ public:
     virtual bool isTransparent() const;
     void setTransparency(bool);
     
-    bool isWalkable() const;
+    virtual bool isWalkable() const;
     void setWalkable(bool);
     
     

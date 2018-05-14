@@ -16,7 +16,7 @@
 #include "Controller.h"
 #include "DungeonMap.h"
 #include "GameEngine.h"
-
+#include "Ai.h"
 
 class AiController : public Controller {
 public:
@@ -27,8 +27,8 @@ public:
     
     int move();
     
-    void updateBehaviour(const DungeonMap& map, Position from, Position to);
-    void updateShortestPath();
+    void updateBehaviour(const DungeonMap& map, const vector<Position>& attackPath, Position from, Position to);
+    void updateAttackPath(const vector<Position>& attackPath);
     
     Behaviour getBehaviour() const;
     void setBehaviour(Behaviour behaviour);
@@ -41,6 +41,7 @@ private:
     
     Behaviour m_behaviour;
     vector<Position> m_attackPath;
+    Graph* m_graph;
     
     AiController(const AiController& orig);
 };
