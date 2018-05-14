@@ -21,7 +21,7 @@ const int INF = std::numeric_limits<int>::max();
 using std::map;
 using std::set;
 
-void Graph::fillGraph(const DungeonMap& map, std::map<Position, std::map<Position, int> >& graph) {
+void fillGraph(const DungeonMap& map, std::map<Position, std::map<Position, int> >& graph) {
     graph.clear();
     for (int i = 0; i < map.getHeight(); ++i) {
         for (int j = 0; j < map.getWidth(); ++j) {
@@ -38,10 +38,11 @@ void Graph::fillGraph(const DungeonMap& map, std::map<Position, std::map<Positio
     }
 }
 
-void Graph::dijkstra(Position from, std::map<Position, std::map<Position,int> >& graph, std::map<Position, Position>& previous)
+void dijkstra(Position from, std::map<Position, std::map<Position,int> >& graph, std::map<Position, Position>& previous)
 {
     
     map<Position, int> min_distance;
+    previous.clear();
     
     for (auto it : graph) {
         min_distance[it.first] = INF;
@@ -50,7 +51,7 @@ void Graph::dijkstra(Position from, std::map<Position, std::map<Position,int> >&
     min_distance[from] = 0;
     
     set<std::pair<int, Position> > queue; 
-    
+    queue.insert(std::make_pair(min_distance[from], from));
     
     while(!queue.empty()) {
         int dist = queue.begin()->first;
@@ -75,7 +76,7 @@ void Graph::dijkstra(Position from, std::map<Position, std::map<Position,int> >&
 }
 
 
-bool Graph::getShortestPath(vector<Position>& shortestPath, Position from, Position to, std::map<Position, Position>& previous)
+bool getShortestPath(vector<Position>& shortestPath, Position from, Position to, std::map<Position, Position>& previous)
 {
    
     if (previous.find(to) == previous.end()) return false;

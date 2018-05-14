@@ -18,16 +18,10 @@
 
 
 
-class Graph{
-public:
-    Graph() {}
-    ~Graph() {}
-    Graph(const DungeonMap& map);
     void fillGraph(const DungeonMap& map, std::map<Position, std::map<Position, int> >& graph);
     bool getShortestPath(vector<Position>& shortestPath, Position from, Position to, std::map<Position, Position>& previous);
     void dijkstra(Position from, std::map<Position, std::map<Position, int> >& graph, std::map<Position, Position>& previous);
-private:
-};
+
 
 #endif /* AI_H */
 

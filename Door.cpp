@@ -16,7 +16,7 @@
 
 Door::Door() : Passive('X', false), m_isOpen{false} 
 {
-    setWalkable(false);
+    Tile::setWalkable(false);
 }
 
 Door::~Door() {}
@@ -26,12 +26,12 @@ void Door::notify() {
     if (m_isOpen) {
         setSign('/');
         Tile::setTransparency(true);
-        setWalkable(true);
+        Tile::setWalkable(true);
     }
     else {
         setSign('X');
         Tile::setTransparency(false);
-        setWalkable(true);
+        Tile::setWalkable(true);
     }
 }
 

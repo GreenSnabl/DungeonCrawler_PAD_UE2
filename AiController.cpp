@@ -12,9 +12,10 @@
  */
 
 #include "AiController.h"
+#include "Ai.h"
 
 AiController::AiController(Behaviour behaviour) : m_behaviour{behaviour} {
-                                                                         }
+}
 
 AiController::~AiController() {
 }
@@ -58,16 +59,28 @@ AiController::Behaviour AiController::getBehaviour() const
 {
     return m_behaviour;
 }
+/*
+
 void AiController::setBehaviour(AiController::Behaviour behaviour) 
 {
     m_behaviour = behaviour;
 }
 
-void AiController::updateBehaviour(const DungeonMap& map, const vector<Position>& attackPath, Position from, Position to)
+void AiController::updateBehaviour(const DungeonMap& map, Position from, Position to)
 {
     if (map.checkLine(from, to)) {
-        setBehaviour(ATTACK);
-        updateAttackPath(attackPath);
+        setBehaviour(AiController::ATTACK);
+        
+        std::map<Position, std::map<Position, int> > graph;
+        std::map<Position, Position> previous;
+        vector<Position> attackPath;
+        
+        fillGraph(map, graph);
+        dijkstra(from, graph, previous);
+        
+        if(getShortestPath(attackPath, from, to, previous))
+            updateAttackPath(attackPath);
+        
     }
     else {
         setBehaviour(STROLL);    
@@ -77,5 +90,6 @@ void AiController::updateBehaviour(const DungeonMap& map, const vector<Position>
 
 void AiController::updateAttackPath(const vector<Position>& attackPath) 
 {
-    
+    m_attackPath = attackPath;
 }
+ * */

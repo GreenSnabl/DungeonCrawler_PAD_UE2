@@ -22,7 +22,7 @@
 class Tile {
 public:
     Tile(char sign, bool transparent);
-//    Tile(const Tile& other);
+    Tile(const Tile& other);
     virtual ~Tile() = 0;
     Character* getCharacter() const;
 

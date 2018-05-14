@@ -11,7 +11,7 @@
  * Created on April 19, 2018, 8:32 PM
  */
 
-/*
+
 #include "GameEngine.h"
 #include <iostream>
 using std::cout;
@@ -24,8 +24,8 @@ int main(int argc, char** argv) {
     
     return 0;
 }
-*/
 
+/*
 
 #include "DungeonMap.h"
 #include "Ai.h"
@@ -52,15 +52,15 @@ int main() {
     };
     DungeonMap map(mapVec);
     
-    Graph gra;
     std::map<Position, std::map<Position, int> > graph;
     std::map<Position, Position> previous;
-    gra.fillGraph(map, graph);
-    gra.dijkstra({3,3}, graph, previous);
-    gra.getShortestPath(pos, {3,3},{1,1}, previous);
+    fillGraph(map, graph);
+    dijkstra({3,3}, graph, previous);
+    getShortestPath(pos, {3,3},{1,1}, previous);
     
     for (auto it : pos)
         cout << it << endl;
     
     return 0;
 }
+*/

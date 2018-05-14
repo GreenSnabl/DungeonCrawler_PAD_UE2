@@ -1,9 +1,7 @@
-build/Debug/GNU-Linux/main.o: main.cpp DungeonMap.h Tile.h Character.h \
- Controller.h Item.h Screen.h Ai.h
+build/Debug/GNU-Linux/main.o: main.cpp GameEngine.h Character.h \
+ Controller.h Item.h DungeonMap.h Tile.h Screen.h ConsoleController.h
 
-DungeonMap.h:
-
-Tile.h:
+GameEngine.h:
 
 Character.h:
 
@@ -11,6 +9,10 @@ Controller.h:
 
 Item.h:
 
+DungeonMap.h:
+
+Tile.h:
+
 Screen.h:
 
-Ai.h:
+ConsoleController.h:
