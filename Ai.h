@@ -11,17 +11,17 @@
  * Created on May 14, 2018, 10:19 AM
  */
 
+// Die Dijkstra Funktion ist angelehnt an den Kommentar von Samuel auf
+// https://stackoverflow.com/questions/3447566/dijkstras-algorithm-in-c
+
 #ifndef AI_H
 #define AI_H
 #include <map>
 #include "DungeonMap.h"
 
-
-
     void fillGraph(DungeonMap* map, std::map<Position, std::map<Position, int> >& graph);
     bool getShortestPath(vector<Position>& shortestPath, Position from, Position to, std::map<Position, Position>& previous);
     void dijkstra(Position from, std::map<Position, std::map<Position, int> >& graph, std::map<Position, Position>& previous);
-
 
 #endif /* AI_H */
 

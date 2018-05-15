@@ -34,18 +34,22 @@ public:
 private:
     void turn();
     void processEvents();
-    void update();
     
     bool loadFromFile(const std::string& mapFile);
     bool loadEntity(const std::string& data);
 
-
-
+    void fight(Character*, Character*);
+    bool m_fightHappened;
+    bool m_playerWasAttacked;
+    bool m_playerAttacked;
+    
+    
     void render();
     void renderTile(sf::Vector2f tilePos, sf::Vector2f mapPos);
     void renderChar(sf::Vector2f tilePos, sf::Vector2f mapPos);
     
     void setStatus();
+    void setFightStatus(bool, int, int);
     void renderStatus();
     
     void handlePlayerInput(sf::Keyboard::Key&);
@@ -61,7 +65,11 @@ private:
     sf::Texture m_mapTex;
     sf::Sprite m_mapSprite;
     sf::RenderWindow *m_window;
+    
     sf::Text m_status;
+    sf::Text m_defendText;
+    sf::Text m_attackText;
+    
     sf::Font m_font;
     
     Character* m_player;

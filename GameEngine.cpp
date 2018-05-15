@@ -73,7 +73,7 @@ namespace spriteIds {
 };
 
 
-GameEngine::GameEngine(const std::string& mapFile) : m_tileSize{sf::Vector2f(32, 32)}
+GameEngine::GameEngine(const std::string& mapFile) : m_tileSize{sf::Vector2f(32, 32)}, m_fightHappened{false}, m_playerAttacked{false}, m_playerWasAttacked{false}
 {
 
     loadFromFile(mapFile);
@@ -83,6 +83,15 @@ GameEngine::GameEngine(const std::string& mapFile) : m_tileSize{sf::Vector2f(32,
     m_status.setColor(sf::Color(255, 255, 255));
     m_status.setCharacterSize(30);
 
+    m_defendText.setFont(m_font);
+    m_defendText.setColor(sf::Color(255,255,255));
+    m_defendText.setCharacterSize(15);
+    
+    m_attackText.setFont(m_font);
+    m_attackText.setColor(sf::Color(255,255,255));
+    m_attackText.setCharacterSize(15);
+    
+    
     m_mapTex.loadFromFile("./gfx/ProjectUtumno_full.png");
     m_mapSprite.setTexture(m_mapTex);
 
@@ -163,6 +172,9 @@ GameEngine::~GameEngine() {
 
 void GameEngine::turn() {
     
+    m_playerAttacked = false;
+    m_playerWasAttacked = false;
+    
     for (int i = 0; i < m_charVec.size(); ++i)
     {
         if (m_charVec[i]->getCurrentHP() <= 0)
@@ -173,6 +185,7 @@ void GameEngine::turn() {
                 return;
             }
             else {
+            m_map->find(m_map->find(m_charVec[i]))->setCharacter(nullptr);    
             delete m_charVec[i];
             m_charVec.erase(m_charVec.begin() + i);
             }
@@ -182,9 +195,6 @@ void GameEngine::turn() {
     for (int i = 0; i < m_charVec.size(); ++i) {
         Position charPos = m_map->find(m_charVec[i]);
         
-        
-        
-
         if (AiController* control = dynamic_cast<AiController*>(m_charVec[i]->getController())) {
         
             control->updateBehaviour(m_map, charPos, m_map->find(m_player));
@@ -192,13 +202,62 @@ void GameEngine::turn() {
         
         Position movement = intToPos(m_charVec[i]->move());
         
-        // Hier kommt die Kampfphase hin
-
+        m_fightHappened = (
+                m_map->find({charPos.x + movement.x, charPos.y + movement.y})->hasCharacter() &&
+                m_map->find(Position({charPos.x + movement.x, charPos.y + movement.y}))->getCharacter() != m_charVec[i]
+                        );
+                
         m_map->find(charPos)->onLeave(m_map->find({charPos.x + movement.x, charPos.y + movement.y}));
+        if(m_fightHappened)
+        {
+            Character* attacker = m_map->find(charPos)->getCharacter();
+            Character* defender = m_map->find({charPos.x + movement.x, charPos.y + movement.y})->getCharacter();
+            // Hier kommt die Kampfphase hin
+            fight(attacker, defender);
+        }
     }
     m_map->print(m_map->find(m_player));
 }
 
+void GameEngine::fight(Character* attacker, Character* defender)
+{
+    bool playerIsAttacking = false;
+    int attackerDamage = attacker->getStrength();
+    int defenderDamage = -1;
+    defender->takeDamage(attackerDamage);
+    if (dynamic_cast<ConsoleController*>(attacker->getController()))
+    {
+        playerIsAttacking = true;
+        m_playerAttacked = true;
+    }
+    else {
+        m_playerWasAttacked = true;
+    }
+    if (defender->getCurrentHP() > 0) {
+        defenderDamage = defender->getStrength();
+        attacker->takeDamage(defenderDamage);
+    }
+    setFightStatus(playerIsAttacking, attackerDamage, defenderDamage);
+    
+}
+
+void GameEngine::setFightStatus(bool playerIsAttacking, int attackerDamage, int defenderDamage)
+{
+    std::stringstream ss;
+    std::string attacker, defender;
+    if (playerIsAttacking) {attacker = "Spieler"; defender = "Gegner";}
+    else { attacker = "Gegner"; defender = "Spieler";}
+    ss << attacker <<  " attackiert " << defender << "\n" << attackerDamage << " Schaden.\n";
+    if (defenderDamage != -1)
+    {
+        ss << "\n" << defender << " verteidigt sich \n" << defenderDamage << " Schaden.";
+    }
+    else {
+        ss << "\n" << defender << " stirbt.";
+    }
+    if (playerIsAttacking) {m_attackText.setString(ss.str());}
+    else {m_defendText.setString(ss.str());}
+}
 
 void GameEngine::run() {
     m_map->print(m_map->find(m_player));
@@ -206,7 +265,6 @@ void GameEngine::run() {
     sf::Event event;
     while (m_window->isOpen()) {
         processEvents();
-        update();
         render();
     }
 }
@@ -262,7 +320,6 @@ void GameEngine::render() {
         }
     }
     renderStatus();
-
     m_window->display();
 }
 
@@ -294,8 +351,21 @@ void GameEngine::setStatus() {
 
 void GameEngine::renderStatus() {
     setStatus();
-    m_status.setPosition(m_map->getWidth() * 32 + 20, m_map->getHeight() * 32 / 4);
+    m_status.setPosition(m_map->getWidth() * 32 + 20, m_map->getHeight() * 32 / 10);
     m_window->draw(m_status);
+    
+    if (m_playerAttacked)
+    {
+        m_attackText.setPosition(m_map->getWidth() * 32 + 20, (m_map->getHeight() * 32 / 4) * 2);
+        m_window->draw(m_attackText);
+    }
+    if (m_playerWasAttacked)
+    {
+        m_defendText.setPosition(m_map->getWidth() * 32 + 20, (m_map->getHeight() * 32 / 4) * 3);
+        m_window->draw(m_defendText);
+    
+    }
+    
 }
 
 void GameEngine::renderChar(sf::Vector2f tilePos, sf::Vector2f mapPos) {
@@ -355,12 +425,6 @@ void GameEngine::handlePlayerInput(sf::Keyboard::Key& key) {
     else if (key == sf::Keyboard::Num0)
         enterMenuState(false);
 }
-
-void GameEngine::update() {
-    //if (m_player->getCurrentHP() <= 0)
-    //    m_window->close();
-}
-
 
 
 void GameEngine::enterMenuState(bool gameEnd) {
