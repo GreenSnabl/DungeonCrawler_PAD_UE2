@@ -73,7 +73,7 @@ namespace spriteIds {
 };
 
 
-GameEngine::GameEngine(const std::string& mapFile) : m_tileSize{sf::Vector2f(32, 32)}, m_fightHappened{false}, m_playerAttacked{false}, m_playerWasAttacked{false}
+GameEngine::GameEngine(const std::string& mapFile) : m_tileSize{sf::Vector2f(32, 32)}, m_playerAttacked{false}, m_playerWasAttacked{false}
 {
 
     loadFromFile(mapFile);
@@ -202,13 +202,13 @@ void GameEngine::turn() {
         
         Position movement = intToPos(m_charVec[i]->move());
         
-        m_fightHappened = (
+        bool fightHappened = (
                 m_map->find({charPos.x + movement.x, charPos.y + movement.y})->hasCharacter() &&
                 m_map->find(Position({charPos.x + movement.x, charPos.y + movement.y}))->getCharacter() != m_charVec[i]
                         );
                 
         m_map->find(charPos)->onLeave(m_map->find({charPos.x + movement.x, charPos.y + movement.y}));
-        if(m_fightHappened)
+        if(fightHappened)
         {
             Character* attacker = m_map->find(charPos)->getCharacter();
             Character* defender = m_map->find({charPos.x + movement.x, charPos.y + movement.y})->getCharacter();

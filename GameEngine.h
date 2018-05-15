@@ -39,7 +39,6 @@ private:
     bool loadEntity(const std::string& data);
 
     void fight(Character*, Character*);
-    bool m_fightHappened;
     bool m_playerWasAttacked;
     bool m_playerAttacked;
     
