@@ -15,27 +15,14 @@
 #include <set>
 #include <limits>
 #include <algorithm>
+#include <utility>
 
 const int INF = std::numeric_limits<int>::max();
 
 using std::map;
 using std::set;
+using std::pair;
 
-void fillGraph(DungeonMap* map, std::map<Position, std::map<Position, int> >& graph) {
-    for (int i = 0; i < map->getHeight(); ++i) {
-        for (int j = 0; j < map->getWidth(); ++j) {
-            if (map->find({j, i})->isWalkable()) {
-
-                for (int k = i - 1; k < i + 2; ++k) {
-                    for (int l = j - 1; l < j + 2; ++l) {
-                        if (k < 0 || k >= map->getHeight() || l < 0 || l >= map->getWidth() || (k == i && l == j)) continue;
-                        if (map->find({l, k})->isWalkable()) graph[{j, i}][{l, k}] = 1;
-                    }
-                }
-            }
-        }
-    }
-}
 
 void dijkstra(Position from, std::map<Position, std::map<Position,int> >& graph, std::map<Position, Position>& previous)
 {
@@ -72,6 +59,46 @@ void dijkstra(Position from, std::map<Position, std::map<Position,int> >& graph,
             
         }
     }
+}
+
+void a_star(Position source, Position destination, map<Position, map<Position, double> >& graph, map<Position, Position>& previous)
+{
+    map<Position, double> min_distance;
+    map<Position, double> heuristic_distance;
+    min_distance.clear();
+    previous.clear();
+    for (auto it : graph) {
+        min_distance[it.first] = INF;
+        heuristic_distance[it.first] = sqrt(pow(destination.x - it.first.x, 2) + pow(destination.y - it.first.y, 2));
+    }    
+    min_distance[source] = 0;
+    
+    set<pair<double, Position> > queue;
+    queue.insert(std::make_pair(min_distance[source], source));
+    while (!queue.empty())
+    {
+        Position u = queue.begin()->second;
+        int distance = queue.begin()->first;
+        queue.erase(queue.begin());
+        
+        for (auto it : graph[u])
+        {
+            Position v = it.first;
+            int dist_through_u = distance + it.second + heuristic_distance[v];
+            
+            if (dist_through_u < min_distance[v])
+            {
+                queue.erase(std::make_pair(min_distance[v], v));
+                previous[v] = u;
+                min_distance[v] = dist_through_u;
+                queue.insert(std::make_pair(min_distance[v], v));
+                if (v == destination) return;
+            }
+        
+        }
+    
+    }
+    
 }
 
 

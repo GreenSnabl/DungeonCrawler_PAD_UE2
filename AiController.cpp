@@ -76,12 +76,15 @@ void AiController::updateBehaviour(DungeonMap* m_map, Position from, Position to
     if (m_map->checkLine(from, to)) {
         setBehaviour(AiController::ATTACK);
         
-        map<Position, map<Position, int> > graph;
+        //map<Position, map<Position, int> > graph;
+        map<Position, map<Position, double> > graph;
+        
         std::map<Position, Position> previous;
         vector<Position> attackPath;
         
         fillGraph(m_map, graph);
-        dijkstra(from, graph, previous);
+        a_star(from, to, graph, previous);
+        //dijkstra(from, graph, previous);
         
         if(getShortestPath(attackPath, from, to, previous))
             updateAttackPath(attackPath);
