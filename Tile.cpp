@@ -18,6 +18,7 @@
 #include "Door.h"
 #include "Lever.h"
 #include "Trap.h"
+#include "Portal.h"
 
 
 Tile::Tile(char sign, bool transparent) : m_character{nullptr}, m_sign{sign}, m_transparent{transparent}, m_walkable{true}
@@ -74,6 +75,7 @@ Tile* Tile::makeTile(char c){
         case '#' : return new Wall;
         case 'D' : return new Door;
         case 'S' : return new Switch;
+        case 'O' : return new Portal;
         case 'C': case 'N': case 'G': return new Floor;
     }
 }
@@ -84,6 +86,7 @@ Tile* Tile::makeTile(const std::string& name)
     else if (name == "Door") return new Door;
     else if (name == "Trap") return new Trap;
     else if (name == "Lever") return new Lever;
+    else if (name == "Portal") return new Portal;
     return nullptr;
 }
 
@@ -99,7 +102,8 @@ const std::vector<std::string> Tile::specialTiles{
     "Door",
     "Switch",
     "Trap",
-    "Lever"
+    "Lever",
+    "Portal"
 };
 
 

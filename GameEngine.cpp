@@ -18,6 +18,7 @@
 #include "Switch.h"
 #include "AiController.h"
 #include "Floor.h"
+#include "Portal.h"
 #include <fstream>
 #include <sstream>
 #include <iostream>
@@ -49,6 +50,7 @@ namespace spriteIds {
     static const sf::Vector2f LEVER{1, 1};
     static const sf::Vector2f LEVER_USED{6, 1};
     static const sf::Vector2f TRAP_USED{8, 13};
+    static const sf::Vector2f PORTAL{40, 10};
 
     sf::Vector2f charToSpriteId(char c) {
         switch (c) {
@@ -68,6 +70,7 @@ namespace spriteIds {
             case 'L': return LEVER;
             case 'l': return LEVER_USED;
             case 't': return TRAP_USED;
+            case 'O': return PORTAL;
         }
     }
 };
@@ -146,9 +149,14 @@ bool GameEngine::loadEntity(const std::string& data) {
         for (int i = 0; i < tiles.size(); ++i) {
             m_map->replaceTile(tiles[i].first, tiles[i].second);
         }
-        if (tiles.size() > 1) {
+        if (tiles.size() > 1 && tiles[0].first != "Portal") {
             for (int i = 1; i < tiles.size(); ++i)
                 dynamic_cast<Active*> (m_map->find(tiles[0].second))->registerPassive(dynamic_cast<Passive*> (m_map->find(tiles[i].second)));
+        }
+        if (tiles.size() > 1 && tiles[0].first == "Portal")
+        {
+            dynamic_cast<Portal*>(m_map->find(tiles[0].second))->setDestination(dynamic_cast<Portal*>(m_map->find(tiles[1].second)));
+            dynamic_cast<Portal*>(m_map->find(tiles[1].second))->setDestination(dynamic_cast<Portal*>(m_map->find(tiles[0].second)));
         }
     }
 

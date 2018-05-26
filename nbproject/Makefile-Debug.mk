@@ -48,6 +48,7 @@ OBJECTFILES= \
 	${OBJECTDIR}/Item.o \
 	${OBJECTDIR}/Lever.o \
 	${OBJECTDIR}/Passive.o \
+	${OBJECTDIR}/Portal.o \
 	${OBJECTDIR}/Screen.o \
 	${OBJECTDIR}/Switch.o \
 	${OBJECTDIR}/Tile.o \
@@ -144,6 +145,11 @@ ${OBJECTDIR}/Passive.o: Passive.cpp
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
 	$(COMPILE.cc) -g -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Passive.o Passive.cpp
+
+${OBJECTDIR}/Portal.o: Portal.cpp
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} "$@.d"
+	$(COMPILE.cc) -g -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Portal.o Portal.cpp
 
 ${OBJECTDIR}/Screen.o: Screen.cpp
 	${MKDIR} -p ${OBJECTDIR}

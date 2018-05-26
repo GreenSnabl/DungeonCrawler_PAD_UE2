@@ -35,6 +35,7 @@ Switch 9 18 Door 7 14
 Switch 8 6 Door 6 2
 Switch 4 16 Door 2 4
 Switch 5 10 Door 3 4
+Portal 16 6 Portal 5 7
 Trap 17 5
 Trap 16 5
 Trap 15 5

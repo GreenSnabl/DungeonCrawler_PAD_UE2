@@ -21,8 +21,8 @@ class Active : public Tile {
 public:
     Active(char sign, bool transparent);
     virtual ~Active() = 0;
-    void registerPassive(Passive*);
-    void unregisterPassive(Passive*);
+    virtual void registerPassive(Passive*);
+    virtual void unregisterPassive(Passive*);
     virtual void use();
 private:
     std::vector<Passive*> m_passives;

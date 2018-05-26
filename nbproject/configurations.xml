@@ -10,6 +10,7 @@
         <itemPath>Floor.h</itemPath>
         <itemPath>Lever.h</itemPath>
         <itemPath>Passive.h</itemPath>
+        <itemPath>Portal.h</itemPath>
         <itemPath>Switch.h</itemPath>
         <itemPath>Tile.h</itemPath>
         <itemPath>Trap.h</itemPath>
@@ -38,6 +39,7 @@
         <itemPath>Floor.cpp</itemPath>
         <itemPath>Lever.cpp</itemPath>
         <itemPath>Passive.cpp</itemPath>
+        <itemPath>Portal.cpp</itemPath>
         <itemPath>Switch.cpp</itemPath>
         <itemPath>Tile.cpp</itemPath>
         <itemPath>Trap.cpp</itemPath>
@@ -140,6 +142,10 @@
       </item>
       <item path="Passive.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="Portal.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Portal.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="Screen.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="Screen.h" ex="false" tool="3" flavor2="0">
@@ -235,6 +241,10 @@
       <item path="Passive.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="Passive.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Portal.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Portal.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="Screen.cpp" ex="false" tool="1" flavor2="0">
       </item>
