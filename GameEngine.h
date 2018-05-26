@@ -48,7 +48,7 @@ private:
     void renderChar(sf::Vector2f tilePos, sf::Vector2f mapPos);
     
     void setStatus();
-    void setFightStatus(bool, int, int);
+    void setFightStatus(bool, bool, int, int);
     void renderStatus();
     
     void handlePlayerInput(sf::Keyboard::Key&);

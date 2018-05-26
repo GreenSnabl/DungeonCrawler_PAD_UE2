@@ -222,6 +222,7 @@ void GameEngine::turn() {
 void GameEngine::fight(Character* attacker, Character* defender)
 {
     bool playerIsAttacking = false;
+    bool attackerDied = false;
     int attackerDamage = attacker->getStrength();
     int defenderDamage = -1;
     defender->takeDamage(attackerDamage);
@@ -236,25 +237,36 @@ void GameEngine::fight(Character* attacker, Character* defender)
     if (defender->getCurrentHP() > 0) {
         defenderDamage = defender->getStrength();
         attacker->takeDamage(defenderDamage);
+        if (attacker->getCurrentHP() == 0) attackerDied = true;
     }
-    setFightStatus(playerIsAttacking, attackerDamage, defenderDamage);
+    setFightStatus(playerIsAttacking, attackerDied, attackerDamage, defenderDamage);
     
 }
 
-void GameEngine::setFightStatus(bool playerIsAttacking, int attackerDamage, int defenderDamage)
+void GameEngine::setFightStatus(bool playerIsAttacking, bool attackerDied, int attackerDamage, int defenderDamage)
 {
     std::stringstream ss;
     std::string attacker, defender;
-    if (playerIsAttacking) {attacker = "Spieler"; defender = "Gegner";}
-    else { attacker = "Gegner"; defender = "Spieler";}
+    if (playerIsAttacking) 
+    {
+        attacker = "Spieler"; defender = "Gegner";
+    }
+    else 
+    { 
+        attacker = "Gegner"; defender = "Spieler";
+    }
+    
     ss << attacker <<  " attackiert " << defender << "\n" << attackerDamage << " Schaden.\n";
+    
     if (defenderDamage != -1)
     {
         ss << "\n" << defender << " verteidigt sich \n" << defenderDamage << " Schaden.";
+        if (attackerDied) ss << "\n" << attacker << " stirbt.";
     }
     else {
         ss << "\n" << defender << " stirbt.";
     }
+    
     if (playerIsAttacking) {m_attackText.setString(ss.str());}
     else {m_defendText.setString(ss.str());}
 }
