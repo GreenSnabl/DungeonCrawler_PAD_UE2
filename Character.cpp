@@ -54,6 +54,8 @@ Character* Character::makeCharacter(const std::string& data) {
     int strength, stamina;
     ss >> name >> sign >> pos.y >> pos.x >> controllerType >> stamina >> strength;
     if (controllerType == "StationaryController") {
+        return new Character(sign, stamina, strength, new AiController(AiController::HOLD));
+    } else if (controllerType == "AiController") {
         return new Character(sign, stamina, strength, new AiController(AiController::STROLL));
     } else if (controllerType == "ConsoleController") {
         return new Character(sign, stamina, strength, new ConsoleController);
@@ -111,3 +113,8 @@ void Character::addItem(Item* item) {
     updateCurrentHP(percentage);
 }
 
+int Character::getItemSize() const {return m_items.size();}
+
+Item* Character::getItem(int index) const {
+    return m_items[index];
+}

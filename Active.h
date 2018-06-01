@@ -19,13 +19,20 @@
 
 class Active : public Tile {
 public:
-    Active(char sign, bool transparent);
+    Active(char sign, bool transparent, bool wasUsed);
     virtual ~Active() = 0;
     virtual void registerPassive(Passive*);
     virtual void unregisterPassive(Passive*);
     virtual void use();
+    virtual int getPassiveSize() const;
+    virtual Passive* getPassive(int index) const;
+    
+    bool getWasUsed() const;
+    void setWasUsed(bool wasUsed);
+    
 private:
     std::vector<Passive*> m_passives;
+    bool m_wasUsed;
 };
 
 #endif /* ACTIVE_H */

@@ -24,7 +24,6 @@ public:
     virtual void onEnter(Character* c);
 
 private:
-    bool m_wasUsed;
     
     Lever(const Lever& orig);
 };

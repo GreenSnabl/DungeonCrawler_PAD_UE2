@@ -19,6 +19,10 @@
 #include "AiController.h"
 #include "Floor.h"
 #include "Portal.h"
+#include "Lever.h"
+#include "Door.h"
+#include "Trap.h"
+#include "Wall.h"
 #include <fstream>
 #include <sstream>
 #include <iostream>
@@ -30,6 +34,7 @@ using std::cout;
 using std::endl;
 using std::stringstream;
 using std::ifstream;
+using std::ofstream;
 using std::string;
 using std::vector;
 
@@ -75,8 +80,20 @@ namespace spriteIds {
     }
 };
 
+GameEngine::GameEngine(const GameEngine& orig) {
+    
+}
 
-GameEngine::GameEngine(const std::string& mapFile) : m_tileSize{sf::Vector2f(32, 32)}, m_playerAttacked{false}, m_playerWasAttacked{false}
+GameEngine::~GameEngine() {
+    delete m_map;
+    for (int i = 0; i < m_charVec.size(); ++i) {
+        delete m_charVec[i];
+    }
+    delete m_window;
+}
+
+
+GameEngine::GameEngine(const std::string& mapFile) : m_tileSize{sf::Vector2f(32, 32)}, m_playerAttacked{false}, m_playerWasAttacked{false}, m_map{nullptr}
 {
 
     loadFromFile(mapFile);
@@ -104,6 +121,14 @@ GameEngine::GameEngine(const std::string& mapFile) : m_tileSize{sf::Vector2f(32,
 }
 
 bool GameEngine::loadFromFile(const std::string& mapFile) {
+    if (m_map != nullptr) 
+    {
+        delete m_map;
+        for (int i = 0; i < m_charVec.size(); ++i) {
+            delete m_charVec[i];
+        }
+    }
+    
     vector<string> mapVec;
     ifstream ifs;
     ifs.open(mapFile);
@@ -118,7 +143,124 @@ bool GameEngine::loadFromFile(const std::string& mapFile) {
     for (int i = m_map->getHeight() + 1; i < mapVec.size(); ++i) {
         loadEntity(mapVec[i]);
     }
+   
+    
 }
+
+bool GameEngine::saveToFile(const std::string& mapFile)
+{
+    ofstream ofs;
+    stringstream ss;
+    ss << "./savefiles/" << mapFile << ".txt";
+    ofs.open(ss.str());
+    ss.str("");
+    ss << m_map->getHeight() << " " << m_map->getWidth() << "\n";
+    for (int i = 0; i < m_map->getHeight(); ++i) {
+        for (int j = 0; j < m_map->getWidth(); ++j) {
+            if (dynamic_cast<Wall*>(m_map->find({j, i}))) ss << "#";
+            else {ss << ".";}
+        }
+        ss << "\n";
+        ofs << ss.str();
+        ss.str("");
+    }
+    ss.str("");
+    for (int i = 0; i < m_map->getHeight(); ++i) {
+        for (int j = 0; j < m_map->getWidth(); ++j) {
+            if (Switch* tswitch = dynamic_cast<Switch*>(m_map->find({j,i})))
+            {
+                if (tswitch->getWasUsed())
+                {
+                    ss << "SwitchUsed";
+                } else {
+                ss << "Switch";
+                }                
+                ss << " " << Position({j,i}) << " ";
+                for (int i = 0; i < tswitch->getPassiveSize(); ++i)
+                {
+                    ss << passiveToString(tswitch->getPassive(i)) << " " << m_map->find(tswitch->getPassive(i)) << " ";
+                }
+                ss << "\n";
+                ofs << ss.str();
+                ss.str("");           
+            }
+            else if (Lever* tlever = dynamic_cast<Lever*>(m_map->find({j,i})))
+            {
+                ss << "Lever " << Position({j,i}) << " ";
+                for (int i = 0; i < tlever->getPassiveSize(); ++i)
+                {
+                    ss << passiveToString(tlever->getPassive(i)) << " " << m_map->find(tlever->getPassive(i)) << " ";
+                }
+                ss << "\n";
+                ofs << ss.str();
+                ss.str("");           
+            }
+            else if (Trap* trap = dynamic_cast<Trap*>(m_map->find({j,i}))) 
+            {
+                if (trap->getWasUsed()) { ss << "TrapUsed"; }
+                else { ss << "Trap";}
+                ss << " " << Position({j,i}) << "\n";
+                ofs << ss.str();
+                ss.str("");
+            }
+            
+            else if (Portal* portal = dynamic_cast<Portal*>(m_map->find({j,i})))
+            {
+                Position src = m_map->find(portal);
+                Position dest = m_map->find(portal->getDestination());
+                if (dest < src) continue;
+                ss << "Portal " << src << " Portal " << m_map->find(portal->getDestination()) << "\n";
+                ofs << ss.str();
+                ss.str("");
+            }
+            
+            else if (Floor* tmpFloor = dynamic_cast<Floor*>(m_map->find(Position({j,i}))))
+            {
+                if (tmpFloor->hasItem()) {
+                Item* tmp = tmpFloor->getItem();
+                Position pos({j,i});
+                ss << Item::itemToString(tmp) << " " << pos << "\n";
+                ofs << ss.str();
+                ss.str("");
+                }
+            }
+            
+        }
+    }
+    
+    
+    for (int i = 0; i < m_charVec.size(); ++i)
+    {
+        ss << "Character " << m_charVec[i]->getSign() << " " << m_map->find(m_charVec[i]) << " ";
+        if (dynamic_cast<ConsoleController*>(m_charVec[i]->getController())) 
+        {
+            ss << "ConsoleController ";
+        }
+        else if (AiController* temp = dynamic_cast<AiController*>(m_charVec[i]->getController()))
+        {
+            if (temp->getBehaviour() == AiController::Behaviour::HOLD)
+                ss << "StationaryController ";
+            else {
+                ss << "AiController ";
+            }
+        }
+        ss << m_charVec[i]->getStrength() << " " << m_charVec[i]->getStamina();
+
+        for (int j = 0; j < m_charVec[i]->getItemSize(); ++j)
+        {
+            if (Item* tmp = dynamic_cast<Item*>(m_charVec[i]->getItem(j)))
+            {
+                ss << " " << Item::itemToString(tmp);
+            }
+        }
+  
+        ss << "\n";
+        ofs << ss.str();
+        ss.str("");
+    }     
+}
+
+
 
 bool GameEngine::loadEntity(const std::string& data) {
     std::stringstream ss;
@@ -130,13 +272,27 @@ bool GameEngine::loadEntity(const std::string& data) {
     if (name == "Character") {
         char sign;
         ss >> sign >> pos >> controller;
+        vector<string> items;
+        string tempItem;
+        int stamina, strength;
+        ss >> stamina >> strength;
+        while (ss.good())
+        {
+            ss >> tempItem;
+            items.push_back(tempItem);
+        }
         if (Character * character = Character::makeCharacter(data)) {
             m_charVec.push_back(character);
             m_map->place(pos, character);
+            for (int i = 0; i < items.size(); ++i)
+                {
+                 character->addItem(Item::makeItem(items[i]));   
+                }
             if (controller == "ConsoleController") {
                 m_playerControl = dynamic_cast<ConsoleController*> (character->getController());
                 m_player = character;
             }
+            
         }
     } else if (Tile::isSpecialTile(name)) {
         vector<std::pair<string, Position> > tiles;
@@ -167,16 +323,18 @@ bool GameEngine::loadEntity(const std::string& data) {
     }
 }
 
-GameEngine::GameEngine(const GameEngine& orig) {
+
+
+void GameEngine::run() {
+    m_map->print(m_map->find(m_player));
+    render();
+    sf::Event event;
+    while (m_window->isOpen()) {
+        processEvents();
+        render();
+    }
 }
 
-GameEngine::~GameEngine() {
-    delete m_map;
-    for (int i = 0; i < m_charVec.size(); ++i) {
-        delete m_charVec[i];
-    }
-    delete m_window;
-}
 
 void GameEngine::turn() {
     
@@ -279,15 +437,7 @@ void GameEngine::setFightStatus(bool playerIsAttacking, bool attackerDied, int a
     else {m_defendText.setString(ss.str());}
 }
 
-void GameEngine::run() {
-    m_map->print(m_map->find(m_player));
-    render();
-    sf::Event event;
-    while (m_window->isOpen()) {
-        processEvents();
-        render();
-    }
-}
+
 
 Position intToPos(int dir) {
     switch (dir) {
@@ -371,7 +521,7 @@ void GameEngine::setStatus() {
 
 void GameEngine::renderStatus() {
     setStatus();
-    m_status.setPosition(m_map->getWidth() * 32 + 20, m_map->getHeight() * 32 / 10);
+    m_status.setPosition(m_map->getWidth() * 32 + 20, m_map->getHeight() * 32 / 6);
     m_window->draw(m_status);
     
     if (m_playerAttacked)
@@ -454,33 +604,76 @@ void GameEngine::enterMenuState(bool gameEnd) {
     sf::Text back;
     sf::Text end;
     sf::Text dead;
+    sf::Text saveGame;
+    sf::Text loadGame;
+    sf::Text textInput;
+    sf::Text saveOptions;
+    sf::Text loadOptions;
+    sf::Text items;
 
+
+    
     if (gameEnd) {
     dead.setFont(m_font);
     dead.setCharacterSize(30);
     dead.setString("Ups, du bist tot");
-    dead.setPosition(300, 50);
+    dead.setPosition(300, 10);
     }
     end.setFont(m_font);
     end.setCharacterSize(30);
     end.setString("0. Spiel beenden");
-    end.setPosition(40, 100);
+    end.setPosition(40, 50);
 
     back.setFont(m_font);
     back.setCharacterSize(30);
     back.setString("1. Zurueck zum Spiel");
-    back.setPosition(40, 150);
+    back.setPosition(40, 100);
 
     showInfo.setFont(m_font);
     showInfo.setCharacterSize(30);
-    showInfo.setPosition(40, 200);
+    showInfo.setPosition(40, 150);
     showInfo.setString("2. Spielerinformationen anzeigen");
 
-    m_status.setPosition(40, 250);
+    items.setFont(m_font);
+    items.setCharacterSize(20);
+    items.setPosition(300, 300);
     
-    sf::Event event;
+    saveGame.setFont(m_font);
+    saveGame.setCharacterSize(30);
+    saveGame.setPosition(40, 200);
+    saveGame.setString("3. Spielstand speichern");
+    
+    loadGame.setFont(m_font);
+    loadGame.setCharacterSize(30);
+    loadGame.setPosition(40, 250);
+    loadGame.setString("4. Spielstand laden");
+    
+    textInput.setFont(m_font);
+    textInput.setCharacterSize(20);
+    textInput.setPosition(40, 400);
+    
+    saveOptions.setFont(m_font);
+    saveOptions.setCharacterSize(20);
+    saveOptions.setPosition(40, 370);
+    saveOptions.setString("Abbrechen (ESC), Speichern (Enter)");
+    
+    loadOptions.setFont(m_font);
+    loadOptions.setCharacterSize(20);
+    loadOptions.setPosition(40, 370);
+    loadOptions.setString("Abbrechen (ESC), Laden (Enter)");
+    
+    
+    m_status.setPosition(40, 300);
+    
     
     bool showStatus = false;
+    bool textInputMode = false;
+    bool changedToInputMode = false;
+    bool load = false;
+    bool save = false;
+    std::string str;
+    sf::Event event;
+
 
     while (m_window->isOpen()) {
         while (m_window->pollEvent(event)) {
@@ -488,29 +681,99 @@ void GameEngine::enterMenuState(bool gameEnd) {
             m_window->draw(end);
             m_window->draw(back);
             m_window->draw(showInfo);
-            if (showStatus) m_window->draw(m_status);
+            m_window->draw(saveGame);
+            m_window->draw(loadGame);
+            m_window->draw(textInput);
+            if (textInputMode && save) m_window->draw(saveOptions);
+            if (textInputMode && load) m_window->draw(loadOptions);
+            if (showStatus) {
+                m_window->draw(m_status);
+                m_window->draw(items);
+            }
             if (gameEnd) m_window->draw(dead);
             m_window->display();
-
-            if (event.type == sf::Event::KeyPressed) {
+            if (event.type == sf::Event::TextEntered && textInputMode)
+            {
+                if(event.text.unicode == '\b' && str.size() > 0)
+                {
+                    str.erase(str.size()-1, 1);
+                }
+                else if (event.text.unicode == 27)
+                {
+                    str = "";
+                    textInputMode = false;
+                }
+                else if (event.text.unicode == 13)
+                {
+                    if (load) {
+                        stringstream ss;
+                        ss << "./savefiles/" << str << ".txt";
+                        loadFromFile(ss.str());
+                        run();
+                    }
+                    if (save) saveToFile(str);
+                    str = "";
+                    textInputMode = false;
+                    load = save = false;
+                }
+                else if (changedToInputMode)
+                {
+                    changedToInputMode = false;
+                }
+                else if (isAllowedChar(event.text.unicode))
+                {
+                    str += event.text.unicode;
+                }
+                textInput.setString(str);
+            }
+            
+            if (event.type == sf::Event::KeyPressed && !textInputMode) {
                 if (event.key.code == sf::Keyboard::Num0 || event.key.code == sf::Keyboard::Escape) {
                     m_window->close();
                 } 
-                else if (event.key.code == sf::Keyboard::Num1)
+                else if (event.key.code == sf::Keyboard::Num1 && !textInputMode)
                 {
                     m_window->clear();
                     return;                
                 }
-                else if (event.key.code == sf::Keyboard::Num2)
+                else if (event.key.code == sf::Keyboard::Num2 && !textInputMode)
                 {
                     showStatus = !showStatus;
+                    stringstream ss;
+                    ss << "Playeritems:\n";
+                    for (int i = 0; i < m_player->getItemSize(); ++i)
+                    {
+                        ss << Item::itemToString(m_player->getItem(i)) << " ";
+                        if ((i + 1) % 3 == 0)
+                            ss << "\n";
+                    }
+                    items.setString(ss.str());
                 }
+                else if (event.key.code == sf::Keyboard::Num3 && !textInputMode)
+                {
+                   textInputMode = true;
+                   changedToInputMode = true;
+                   save = true;
+                }
+                else if (event.key.code == sf::Keyboard::Num4 && !textInputMode)
+                {
+                    textInputMode = true;
+                    changedToInputMode = true;
+                    load = true;
                 
+                }
             }
             else if (event.type == sf::Event::Closed)
             {
                 m_window->close();
             }
+
         }
     }
 }
+
+bool isAllowedChar(int num)
+{
+    return num >= 48 && num < 58 || num >= 65 && num < 91 || num >= 97 && num < 128;
+}
+

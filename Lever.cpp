@@ -13,14 +13,14 @@
 
 #include "Lever.h"
 
-Lever::Lever() : Active('L', true), m_wasUsed(false) {}
+Lever::Lever() : Active('L', true, false) {}
 
 Lever::~Lever() {}
 
 void Lever::use() {
     Active::use();
-    m_wasUsed = !m_wasUsed;
-    m_wasUsed ? Tile::setSign('l') : Tile::setSign('L');
+    setWasUsed(!getWasUsed());
+    getWasUsed() ? Tile::setSign('l') : Tile::setSign('L');
 }
 
 void Lever::onEnter(Character* c)

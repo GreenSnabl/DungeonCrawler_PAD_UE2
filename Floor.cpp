@@ -31,6 +31,10 @@ void Floor::onEnter(Character* c)
     Tile::onEnter(c);
 }
 
+bool Floor::hasItem() const
+{
+    return (m_item != nullptr);
+}
 
 Item* Floor::getItem() const
 {

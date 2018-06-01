@@ -30,6 +30,8 @@ public:
     static Item* makeItem(const std::string& name);
     static bool isItem(const std::string& str);
     
+    static std::string itemToString(Item* item);
+    
 private:
     Item(const Item& orig);
     

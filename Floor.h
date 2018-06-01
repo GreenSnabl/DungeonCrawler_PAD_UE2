@@ -24,6 +24,7 @@ public:
     
     void onEnter(Character* c);
     
+    bool hasItem() const;
     Item* takeItem();
     Item* getItem() const;
     void setItem(Item* item);

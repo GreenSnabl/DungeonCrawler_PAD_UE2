@@ -13,7 +13,7 @@
 
 #include "Trap.h"
 
-Trap::Trap() : Active('.', true), m_wasUsed(false) {
+Trap::Trap() : Active('.', true, false) {
 }
 
 
@@ -23,9 +23,9 @@ Trap::~Trap() {
 void Trap::use() {
     getCharacter()->takeDamage(20);
     Tile::setSign('t');
-    m_wasUsed = true;
+    setWasUsed(true);
 }
 void Trap::onEnter(Character* c) {
     Tile::setCharacter(c);
-    if (!m_wasUsed) use();
+    if (!getWasUsed()) use();
 }

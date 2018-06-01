@@ -16,7 +16,7 @@
 #include "Character.h"
 #include <vector>
 
-
+class Passive;
 
 
 class Tile {
@@ -60,6 +60,9 @@ private:
     
     const static std::vector<std::string> specialTiles;
 };
+
+
+std::string passiveToString(Passive*);
 
 #endif /* TILE_H */
 

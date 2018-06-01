@@ -116,3 +116,15 @@ const std::vector<std::string> Item::items{
     "Shield",
     "FullPlateArmour"
 };
+
+std::string Item::itemToString(Item* item)
+{
+    if (Greatsword* temp = dynamic_cast<Greatsword*>(item)) return items[0];
+    if (ArmingSword* temp = dynamic_cast<ArmingSword*>(item)) return items[1];
+    if (Club* temp = dynamic_cast<Club*>(item)) return items[2];
+    if (RapierAndDagger* temp = dynamic_cast<RapierAndDagger*>(item)) return items[3];
+    if (Gambeson* temp = dynamic_cast<Gambeson*>(item)) return items[4];
+    if (MailArmour* temp = dynamic_cast<MailArmour*>(item)) return items[5];
+    if (Shield* temp = dynamic_cast<Shield*>(item)) return items[6];
+    if (FullPlateArmour* temp = dynamic_cast<FullPlateArmour*>(item)) return items[7];
+}

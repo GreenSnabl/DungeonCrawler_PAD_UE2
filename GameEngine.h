@@ -19,6 +19,7 @@
 #include <string>
 #include <SFML/Graphics.hpp>
 #include "ConsoleController.h"
+#include "Passive.h"
 
 
 
@@ -37,6 +38,8 @@ private:
     
     bool loadFromFile(const std::string& mapFile);
     bool loadEntity(const std::string& data);
+    
+    bool saveToFile(const std::string& mapFile);
 
     void fight(Character*, Character*);
     bool m_playerWasAttacked;
@@ -79,6 +82,7 @@ private:
 
 Position intToPos(int);
 int posToInt(Position);
+bool isAllowedChar(int);
 
 #endif /* GAMEENGINE_H */
 

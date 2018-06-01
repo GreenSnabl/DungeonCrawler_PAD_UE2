@@ -20,7 +20,7 @@ using std::ifstream;
 using std::stringstream;
 
 std::ostream& operator<<(std::ostream& os, const Position& pos) {
-    os << pos.y << pos.x;
+    os << pos.y << " " << pos.x;
     return os;
 }
 
@@ -84,7 +84,7 @@ void DungeonMap::place(Position pos, Character* c) {
 Position DungeonMap::find(Tile* t) const {
     for (int i = 0; i < m_height; ++i) {
         for (int j = 0; j < m_width; ++j) {
-            if (m_tile[j][i] == t) {
+            if (m_tile[i][j] == t) {
                 return {j, i};
             }
         }

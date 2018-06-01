@@ -13,18 +13,18 @@
 
 #include "Switch.h"
 
-Switch::Switch() : Active('?', true), m_wasUsed(false) {}
+Switch::Switch() : Active('?', true, false) {}
 
 Switch::~Switch() {}
 
 void Switch::use() {
     Active::use();
     Tile::setSign('!');
-    m_wasUsed = true;
+    setWasUsed(true);
 }
 
 void Switch::onEnter(Character* c)
 {
     Tile::setCharacter(c);
-    if (!m_wasUsed) use();
+    if (!getWasUsed()) use();
 }

@@ -83,8 +83,23 @@ Tile* Tile::makeTile(char c){
 Tile* Tile::makeTile(const std::string& name)
 {
     if (name == "Switch") return new Switch;
+    else if (name == "SwitchUsed") {
+        Switch* tmp = new Switch;
+        tmp->setWasUsed(true);
+        return tmp;
+    }
     else if (name == "Door") return new Door;
+    else if (name == "DoorOpen") {
+        Door* tmp = new Door;
+        tmp->notify();
+        return tmp;
+    } 
     else if (name == "Trap") return new Trap;
+    else if (name == "TrapUsed") {
+        Trap* tmp = new Trap;
+        tmp->setWasUsed(true);
+        return tmp;
+    }
     else if (name == "Lever") return new Lever;
     else if (name == "Portal") return new Portal;
     return nullptr;
@@ -100,8 +115,11 @@ void Tile::setSign(char c)
 
 const std::vector<std::string> Tile::specialTiles{
     "Door",
+    "DoorOpen",
     "Switch",
+    "SwitchUsed",
     "Trap",
+    "TrapUsed",
     "Lever",
     "Portal"
 };
@@ -134,3 +152,15 @@ void Tile::setWalkable(bool walkable)
 }
 
 bool Tile::isWalkable() const {return m_walkable;}
+
+std::string passiveToString(Passive* passive) {
+    if(Door* tmp = dynamic_cast<Door*>(passive))
+    {
+        if (tmp->canEnter()) return "DoorOpen";
+        return "Door";
+    }
+    else if (Trap* tmp = dynamic_cast<Trap*>(passive))
+    {
+        return "Trap";
+    }
+}

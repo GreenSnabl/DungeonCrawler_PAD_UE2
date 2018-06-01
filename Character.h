@@ -35,6 +35,10 @@ public:
     
     
     void addItem(Item*);
+    int getItemSize() const;
+    Item* getItem(int) const;
+    
+    
     int getStrength() const;
     int getStamina() const;
     bool isAlive() const;

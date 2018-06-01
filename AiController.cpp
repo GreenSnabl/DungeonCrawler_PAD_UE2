@@ -73,6 +73,7 @@ void AiController::setBehaviour(AiController::Behaviour behaviour)
 
 void AiController::updateBehaviour(DungeonMap* m_map, Position from, Position to)
 {
+    if (getBehaviour() == Behaviour::HOLD) return;
     if (m_map->checkLine(from, to)) {
         setBehaviour(AiController::ATTACK);
         

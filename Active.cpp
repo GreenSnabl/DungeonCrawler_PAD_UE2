@@ -13,7 +13,7 @@
 
 #include "Active.h"
 
-Active::Active(char sign, bool transparent) : Tile(sign, transparent) {}
+Active::Active(char sign, bool transparent, bool wasUsed) : Tile(sign, transparent), m_wasUsed(wasUsed) {}
 Active::~Active() {}
 
 void Active::use() {
@@ -33,4 +33,28 @@ void Active::unregisterPassive(Passive* passive)
     {
         if (m_passives[i] == passive) m_passives.erase(m_passives.begin() + i);
     }
+}
+
+int Active::getPassiveSize() const
+{
+    return m_passives.size();
+}
+
+Passive* Active::getPassive(int index) const
+{
+    if (index >= 0 && index < getPassiveSize())
+    {
+        return m_passives[index];
+    }
+    return nullptr;
+}
+
+bool Active::getWasUsed() const 
+{ 
+    return m_wasUsed;
+}
+
+void Active::setWasUsed(bool wasUsed) 
+{
+    m_wasUsed = wasUsed;
 }

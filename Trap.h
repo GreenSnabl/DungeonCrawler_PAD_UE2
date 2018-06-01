@@ -23,7 +23,6 @@ public:
     void use();
     virtual void onEnter(Character* c);
 private:
-    bool m_wasUsed;
     Trap(const Trap& orig);
 };
 
