@@ -30,7 +30,8 @@ public:
     GameEngine(const std::string& mapFile);
     ~GameEngine();
 
-    void run();
+    bool run();
+    std::string getNewMap() const;
     
 private:
     void turn();
@@ -45,6 +46,7 @@ private:
     bool m_playerWasAttacked;
     bool m_playerAttacked;
     
+
     
     void render();
     void renderTile(sf::Vector2f tilePos, sf::Vector2f mapPos);
@@ -76,6 +78,9 @@ private:
     
     Character* m_player;
     ConsoleController* m_playerControl;
+    
+    bool newMap;
+    std::string newMapName;
 
     GameEngine(const GameEngine& orig);
 };

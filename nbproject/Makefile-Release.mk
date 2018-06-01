@@ -44,6 +44,7 @@ OBJECTFILES= \
 	${OBJECTDIR}/Door.o \
 	${OBJECTDIR}/DungeonMap.o \
 	${OBJECTDIR}/Floor.o \
+	${OBJECTDIR}/Game.o \
 	${OBJECTDIR}/GameEngine.o \
 	${OBJECTDIR}/Item.o \
 	${OBJECTDIR}/Lever.o \
@@ -125,6 +126,11 @@ ${OBJECTDIR}/Floor.o: Floor.cpp
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
 	$(COMPILE.cc) -O2 -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Floor.o Floor.cpp
+
+${OBJECTDIR}/Game.o: Game.cpp
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Game.o Game.cpp
 
 ${OBJECTDIR}/GameEngine.o: GameEngine.cpp
 	${MKDIR} -p ${OBJECTDIR}

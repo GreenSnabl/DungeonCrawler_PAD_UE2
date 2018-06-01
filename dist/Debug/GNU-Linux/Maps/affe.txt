@@ -1,0 +1,48 @@
+20 20
+####################
+#......#############
+#..###.............#
+####################
+#..................#
+#..................#
+#################.##
+#.............#....#
+#.............#....#
+###############....#
+#.............#....#
+#.............#....#
+#.............#....#
+#################.##
+#..................#
+#..................#
+#..................#
+#..................#
+#..................#
+####################
+Switch 4 16 Door 2 4 
+Greatsword 5 4
+Greatsword 5 6
+Portal 5 7 Portal 16 6
+Switch 5 10 Door 3 4 
+Switch 8 6 Door 6 2 
+Trap 9 17
+Switch 9 18 Door 7 14 
+Switch 10 3 Door 11 14 Door 9 4 
+Trap 10 16
+Trap 11 15
+Trap 14 3
+Trap 14 5
+Trap 15 3
+Trap 15 5
+Trap 16 3
+Trap 16 5
+Trap 17 3
+Trap 17 5
+Shield 17 17
+Gambeson 18 4
+Gambeson 18 16
+Lever 18 18 DoorOpen 13 17 DoorOpen 6 17 
+Character @ 18 5 ConsoleController 9 12 Gambeson Gambeson Gambeson
+Character % 2 2 AiController 3 4
+Character % 14 10 AiController 5 5
+Character D 15 10 StationaryController 20 1

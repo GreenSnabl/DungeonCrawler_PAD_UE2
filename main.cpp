@@ -13,12 +13,11 @@
 
 
 #include "GameEngine.h"
-
+#include "Game.h"
 
 int main(int argc, char** argv) {
 
-      GameEngine game2("Maps/level2.txt");
-      game2.run();
+      Game game("Maps/level2.txt");
     
     return 0;
 }

@@ -93,11 +93,11 @@ GameEngine::~GameEngine() {
 }
 
 
-GameEngine::GameEngine(const std::string& mapFile) : m_tileSize{sf::Vector2f(32, 32)}, m_playerAttacked{false}, m_playerWasAttacked{false}, m_map{nullptr}
+GameEngine::GameEngine(const std::string& mapFile) : m_tileSize{sf::Vector2f(32, 32)}, m_playerAttacked{false}, m_playerWasAttacked{false}, m_map{nullptr}, newMap{false}
 {
 
     loadFromFile(mapFile);
-
+    
     m_font.loadFromFile("./font/UbuntuMono-B.ttf");
     m_status.setFont(m_font);
     m_status.setColor(sf::Color(255, 255, 255));
@@ -114,10 +114,8 @@ GameEngine::GameEngine(const std::string& mapFile) : m_tileSize{sf::Vector2f(32,
     
     m_mapTex.loadFromFile("./gfx/ProjectUtumno_full.png");
     m_mapSprite.setTexture(m_mapTex);
-
-
-    //m_window = new sf::RenderWindow(sf::VideoMode(1024, 640), "Game running!");    
-    m_window = new sf::RenderWindow(sf::VideoMode(m_map->getHeight() * m_tileSize.x + 300.f, m_map->getWidth() * m_tileSize.y), "Game running!");
+    
+    
 }
 
 bool GameEngine::loadFromFile(const std::string& mapFile) {
@@ -127,6 +125,7 @@ bool GameEngine::loadFromFile(const std::string& mapFile) {
         for (int i = 0; i < m_charVec.size(); ++i) {
             delete m_charVec[i];
         }
+        delete m_window;
     }
     
     vector<string> mapVec;
@@ -144,7 +143,11 @@ bool GameEngine::loadFromFile(const std::string& mapFile) {
         loadEntity(mapVec[i]);
     }
    
-    
+
+
+
+    //m_window = new sf::RenderWindow(sf::VideoMode(1024, 640), "Game running!");    
+    m_window = new sf::RenderWindow(sf::VideoMode(m_map->getHeight() * m_tileSize.x + 300.f, m_map->getWidth() * m_tileSize.y), "Game running!");
 }
 
 bool GameEngine::saveToFile(const std::string& mapFile)
@@ -325,14 +328,15 @@ bool GameEngine::loadEntity(const std::string& data) {
 
 
 
-void GameEngine::run() {
+bool GameEngine::run() {
     m_map->print(m_map->find(m_player));
     render();
     sf::Event event;
-    while (m_window->isOpen()) {
+    while (m_window->isOpen() && !newMap) {
         processEvents();
-        render();
+        render();  
     }
+    return newMap;
 }
 
 
@@ -383,6 +387,12 @@ void GameEngine::turn() {
         }
     }
     m_map->print(m_map->find(m_player));
+}
+
+
+std::string GameEngine::getNewMap() const
+{
+    return newMapName;
 }
 
 void GameEngine::fight(Character* attacker, Character* defender)
@@ -708,13 +718,17 @@ void GameEngine::enterMenuState(bool gameEnd) {
                     if (load) {
                         stringstream ss;
                         ss << "./savefiles/" << str << ".txt";
-                        loadFromFile(ss.str());
-                        run();
+                        newMap = true;
+                        newMapName = ss.str();
+                        return;
                     }
-                    if (save) saveToFile(str);
+                    if (save) {
+                        saveToFile(str);
+                    }
                     str = "";
                     textInputMode = false;
                     load = save = false;
+                
                 }
                 else if (changedToInputMode)
                 {

@@ -1,6 +1,8 @@
-build/Debug/GNU-Linux/main.o: main.cpp GameEngine.h Character.h \
+build/Debug/GNU-Linux/Game.o: Game.cpp Game.h GameEngine.h Character.h \
  Controller.h Item.h DungeonMap.h Tile.h Screen.h ConsoleController.h \
- Passive.h Game.h
+ Passive.h
+
+Game.h:
 
 GameEngine.h:
 
@@ -19,5 +21,3 @@ Screen.h:
 ConsoleController.h:
 
 Passive.h:
-
-Game.h:
