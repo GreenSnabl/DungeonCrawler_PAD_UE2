@@ -21,6 +21,8 @@
 #include "ConsoleController.h"
 #include "Passive.h"
 #include <fstream>
+#include <SFML/Audio/SoundBuffer.hpp>
+#include <SFML/Audio/Sound.hpp>
 
 
 
@@ -82,6 +84,9 @@ private:
     sf::Text m_attackText;
     
     sf::Font m_font;
+    
+    sf::SoundBuffer bDeath;
+    sf::Sound sDeath;
     
     vector<Character*> m_players;
     

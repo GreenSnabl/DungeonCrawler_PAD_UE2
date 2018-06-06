@@ -118,7 +118,8 @@ GameEngine::GameEngine(const std::string& mapFile) : m_tileSize{sf::Vector2f(32,
     m_mapTex.loadFromFile("./gfx/ProjectUtumno_full.png");
     m_mapSprite.setTexture(m_mapTex);
     
-    
+    bDeath.loadFromFile("./sound/death.ogg");
+    sDeath.setBuffer(bDeath);
 }
 
 bool GameEngine::loadFromFile(const std::string& mapFile) {
@@ -474,7 +475,14 @@ void GameEngine::fight(Character* attacker, Character* defender)
     if (defender->getCurrentHP() > 0) {
         defenderDamage = defender->getStrength();
         attacker->takeDamage(defenderDamage);
-        if (attacker->getCurrentHP() == 0) attackerDied = true;
+        if (attacker->getCurrentHP() == 0) 
+        {
+            attackerDied = true;
+            sDeath.play();
+        }
+    } else 
+    {
+        sDeath.play();
     }
     setFightStatus(playerIsAttacking, attackerDied, attackerDamage, defenderDamage);
     

@@ -27,7 +27,7 @@ Switch 5 10 Door 3 4
 Switch 8 6 Door 6 2 
 Trap 9 17
 Switch 9 18 Door 7 14 
-Switch 10 3 Door 11 14 Door 9 4 
+SwitchUsed 10 3 DoorOpen 11 14 DoorOpen 9 4 
 Trap 10 16
 Trap 11 15
 Trap 14 3
@@ -37,12 +37,12 @@ Trap 15 5
 Trap 16 3
 Trap 16 5
 Switch 16 14 Door 13 4 
-TrapUsed 17 3
-Trap 17 5
+Trap 17 3
+TrapUsed 17 5
 Shield 17 17
+Gambeson 18 4
 Gambeson 18 16
 Lever 18 18 DoorOpen 13 17 DoorOpen 6 17 
-Character @ 17 3 ConsoleController 9 13 Gambeson Gambeson Gambeson Gambeson
-Character % 1 1 AiController 3 4
-Character % 15 6 AiController 5 5
-Character D 15 10 StationaryController 20 1
+Character D 16 11 AiController 78 87 455
+Character @ 11 5 ConsoleController 52 53 261 RapierAndDagger Gambeson Gambeson
+Character % 1 5 ConsoleController 55 49 262 Greatsword
