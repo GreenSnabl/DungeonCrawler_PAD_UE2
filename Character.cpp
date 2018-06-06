@@ -51,14 +51,16 @@ Character* Character::makeCharacter(const std::string& data) {
     std::string name, controllerType;
     Position pos;
     char sign;
-    int strength, stamina;
-    ss >> name >> sign >> pos.y >> pos.x >> controllerType >> stamina >> strength;
+    int strength, stamina, playerNr;
+    while (ss.good()) {
+    ss >> name >> sign >> pos.y >> pos.x >> controllerType >> stamina >> strength >> playerNr;
+    }
     if (controllerType == "StationaryController") {
         return new Character(sign, stamina, strength, new AiController(AiController::HOLD));
     } else if (controllerType == "AiController") {
         return new Character(sign, stamina, strength, new AiController(AiController::STROLL));
     } else if (controllerType == "ConsoleController") {
-        return new Character(sign, stamina, strength, new ConsoleController);
+        return new Character(sign, stamina, strength, new ConsoleController(playerNr));
     }
     return nullptr;
 }

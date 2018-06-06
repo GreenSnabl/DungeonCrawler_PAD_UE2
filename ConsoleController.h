@@ -19,13 +19,18 @@
 class ConsoleController : public Controller {
 public:
     ConsoleController();
+    ConsoleController(int playerNr);
     ~ConsoleController();
     
     int move();
+    bool madeTurn();
+    void setMadeTurn(bool);
     void set_next_move(int);
     
 private:
-    int m_next_move;
+    int mPlayerNr;
+    bool m_madeTurn;;
+    int m_nextMove;
     ConsoleController(const ConsoleController& orig);
 };
 

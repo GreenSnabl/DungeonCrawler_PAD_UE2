@@ -16,7 +16,10 @@
 
 using std::cin;
 
-ConsoleController::ConsoleController() : m_next_move{5} {
+ConsoleController::ConsoleController() : m_nextMove{5}, m_madeTurn{false} {
+}
+
+ConsoleController::ConsoleController(int playerNr) : m_nextMove{5}, m_madeTurn{false}, mPlayerNr{playerNr} {
 }
 
 ConsoleController::ConsoleController(const ConsoleController& orig) {
@@ -25,10 +28,19 @@ ConsoleController::ConsoleController(const ConsoleController& orig) {
 ConsoleController::~ConsoleController() {
 }
 
+bool ConsoleController::madeTurn()
+{
+    return m_madeTurn;
+}
+void ConsoleController::setMadeTurn(bool madeTurn)
+{
+    m_madeTurn = madeTurn;
+}
+
 int ConsoleController::move()
 {
-    int temp = m_next_move;
-    m_next_move = 5;
+    int temp = m_nextMove;
+    m_nextMove = 5;
     return temp;
     /*
     char c = '0';
@@ -41,5 +53,5 @@ int ConsoleController::move()
 
 void ConsoleController::set_next_move(int next_move) 
 {
-    m_next_move = next_move;
+    m_nextMove = next_move;
 }
