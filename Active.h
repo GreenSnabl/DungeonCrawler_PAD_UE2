@@ -28,7 +28,7 @@ public:
     virtual Passive* getPassive(int index) const;
     
     bool getWasUsed() const;
-    void setWasUsed(bool wasUsed);
+    virtual void setWasUsed(bool wasUsed);
     
 private:
     std::vector<Passive*> m_passives;

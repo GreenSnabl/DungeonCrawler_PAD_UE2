@@ -21,6 +21,7 @@ public:
     Trap();
     ~Trap();
     void use();
+    void setWasUsed(bool wasUsed);
     virtual void onEnter(Character* c);
 private:
     Trap(const Trap& orig);

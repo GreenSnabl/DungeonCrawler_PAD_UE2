@@ -93,7 +93,7 @@ GameEngine::~GameEngine() {
 }
 
 
-GameEngine::GameEngine(const std::string& mapFile) : m_tileSize{sf::Vector2f(32, 32)}, m_playerAttacked{false}, m_playerWasAttacked{false}, m_map{nullptr}, newMap{false}
+GameEngine::GameEngine(const std::string& mapFile) : m_tileSize{sf::Vector2f(32, 32)}, m_playerAttacked{false}, m_playerWasAttacked{false}, m_map{nullptr}, newMap{false}, m_redTriangle{sf::CircleShape(10, 3)}, m_actionWasTaken{false}
 {
 
     loadFromFile(mapFile);
@@ -111,6 +111,9 @@ GameEngine::GameEngine(const std::string& mapFile) : m_tileSize{sf::Vector2f(32,
     m_attackText.setColor(sf::Color(255,255,255));
     m_attackText.setCharacterSize(15);
     
+    m_redTriangle.setFillColor(sf::Color::Red);
+    m_redTriangle.rotate(180.f);
+    
     
     m_mapTex.loadFromFile("./gfx/ProjectUtumno_full.png");
     m_mapSprite.setTexture(m_mapTex);
@@ -119,14 +122,6 @@ GameEngine::GameEngine(const std::string& mapFile) : m_tileSize{sf::Vector2f(32,
 }
 
 bool GameEngine::loadFromFile(const std::string& mapFile) {
-    if (m_map != nullptr) 
-    {
-        delete m_map;
-        for (int i = 0; i < m_charVec.size(); ++i) {
-            delete m_charVec[i];
-        }
-        delete m_window;
-    }
     
     vector<string> mapVec;
     ifstream ifs;
@@ -227,19 +222,25 @@ bool GameEngine::saveToFile(const std::string& mapFile)
                 ss.str("");
                 }
             }
-            
         }
     }
     
-    
-    for (int i = 0; i < m_charVec.size(); ++i)
+
+    saveEntities(m_charVec, ofs);
+    saveEntities(m_players, ofs);
+}
+
+void GameEngine::saveEntities(const vector<Character*>& charVec, ofstream& ofs)
+{
+    stringstream ss;
+    for (int i = 0; i < charVec.size(); ++i)
     {
-        ss << "Character " << m_charVec[i]->getSign() << " " << m_map->find(m_charVec[i]) << " ";
-        if (dynamic_cast<ConsoleController*>(m_charVec[i]->getController())) 
+        ss << "Character " << charVec[i]->getSign() << " " << m_map->find(charVec[i]) << " ";
+        if (dynamic_cast<ConsoleController*>(charVec[i]->getController())) 
         {
             ss << "ConsoleController ";
         }
-        else if (AiController* temp = dynamic_cast<AiController*>(m_charVec[i]->getController()))
+        else if (AiController* temp = dynamic_cast<AiController*>(charVec[i]->getController()))
         {
             if (temp->getBehaviour() == AiController::Behaviour::HOLD)
                 ss << "StationaryController ";
@@ -247,11 +248,11 @@ bool GameEngine::saveToFile(const std::string& mapFile)
                 ss << "AiController ";
             }
         }
-        ss << m_charVec[i]->getStrength() << " " << m_charVec[i]->getStamina();
+        ss << charVec[i]->getStrength() << " " << charVec[i]->getStamina() << " " << charVec[i]->getCurrentHP();
 
-        for (int j = 0; j < m_charVec[i]->getItemSize(); ++j)
+        for (int j = 0; j < charVec[i]->getItemSize(); ++j)
         {
-            if (Item* tmp = dynamic_cast<Item*>(m_charVec[i]->getItem(j)))
+            if (Item* tmp = dynamic_cast<Item*>(charVec[i]->getItem(j)))
             {
                 ss << " " << Item::itemToString(tmp);
             }
@@ -260,7 +261,8 @@ bool GameEngine::saveToFile(const std::string& mapFile)
         ss << "\n";
         ofs << ss.str();
         ss.str("");
-    }     
+    }  
+
 }
 
 
@@ -277,23 +279,35 @@ bool GameEngine::loadEntity(const std::string& data) {
         ss >> sign >> pos >> controller;
         vector<string> items;
         string tempItem;
-        int stamina, strength;
-        ss >> stamina >> strength;
+        int stamina, strength, currentHP;
+        ss >> stamina >> strength >> currentHP;
+        if (currentHP == 0) 
+        {
+            ss.clear();
+            ss.str("");
+            ss << data;
+            ss >> name >> sign >> pos >> controller >> stamina >> strength;
+        }
+        
         while (ss.good())
         {
             ss >> tempItem;
             items.push_back(tempItem);
         }
         if (Character * character = Character::makeCharacter(data)) {
-            m_charVec.push_back(character);
             m_map->place(pos, character);
             for (int i = 0; i < items.size(); ++i)
                 {
                  character->addItem(Item::makeItem(items[i]));   
                 }
+            if (currentHP != 0) character->setCurrentHP(currentHP);
             if (controller == "ConsoleController") {
-                m_playerControl = dynamic_cast<ConsoleController*> (character->getController());
-                m_player = character;
+                ConsoleController* controller = dynamic_cast<ConsoleController*> (character->getController());
+                controller->setPlayerNr(++numberOfPlayers);
+                m_players.push_back(character);
+            }
+            else {
+                m_charVec.push_back(character);
             }
             
         }
@@ -329,11 +343,12 @@ bool GameEngine::loadEntity(const std::string& data) {
 
 
 bool GameEngine::run() {
-    m_map->print(m_map->find(m_player));
+    m_map->print(m_map->find(m_players[0]));
     render();
     sf::Event event;
     while (m_window->isOpen() && !newMap) {
-        processEvents();
+        
+        processEvents(m_players[currentPlayer]);
         render();  
     }
     return newMap;
@@ -349,25 +364,69 @@ void GameEngine::turn() {
     {
         if (m_charVec[i]->getCurrentHP() <= 0)
         {
-            if (ConsoleController* c = dynamic_cast<ConsoleController*>(m_charVec[i]->getController())) 
-            {
-                enterMenuState(true);
-                return;
-            }
-            else {
             m_map->find(m_map->find(m_charVec[i]))->setCharacter(nullptr);    
             delete m_charVec[i];
-            m_charVec.erase(m_charVec.begin() + i);
-            }
+            m_charVec.erase(m_charVec.begin() + i);      
         }
     }
-
-    for (int i = 0; i < m_charVec.size(); ++i) {
+    
+    
+    for (int i = 0; i < m_players.size(); ++i)
+    {
+        if (m_players[i]->getCurrentHP() <= 0)
+        {
+            --numberOfPlayers;
+            if (numberOfPlayers < 1){
+                enterMenuState(true, m_players[0]);
+                return;
+            }
+            
+            m_map->find(m_map->find(m_players[i]))->setCharacter(nullptr);    
+            delete m_players[i];
+            m_players.erase(m_players.begin() + i);      
+        }
+    }
+    
+    
+        Position charPos = m_map->find(m_players[currentPlayer]);
+        Position movement = intToPos(m_players[currentPlayer]->move());
+        
+        bool fightHappened = (
+                m_map->find({charPos.x + movement.x, charPos.y + movement.y})->hasCharacter() &&
+                m_map->find(Position({charPos.x + movement.x, charPos.y + movement.y}))->getCharacter() != m_players[currentPlayer]                         
+                        );
+                
+        m_map->find(charPos)->onLeave(m_map->find({charPos.x + movement.x, charPos.y + movement.y}));
+        if(fightHappened)
+        {
+            Character* attacker = m_map->find(charPos)->getCharacter();
+            Character* defender = m_map->find({charPos.x + movement.x, charPos.y + movement.y})->getCharacter();
+            // Hier kommt die Kampfphase hin
+            fight(attacker, defender);
+        }    
+        currentPlayer++;
+        if (currentPlayer >= m_players.size()) {
+        for (int i = 0; i < m_charVec.size(); ++i) {
         Position charPos = m_map->find(m_charVec[i]);
         
         if (AiController* control = dynamic_cast<AiController*>(m_charVec[i]->getController())) {
-        
-            control->updateBehaviour(m_map, charPos, m_map->find(m_player));
+            Character* temp = m_players[0];
+            double minDistance = std::numeric_limits<double>::max();
+            for (int j = 0; j < m_players.size(); ++j)
+            {
+                Position source = m_map->find(m_charVec[i]);
+                Position destination = m_map->find(m_players[j]);
+                if (m_map->checkLine(source, destination))
+                {
+                    double tmpDistance = getDistance(source, destination);
+                    if (tmpDistance < minDistance) 
+                    {
+                        minDistance = tmpDistance;
+                        temp = m_players[j];
+                    }  
+                }
+            }
+            control->updateBehaviour(m_map, charPos, m_map->find(temp));
         }
         
         Position movement = intToPos(m_charVec[i]->move());
@@ -386,7 +445,9 @@ void GameEngine::turn() {
             fight(attacker, defender);
         }
     }
-    m_map->print(m_map->find(m_player));
+        currentPlayer = 0;
+        }
+    m_map->print(m_map->find(m_players[0]));
 }
 
 
@@ -423,16 +484,18 @@ void GameEngine::setFightStatus(bool playerIsAttacking, bool attackerDied, int a
 {
     std::stringstream ss;
     std::string attacker, defender;
+    ss << "Spieler " << currentPlayer + 1;
+    
     if (playerIsAttacking) 
     {
-        attacker = "Spieler"; defender = "Gegner";
+        attacker = ss.str(); defender = "Gegner";
     }
     else 
     { 
         attacker = "Gegner"; defender = "Spieler";
     }
-    
-    ss << attacker <<  " attackiert " << defender << "\n" << attackerDamage << " Schaden.\n";
+    ss.str("");
+    ss << attacker << " attackiert " << defender << "\n" << attackerDamage << " Schaden.\n";
     
     if (defenderDamage != -1)
     {
@@ -447,6 +510,8 @@ void GameEngine::setFightStatus(bool playerIsAttacking, bool attackerDied, int a
     else {m_defendText.setString(ss.str());}
 }
 
+int GameEngine::numberOfPlayers = 0;
+int GameEngine::currentPlayer = 0;
 
 
 Position intToPos(int dir) {
@@ -478,28 +543,58 @@ int posToInt(Position pos) {
 void GameEngine::render() {
     sf::Vector2f tilePos;
     m_window->clear();
+    
+    bool hasSight = false;
+    
     for (int i = 0; i < m_map->getHeight(); ++i) {
         for (int j = 0; j < m_map->getWidth(); ++j) {
-            if (m_map->checkLine(m_map->find(m_player), {j,i})) {
-            tilePos = spriteIds::charToSpriteId(m_map->find({j, i})->tileToChar());
-            renderTile(tilePos,{static_cast<float> (j), static_cast<float> (i)});
-            m_window->draw(m_mapSprite);
+            hasSight = false;
+            for (int k = 0; k < m_players.size(); ++k) {
+            if (m_map->checkLine(m_map->find(m_players[k]), {j,i})) {
+                tilePos = spriteIds::charToSpriteId(m_map->find({j, i})->tileToChar());
+                renderTile(tilePos,{static_cast<float> (j), static_cast<float> (i)});
+                m_window->draw(m_mapSprite);
+                hasSight = true;
+                break;
             }
-            else {
+            }
+            if (hasSight) continue;
+            
             renderTile(spriteIds::WALL,{static_cast<float> (j), static_cast<float> (i)});
             m_window->draw(m_mapSprite);
-            }            }
+            
         }
+    }
     
     for (int i = 0; i < m_charVec.size(); ++i) {
         Position charPos = m_map->find(m_charVec[i]);
-        if (m_map->checkLine(m_map->find(m_player), charPos)) {
+        for (int j = 0; j < m_players.size(); ++j) {
+        if (m_map->checkLine(m_map->find(m_players[j]), charPos)) {
         tilePos = spriteIds::charToSpriteId(m_charVec[i]->getSign());
         renderChar(tilePos,{static_cast<float> (charPos.x), static_cast<float> (charPos.y)});
+        break;
+        }
         m_window->draw(m_mapSprite);
         }
     }
-    renderStatus();
+    
+    for (int i = 0; i < m_players.size(); ++i) {
+        Position charPos = m_map->find(m_players[i]);
+        tilePos = spriteIds::charToSpriteId(m_players[i]->getSign());
+        renderChar(tilePos,{static_cast<float> (charPos.x), static_cast<float> (charPos.y)});
+        m_window->draw(m_mapSprite);
+        }
+    
+    Position currentPlayerPos = m_map->find(m_players[currentPlayer]);
+    float player_x = static_cast<float>(currentPlayerPos.x) * static_cast<float>(m_tileSize.x)  + static_cast<float>(m_tileSize.x - 5);
+    float player_y = static_cast<float>(currentPlayerPos.y * m_tileSize.y);
+    
+    m_redTriangle.setPosition(player_x, player_y);
+    m_window->draw(m_redTriangle);
+    
+    
+    
+    renderStatus(m_players[currentPlayer]);
     m_window->display();
 }
 
@@ -518,19 +613,19 @@ void GameEngine::renderTile(sf::Vector2f tilePos, sf::Vector2f mapPos) {
     m_window->draw(m_mapSprite);
 }
 
-void GameEngine::setStatus() {
+void GameEngine::setStatus(Character* player) {
     stringstream ss;
     ss << "Player Stats\n"
-            << "Stamina: " << m_player->getStamina()
-            << "\nStrength: " << m_player->getStrength()
-            << "\nMax HP: " << m_player->getMaxHP()
-            << "\nCurrent HP: " << m_player->getCurrentHP();
+            << "Stamina: " << player->getStamina()
+            << "\nStrength: " << player->getStrength()
+            << "\nMax HP: " << player->getMaxHP()
+            << "\nCurrent HP: " << player->getCurrentHP();
 
     m_status.setString(ss.str());
 }
 
-void GameEngine::renderStatus() {
-    setStatus();
+void GameEngine::renderStatus(Character* player) {
+    setStatus(player);
     m_status.setPosition(m_map->getWidth() * 32 + 20, m_map->getHeight() * 32 / 6);
     m_window->draw(m_status);
     
@@ -563,13 +658,13 @@ void GameEngine::renderChar(sf::Vector2f tilePos, sf::Vector2f mapPos) {
     m_window->draw(m_mapSprite);
 }
 
-void GameEngine::processEvents() {
+void GameEngine::processEvents(Character* player) {
     sf::Event event;
     while (m_window->pollEvent(event)) {
         switch (event.type) {
             case sf::Event::KeyPressed:
-                handlePlayerInput(event.key.code);
-                turn();
+                handlePlayerInput(event.key.code, player);
+                if (m_actionWasTaken) turn();
                 break;
             case sf::Event::Closed:
                 m_window->close();
@@ -581,34 +676,56 @@ void GameEngine::processEvents() {
     }
 }
 
-void GameEngine::handlePlayerInput(sf::Keyboard::Key& key) {
-    if (key == sf::Keyboard::Num1)
-        m_playerControl->set_next_move(1);
-    else if (key == sf::Keyboard::Num2)
-        m_playerControl->set_next_move(2);
-    else if (key == sf::Keyboard::Num3)
-        m_playerControl->set_next_move(3);
-    else if (key == sf::Keyboard::Num4)
-        m_playerControl->set_next_move(4);
-    else if (key == sf::Keyboard::Num5)
-        m_playerControl->set_next_move(5);
-    else if (key == sf::Keyboard::Num6)
-        m_playerControl->set_next_move(6);
-    else if (key == sf::Keyboard::Num7)
-        m_playerControl->set_next_move(7);
-    else if (key == sf::Keyboard::Num8)
-        m_playerControl->set_next_move(8);
-    else if (key == sf::Keyboard::Num9)
-        m_playerControl->set_next_move(9);
-    else if (key == sf::Keyboard::Escape)
+void GameEngine::handlePlayerInput(sf::Keyboard::Key& key, Character* player) {
+    ConsoleController* controller = dynamic_cast<ConsoleController*>(player->getController());
+    m_actionWasTaken = false;
+    if (key == sf::Keyboard::Num1) {
+        controller->set_next_move(1);
+        m_actionWasTaken = true;
+    }
+    else if (key == sf::Keyboard::Num2) {
+        controller->set_next_move(2);
+        m_actionWasTaken = true;
+    }
+    else if (key == sf::Keyboard::Num3) {
+        controller->set_next_move(3);
+        m_actionWasTaken = true;
+    }
+    else if (key == sf::Keyboard::Num4) {
+        controller->set_next_move(4);
+        m_actionWasTaken = true;
+    }
+    else if (key == sf::Keyboard::Num5) {
+        controller->set_next_move(5);
+        m_actionWasTaken = true;
+    }
+    else if (key == sf::Keyboard::Num6) {
+        controller->set_next_move(6);
+        m_actionWasTaken = true;
+    }
+    else if (key == sf::Keyboard::Num7) {
+        controller->set_next_move(7);
+        m_actionWasTaken = true;
+    }
+    else if (key == sf::Keyboard::Num8) {
+        controller->set_next_move(8);
+        m_actionWasTaken = true;
+    }
+    else if (key == sf::Keyboard::Num9) {
+        controller->set_next_move(9);
+        m_actionWasTaken = true;
+    }
+    else if (key == sf::Keyboard::Escape) {
         m_window->close();
-    else if (key == sf::Keyboard::Num0)
-        enterMenuState(false);
+    }
+    else if (key == sf::Keyboard::Num0){
+        enterMenuState(false, player);
+    }
 }
 
 
-void GameEngine::enterMenuState(bool gameEnd) {
-    setStatus();
+void GameEngine::enterMenuState(bool gameEnd, Character* player) {
+    setStatus(player);
 
     sf::Text showInfo;
     sf::Text back;
@@ -755,9 +872,9 @@ void GameEngine::enterMenuState(bool gameEnd) {
                     showStatus = !showStatus;
                     stringstream ss;
                     ss << "Playeritems:\n";
-                    for (int i = 0; i < m_player->getItemSize(); ++i)
+                    for (int i = 0; i < player->getItemSize(); ++i)
                     {
-                        ss << Item::itemToString(m_player->getItem(i)) << " ";
+                        ss << Item::itemToString(player->getItem(i)) << " ";
                         if ((i + 1) % 3 == 0)
                             ss << "\n";
                     }
@@ -768,12 +885,14 @@ void GameEngine::enterMenuState(bool gameEnd) {
                    textInputMode = true;
                    changedToInputMode = true;
                    save = true;
+                   load = false;
                 }
                 else if (event.key.code == sf::Keyboard::Num4 && !textInputMode)
                 {
                     textInputMode = true;
                     changedToInputMode = true;
                     load = true;
+                    save = false;
                 
                 }
             }

@@ -41,6 +41,7 @@
     bool getShortestPath(vector<Position>& shortestPath, Position from, Position to, std::map<Position, Position>& previous);
     void dijkstra(Position from, std::map<Position, std::map<Position, int> >& graph, std::map<Position, Position>& previous);
     void a_star(Position source, Position destination, std::map<Position, std::map<Position, double> >& graph, std::map<Position, Position>& previous);
+    double getDistance(Position, Position);
     
 #endif /* AI_H */
 

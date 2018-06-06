@@ -20,6 +20,7 @@
 #include <SFML/Graphics.hpp>
 #include "ConsoleController.h"
 #include "Passive.h"
+#include <fstream>
 
 
 
@@ -35,13 +36,14 @@ public:
     
 private:
     void turn();
-    void processEvents();
+    void processEvents(Character* player);
     
     bool loadFromFile(const std::string& mapFile);
     bool loadEntity(const std::string& data);
     
     bool saveToFile(const std::string& mapFile);
-
+    void saveEntities(const vector<Character*>& charVec, std::ofstream& ofs);
+    
     void fight(Character*, Character*);
     bool m_playerWasAttacked;
     bool m_playerAttacked;
@@ -52,32 +54,36 @@ private:
     void renderTile(sf::Vector2f tilePos, sf::Vector2f mapPos);
     void renderChar(sf::Vector2f tilePos, sf::Vector2f mapPos);
     
-    void setStatus();
+    void setStatus(Character* player);
     void setFightStatus(bool, bool, int, int);
-    void renderStatus();
+    void renderStatus(Character* player);
     
-    void handlePlayerInput(sf::Keyboard::Key&);
+    void handlePlayerInput(sf::Keyboard::Key&, Character* player);
     
     
-    void enterMenuState(bool gameEnd);
+    void enterMenuState(bool gameEnd, Character* player);
 
     
     std::vector<Character*> m_charVec;
     DungeonMap* m_map;
+    static int numberOfPlayers;
+    static int currentPlayer;
+    bool m_actionWasTaken;
     
     const sf::Vector2u m_tileSize;    
     sf::Texture m_mapTex;
     sf::Sprite m_mapSprite;
     sf::RenderWindow *m_window;
     
+    
+    sf::CircleShape m_redTriangle;
     sf::Text m_status;
     sf::Text m_defendText;
     sf::Text m_attackText;
     
     sf::Font m_font;
     
-    Character* m_player;
-    ConsoleController* m_playerControl;
+    vector<Character*> m_players;
     
     bool newMap;
     std::string newMapName;

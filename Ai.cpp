@@ -116,3 +116,10 @@ bool getShortestPath(vector<Position>& shortestPath, Position from, Position to,
     std::reverse(shortestPath.begin(), shortestPath.end());
     return true;
 }
+
+double getDistance(Position source, Position destination)
+{
+    double delta_x = static_cast<double>(destination.x) - static_cast<double>(source.x);
+    double delta_y = static_cast<double>(destination.y) - static_cast<double>(source.y);
+    return std::sqrt(std::pow(delta_x, 2) + std::pow(delta_y, 2));
+}

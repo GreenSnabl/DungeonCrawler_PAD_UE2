@@ -51,18 +51,18 @@ Character* Character::makeCharacter(const std::string& data) {
     std::string name, controllerType;
     Position pos;
     char sign;
-    int strength, stamina, playerNr;
-    while (ss.good()) {
-    ss >> name >> sign >> pos.y >> pos.x >> controllerType >> stamina >> strength >> playerNr;
-    }
+    int strength, stamina;
+    ss >> name >> sign >> pos>> controllerType >> stamina >> strength;
+    // pos.y >> pos.x 
+    Character* character = nullptr;
     if (controllerType == "StationaryController") {
-        return new Character(sign, stamina, strength, new AiController(AiController::HOLD));
+        character = new Character(sign, stamina, strength, new AiController(AiController::HOLD));
     } else if (controllerType == "AiController") {
-        return new Character(sign, stamina, strength, new AiController(AiController::STROLL));
+        character = new Character(sign, stamina, strength, new AiController(AiController::STROLL));
     } else if (controllerType == "ConsoleController") {
-        return new Character(sign, stamina, strength, new ConsoleController(playerNr));
+        character = new Character(sign, stamina, strength, new ConsoleController());
     }
-    return nullptr;
+    return character;
 }
 
 int Character::getMaxHP() const {
@@ -71,6 +71,11 @@ int Character::getMaxHP() const {
 
 int Character::getCurrentHP() const {
     return m_hitpoints;
+}
+
+void Character::setCurrentHP(int currentHP)
+{
+    m_hitpoints = currentHP;
 }
 
 bool Character::isAlive() const {

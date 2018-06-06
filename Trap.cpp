@@ -29,3 +29,9 @@ void Trap::onEnter(Character* c) {
     Tile::setCharacter(c);
     if (!getWasUsed()) use();
 }
+
+void Trap::setWasUsed(bool wasUsed)
+{
+    Active::setWasUsed(true);
+    Tile::setSign('t');
+}

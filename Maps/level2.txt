@@ -19,10 +19,14 @@
 #..................#
 #..................#
 ####################
-Character @ 18 5 ConsoleController 9 9 Gambeson Gambeson Gambeson
-Character % 2 2 AiController 3 4
-Character % 14 10 AiController 5 5
-Character D 15 10 StationaryController 20 1
+Character @ 18 5 ConsoleController 9 9 50 Gambeson Gambeson Gambeson
+Character @ 10 4 ConsoleController 50 50 RapierAndDagger Gambeson Gambeson
+Character % 2 1 ConsoleController 50 50 Greatsword
+Character G 2 2 AiController 3 4
+Character G 12 5 AiController 12 12
+Character D 16 15 AiController 30 8
+Character D 15 16 AiController 78 87
+Character G 
 Greatsword 5 4
 Greatsword 5 6
 Shield 17 17

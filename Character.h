@@ -30,6 +30,7 @@ public:
     void showInfo() const;
     int getMaxHP() const;
     int getCurrentHP() const;
+    void setCurrentHP(int);
     
     bool takeDamage(int);
     
