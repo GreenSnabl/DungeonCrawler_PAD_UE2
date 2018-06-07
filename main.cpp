@@ -17,7 +17,7 @@
 
 int main(int argc, char** argv) {
 
-      Game game("Maps/level2.txt");
+      Game game("Maps/level2c.txt");
     
     return 0;
 }

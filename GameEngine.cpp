@@ -381,10 +381,11 @@ void GameEngine::turn() {
                 enterMenuState(true, m_players[0]);
                 return;
             }
+            else if (numberOfPlayers == 1) currentPlayer = 0;
             
             m_map->find(m_map->find(m_players[i]))->setCharacter(nullptr);    
             delete m_players[i];
-            m_players.erase(m_players.begin() + i);      
+            m_players.erase(m_players.begin() + i);
         }
     }
     
